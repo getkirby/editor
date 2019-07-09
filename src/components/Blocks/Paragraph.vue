@@ -91,34 +91,20 @@ export default {
     onTab() {
       this.$emit("next");
     },
-    toggleLink() {
-      const attrs = this.getMarkAttrs("link");
-      const href  = prompt("URL", attrs.href || "");
-
-      if (href !== null) {
-        if (!href) {
-          this.removeMark("link");
-        } else {
-          this.addMark("link", {
-            href: href
-          });
-        }
-      }
-    },
   }
 };
 </script>
 
 <style lang="scss">
-.k-editor-paragraph-block {
+.k-editor-paragraph-block .ProseMirror {
   line-height: 1.5em;
   display: block;
   margin-bottom: .75rem;
 }
-.k-editor-paragraph-block strong {
+.k-editor-paragraph-block .ProseMirror strong {
   font-weight: 600;
 }
-.k-editor-paragraph-block code {
+.k-editor-paragraph-block .ProseMirror code {
   position: relative;
   font-size: .875rem;
   display: inline-block;

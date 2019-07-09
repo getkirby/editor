@@ -7,6 +7,9 @@
     @focusout="onBlur"
   >
     <span class="k-editable-placeholder" v-if="placeholder && editor && isEmpty()">{{ placeholder }}</span>
+
+    <k-link-dialog ref="link" @submit="insertLink" />
+
   </div>
 </template>
 
@@ -28,8 +31,23 @@ import {
   getHTML,
 } from "./Utils.js";
 
+/** Dialogs */
+import LinkDialog from "./Dialogs/Link.vue";
+
 export default {
   inheritAttrs: false,
+  components: {
+    "k-link-dialog": LinkDialog
+  },
+  fields: {
+    link: {
+      href: {
+        label: "URL",
+        type: "text",
+        icon: "url"
+      }
+    }
+  },
   props: {
     content: String,
     breaks: Boolean,
@@ -197,6 +215,15 @@ export default {
           .scrollIntoView()
       );
     },
+    insertLink(href) {
+      if (!href) {
+        this.removeMark("link");
+      } else {
+        this.addMark("link", {
+          href: href
+        });
+      }
+    },
     isEmpty() {
       return this.doc().content.size === 0;
     },
@@ -205,6 +232,13 @@ export default {
       const end       = this.cursorPositionAtEnd();
 
       return selection.from === 0 && selection.to === end;
+    },
+    link() {
+      const attrs = this.getMarkAttrs("link");
+      this.$refs.link.open(attrs.href);
+    },
+    mark(type) {
+      return this.editor.state.schema.marks[type];
     },
     nodeAtSelection(selection) {
       return this.doc().cut(selection.from, selection.to);
@@ -218,9 +252,6 @@ export default {
       dom.append(result);
 
       return dom.innerHTML;
-    },
-    mark(type) {
-      return this.editor.state.schema.marks[type];
     },
     onBack() {
       this.$emit("back", {

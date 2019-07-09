@@ -18,7 +18,7 @@ export default {
 
 <style lang="scss">
 
-.k-editor-h1-block {
+.k-editor-h1-block .ProseMirror {
   font-size: 1.75rem;
   font-weight: 600;
   line-height: 1.5em;
@@ -28,9 +28,9 @@ export default {
 .k-editor-h1-block .ProseMirror:empty {
   background: red;
 }
-.k-editor-h1-block code,
-.k-editor-h2-block code,
-.k-editor-h3-block code {
+.k-editor-h1-block .ProseMirror code,
+.k-editor-h2-block .ProseMirror code,
+.k-editor-h3-block .ProseMirror code {
   position: relative;
   font-size: .925em;
   display: inline-block;

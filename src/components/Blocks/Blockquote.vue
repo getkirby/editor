@@ -12,7 +12,7 @@ export default {
 
 <style lang="scss">
 
-.k-editor-blockquote-block {
+.k-editor-blockquote-block .ProseMirror {
   font-size: 1.25rem;
   line-height: 1.5em;
   padding: 0 0 0 1rem;
@@ -20,7 +20,7 @@ export default {
   margin-bottom: 1.5rem;
   border-left: 4px solid #000;
 }
-.k-editor-blockquote-block code {
+.k-editor-blockquote-block .ProseMirror code {
   position: relative;
   font-size: .875em;
   display: inline-block;

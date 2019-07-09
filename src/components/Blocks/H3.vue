@@ -10,7 +10,7 @@ export default {
 
 <style lang="scss">
 
-.k-editor-h3-block {
+.k-editor-h3-block .ProseMirror {
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.5em;
