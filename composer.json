@@ -1,0 +1,15 @@
+{
+    "name": "getkirby/editor",
+    "description": "Kirby Editor",
+    "type": "kirby-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bastian Allgeier",
+            "email": "bastian@getkirby.com"
+        }
+    ],
+    "require": {
+        "getkirby/composer-installer": "^1.1"
+    }
+}

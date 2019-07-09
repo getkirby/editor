@@ -1,0 +1,54 @@
+<template>
+  <hr
+    ref="hr"
+    tabindex="0"
+    @keydown.enter="$emit('append')"
+    @keydown.up="$emit('prev')"
+    @keydown.down="$emit('next')"
+    @keydown.delete="$emit('remove')"
+  />
+</template>
+
+<script>
+export default {
+  label: "Horizontal line",
+  icon: "dots",
+  methods: {
+    focus() {
+      this.$refs.hr.focus();
+    }
+  }
+};
+</script>
+
+<style lang="scss">
+.k-editor-hr-block hr {
+  position: relative;
+  height: 1.5rem;
+  border: 0;
+  margin-bottom: .75rem;
+  color: #ddd;
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:after {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    content: "";
+    height: 1px;
+    background: currentColor;
+  }
+
+  &:focus {
+    color: #b5d7fe;
+  }
+  &:focus:after {
+    outline: 1px solid #b5d7fe;
+  }
+
+}
+</style>

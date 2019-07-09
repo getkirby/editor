@@ -1,0 +1,1 @@
+<blockquote><?= $block->content() ?></blockquote>

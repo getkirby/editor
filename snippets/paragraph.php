@@ -1,0 +1,1 @@
+<p><?= $block->content() ?></p>

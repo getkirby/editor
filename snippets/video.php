@@ -1,0 +1,1 @@
+<?= youtube($block->attrs()->src()) ?>
