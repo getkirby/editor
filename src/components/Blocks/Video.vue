@@ -9,7 +9,7 @@
       @keydown.delete="$emit('remove')"
     >
       <template v-if="embedSrc">
-        <div ref="element" tabindex="0" class="k-editor-video-block-embed">
+        <div ref="element" tabindex="0" class="k-editor-video-block-embed" @dblclick="settings">
           <iframe :src="embedSrc" />
         </div>
       </template>
@@ -56,6 +56,17 @@ export default {
       }
 
       return getId(this.attrs.src);
+    }
+  },
+  methods: {
+    menu() {
+      return {
+        src: {
+          icon: "url",
+          label: "Link",
+          action: "settings",
+        },
+      };
     }
   }
 };

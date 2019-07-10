@@ -27,12 +27,15 @@ export default {
 
 <style lang="scss">
 
+.k-editor-code-block {
+  margin: 1.5rem 0;
+}
 .k-editor-code-block pre {
   background: #000;
   color: #fff;
   font-size: .875rem;
   padding: 1rem;
-  line-height: 1.5em;
+  line-height: 2em;
   border-radius: 3px;
   overflow-y: scroll;
   margin-bottom: .75rem;

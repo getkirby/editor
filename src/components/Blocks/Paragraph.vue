@@ -96,10 +96,11 @@ export default {
 </script>
 
 <style lang="scss">
+.k-editor-paragraph-block {
+  margin-bottom: .75rem;
+}
 .k-editor-paragraph-block .ProseMirror {
   line-height: 1.5em;
-  display: block;
-  margin-bottom: .75rem;
 }
 .k-editor-paragraph-block .ProseMirror strong {
   font-weight: 600;
