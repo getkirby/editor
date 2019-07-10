@@ -7,6 +7,7 @@ Kirby::plugin('getkirby/editor', [
         'blocks/h1'         => __DIR__ . '/snippets/h1.php',
         'blocks/h2'         => __DIR__ . '/snippets/h2.php',
         'blocks/h3'         => __DIR__ . '/snippets/h3.php',
+        'blocks/hr'         => __DIR__ . '/snippets/hr.php',
         'blocks/image'      => __DIR__ . '/snippets/image.php',
         'blocks/ol'         => __DIR__ . '/snippets/ol.php',
         'blocks/paragraph'  => __DIR__ . '/snippets/paragraph.php',
