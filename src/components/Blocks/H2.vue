@@ -12,6 +12,7 @@ export default {
 .k-editor-h2-block {
   margin-bottom: .75rem;
 }
+.k-editor-h2-block .k-editable-placeholder,
 .k-editor-h2-block .ProseMirror {
   font-size: 1.25rem;
   font-weight: 600;
