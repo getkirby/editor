@@ -108,7 +108,7 @@ export default {
 
 <style lang="scss">
 .k-editor-image-block {
-  margin: 1.5rem 0;
+  margin: 3rem 0;
 }
 .k-editor-image-block figure {
   line-height: 0;

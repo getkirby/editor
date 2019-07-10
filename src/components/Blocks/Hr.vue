@@ -24,7 +24,7 @@ export default {
 <style lang="scss">
 .k-editor-hr-block hr {
   position: relative;
-  height: 1.5rem;
+  height: 3rem;
   border: 0;
   margin-bottom: .75rem;
   color: #ddd;
