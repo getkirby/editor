@@ -24,7 +24,7 @@
       </k-dropdown>
       <k-button class="k-editor-toolbar-button" @click="remove()" icon="trash" />
     </div>
-      <div class="k-editor-blocks">
+      <div class="k-editor-blocks" :key="modified">
         <div
           v-for="(block, index) in blocks"
           :key="block.id"
@@ -78,30 +78,17 @@ export default {
     }
   },
   data() {
-
-    let doc = this.value;
-
-    if (doc.length === 0) {
-      doc = [{
-        type: "paragraph"
-      }];
-    }
-
-    // assign a unique ID to each block
-    doc.map(block => {
-      block.id     = this.uuid();
-      block.attrs   = block.attrs || {};
-      block.content = block.content || "";
-      return block;
-    });
+    const blocks = this.sanitize(this.value);
 
     return {
       selected: null,
       menu: {},
       creatorDropdown: false,
       converterDropdown: false,
-      blocks: doc
-    }
+      blocks: blocks,
+      snapshot: JSON.stringify(blocks),
+      modified: new Date()
+    };
   },
   computed: {
     toolbarBlock() {
@@ -117,6 +104,12 @@ export default {
         this.$emit("input", blocks);
       },
       deep: true
+    },
+    value(value) {
+      if (JSON.stringify(value) !== JSON.stringify(this.blocks)) {
+        this.blocks = this.sanitize(value);
+        this.modified = new Date()
+      }
     }
   },
   methods: {
@@ -178,6 +171,23 @@ export default {
     },
     optionIsActive(type) {
       return (this.activeOptions || []).includes(type);
+    },
+    sanitize(blocks) {
+      if (blocks.length === 0) {
+        blocks = [{
+          type: "paragraph"
+        }];
+      }
+
+      // assign a unique ID to each block
+      blocks.map(block => {
+        block.id = block.id || this.uuid();
+        block.attrs = block.attrs || {};
+        block.content = block.content || "";
+        return block;
+      });
+
+      return blocks;
     },
     appendAndFocus(block, after) {
       const next = this.append(block, after);
