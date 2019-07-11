@@ -37,6 +37,13 @@ The editor stores its content in a YAML format. To convert it to HTML you can us
 <?= $page->text()->blocks() ?>
 ```
 
+## Todos
+
+- [ ] History
+- [ ] Better Copy & Paste
+- [ ] Sortable blocks
+- [ ] Plugin system for custom blocks
+
 ## License
 
 MIT
