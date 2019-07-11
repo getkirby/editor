@@ -1,1 +1,1 @@
-<?= youtube($block->attrs()->src()) ?>
+<?= video($attrs->src()) ?>

@@ -1,1 +1,1 @@
-<blockquote><?= $block->content() ?></blockquote>
+<blockquote><?= $content ?></blockquote>

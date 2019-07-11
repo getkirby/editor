@@ -1,5 +1,7 @@
 <?php
 
+use Kirby\Cms\Content;
+
 Kirby::plugin('getkirby/editor', [
     'snippets' => [
         'blocks/blockquote' => __DIR__ . '/snippets/blockquote.php',
@@ -17,17 +19,19 @@ Kirby::plugin('getkirby/editor', [
     'fieldMethods' => [
         'blocks' => function ($field) {
             $html   = [];
-            $blocks = $field->yaml();
+            $blocks = Json::decode($field->value());
 
-            $blockToObj = function ($block) {
+            $blockToObj = function ($block) use ($field) {
 
                 if ($block === null) {
                     return null;
                 }
 
+                $attrs = new Content($block['attrs'], $field->parent());
+
                 return new Obj([
-                    'content' => $block['content'],
-                    'attrs'   => new Obj($block['attrs']),
+                    'content' => new Field($field->parent(), 'content', $block['content']),
+                    'attrs'   => $attrs,
                     'type'    => $block['type'],
                     'prev'    => $block['prev'] ?? null,
                     'next'    => $block['next'] ?? null
@@ -41,7 +45,13 @@ Kirby::plugin('getkirby/editor', [
 
                 $block = $blockToObj($block);
 
-                $html[] = snippet('blocks/' . $block->type(), ['block' => $block], true);
+                $html[] = snippet('blocks/' . $block->type(), [
+                    'block'   => $block,
+                    'content' => $block->content(),
+                    'attrs'   => $block->attrs(),
+                    'prev'    => $block->prev(),
+                    'next'    => $block->next()
+                ], true);
             }
 
             return implode($html);
@@ -52,7 +62,16 @@ Kirby::plugin('getkirby/editor', [
             'mixins' => ['filepicker', 'upload'],
             'props' => [
                 'value' => function ($value = null) {
-                    return Yaml::decode($value);
+
+                    if (is_array($value) === true) {
+                        return $value;
+                    }
+
+                    try {
+                        return Json::decode($value);
+                    } catch (Exception $e) {
+                        return [];
+                    }
                 },
                 /**
                  * Sets the options for the files picker
@@ -69,6 +88,9 @@ Kirby::plugin('getkirby/editor', [
                     return $files;
                 },
             ],
+            'save' => function ($value) {
+                return json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+            },
             'api' => function () {
                 return [
                     [

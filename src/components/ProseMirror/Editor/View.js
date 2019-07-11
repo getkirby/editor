@@ -18,6 +18,15 @@ export default function (props) {
       if (props.onUpdate) {
         props.onUpdate();
       }
+    },
+    handlePaste(view, event) {
+      const html = event.clipboardData.getData('text/html');
+
+      if (props.onPaste) {
+        props.onPaste(html);
+      }
+
+      return true;
     }
   });
 };

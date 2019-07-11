@@ -47,6 +47,7 @@
             @input="onInput(index, $event)"
             @menu="onMenu"
             @next="onNext"
+            @paste="onPaste(index, $event)"
             @prepend="onPrepend(index, $event)"
             @prev="onPrev"
             @remove="onRemove(index, $event)"
@@ -60,9 +61,8 @@
 </template>
 
 <script>
-/* Doc */
-import Doc from "./Doc.js";
 import Blocks from "./Blocks.js";
+import Converters from "./Converters.js";
 import Components from "./Components.js";
 
 export default {
@@ -389,6 +389,53 @@ export default {
         this.focus(this.selected + 1, pos);
 
       }
+    },
+    onPaste(index, html) {
+
+      let element = window.document.createElement("div");
+      element.innerHTML = html;
+
+      let blocks = [];
+
+      const parseElement = function (element) {
+        const children = Array.from(element.children);
+
+        if (children.length === 0) {
+          blocks.push({
+            type: "paragraph",
+            content: element.innerHTML
+          });
+          return;
+        }
+
+        children.forEach(child => {
+          const tag = child.tagName.toLowerCase();
+
+          if (Converters[tag]) {
+            blocks.push(Converters[tag](child));
+          } else {
+            parseElement(child);
+          }
+        });
+      };
+
+      parseElement(element);
+
+      // add all required attributes
+      blocks = this.sanitize(blocks);
+
+      // filter empty paragraphs
+      blocks = blocks.filter(block => {
+        if (block.type === "paragraph" && block.content.length === 0) {
+          return false;
+        }
+
+        return true;
+      });
+
+      // append all pasted blocks
+      this.blocks.splice(index, 0, ...blocks);
+
     },
     onPrev() {
       if (this.hasPreviousBlock(this.selected)) {

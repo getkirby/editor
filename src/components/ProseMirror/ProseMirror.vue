@@ -87,6 +87,7 @@ export default {
       onConvert: this.onConvert,
       onItalic: this.onItalic,
       onNext: this.onNext,
+      onPaste: this.onPaste,
       onPrev: this.onPrev,
       onEnter: this.onEnter,
       onShiftEnter: this.onShiftEnter,
@@ -95,6 +96,8 @@ export default {
       onTab: this.onTab,
       onUnderline: this.onUnderline,
     });
+
+    this.onUpdate();
   },
   destroyed() {
     this.editor.destroy();
@@ -284,6 +287,9 @@ export default {
     },
     onNext() {
       this.$emit("next");
+    },
+    onPaste(html) {
+      this.$emit("paste", html);
     },
     onPrev() {
       this.$emit("prev");

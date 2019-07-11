@@ -1,1 +1,1 @@
-<pre><code><?= $block->content() ?></code></pre>
+<pre><code><?= $content ?></code></pre>

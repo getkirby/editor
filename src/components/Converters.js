@@ -1,0 +1,83 @@
+export default {
+  h1(element) {
+    return {
+      type: "h1",
+      content: element.innerHTML
+    };
+  },
+  h2(element) {
+    return {
+      type: "h2",
+      content: element.innerHTML
+    };
+  },
+  h3(element) {
+    return {
+      type: "h3",
+      content: element.innerHTML
+    };
+  },
+  hr() {
+    return {
+      type: "hr"
+    };
+  },
+  p(element) {
+    return {
+      type: "paragraph",
+      content: element.innerHTML
+    };
+  },
+  img(element) {
+    return {
+      type: "image",
+      attrs: {
+        alt: element.getAttribute("alt"),
+        src: element.getAttribute("src")
+      }
+    };
+  },
+  pre(element) {
+    return {
+      type: "code",
+      content: element.innerHTML
+    };
+  },
+  li(element) {
+    const type = element.parentElement && element.parentElement.tagName === "OL" ? "ol" : "ul";
+    return {
+      type: type,
+      content: element.innerHTML
+    };
+  },
+  tr(element) {
+    return {
+      type: "paragraph",
+      content: element.innerHTML
+    }
+  },
+  figure(element) {
+    const img     = element.querySelector("img");
+    const vid     = element.querySelector("iframe");
+    const caption = element.querySelector("figcaption");
+
+    if (img) {
+      return {
+        type: "image",
+        attrs: {
+          alt: img.getAttribute("alt"),
+          src: img.getAttribute("src"),
+          caption: caption ? caption.innerText : null
+        }
+      };
+    } else {
+      return {
+        type: "video",
+        attrs: {
+          src: vid.getAttribute("src"),
+          caption: caption ? caption.innerText : null
+        }
+      };
+    }
+  }
+};
