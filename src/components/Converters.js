@@ -23,10 +23,17 @@ export default {
     };
   },
   p(element) {
+    if (element.innerText.length === 0) {
+      return false;
+    }
+
     return {
       type: "paragraph",
       content: element.innerHTML
     };
+  },
+  br() {
+    return false;
   },
   img(element) {
     return {
