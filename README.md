@@ -37,12 +37,44 @@ The editor stores its content in a YAML format. To convert it to HTML you can us
 <?= $page->text()->blocks() ?>
 ```
 
-## Todos
+## Customizing blocks
 
-- [ ] History
-- [ ] Better Copy & Paste
-- [ ] Sortable blocks
-- [ ] Plugin system for custom blocks
+You can customize the result of the blocks field method by overwriting individual block snippets. 
+
+Create a new `blocks` folder in `site/snippets`. Each block type can have its own snippet inside the folder. The following block types are currently available. 
+
+- code
+- blockquote
+- h1
+- h2
+- h3
+- hr
+- image
+- ol
+- paragraph
+- ul
+- video
+
+Inside a block snippet you get the following variables: 
+
+- `$block`
+- `$content`
+- `$attrs`
+
+Here's an example how the image block is built: 
+
+```php
+<figure>
+  <img src="<?= $attrs->src() ?>" alt="<?= $attrs->alt() ?>">
+  <?php if ($attrs->caption()->isNotEmpty()): ?>
+  <figcaption>
+    <?= $attrs->caption() ?>
+  </figcaption>
+  <?php endif ?>
+</figure>
+```
+
+Check out the other default block snippets in the snippets folder of the editor plugin, to get a better overview of how the blocks are made. 
 
 ## License
 
