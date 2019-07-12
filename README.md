@@ -4,34 +4,28 @@
 
 ### Download
 
-Download and copy this repository to `/site/plugins/{{ plugin-name }}`.
+Download and copy this repository to `/site/plugins/editor`.
 
 ### Git submodule
 
 ```
-git submodule add https://github.com/{{ your-name }}/{{ plugin-name }}.git site/plugins/{{ plugin-name }}
-```
-
-### Composer
-
-```
-composer require {{ your-name }}/{{ plugin-name }}
+git submodule add https://github.com/bastianallgeier/editor.git site/plugins/editor
 ```
 
 ## Setup
 
-Once the plugin is installed, you can use the new `editor` field type in your blueprints: 
+Once the plugin is installed, you can use the new `editor` field type in your blueprints:
 
 ```yaml
-fields: 
-  text: 
+fields:
+  text:
     label: Editor
     type: editor
 ```
 
 ## In your templates
 
-The editor stores its content in a YAML format. To convert it to HTML you can use the new `blocks` method in your templates. 
+The editor stores its content in a YAML format. To convert it to HTML you can use the new `blocks` method in your templates.
 
 ```
 <?= $page->text()->blocks() ?>
@@ -39,9 +33,9 @@ The editor stores its content in a YAML format. To convert it to HTML you can us
 
 ## Customizing blocks
 
-You can customize the result of the blocks field method by overwriting individual block snippets. 
+You can customize the result of the blocks field method by overwriting individual block snippets.
 
-Create a new `blocks` folder in `site/snippets`. Each block type can have its own snippet inside the folder. The following block types are currently available. 
+Create a new `editor` folder in `site/snippets`. Each block type can have its own snippet inside the folder. The following block types are currently available.
 
 - code
 - blockquote
@@ -55,13 +49,13 @@ Create a new `blocks` folder in `site/snippets`. Each block type can have its ow
 - ul
 - video
 
-Inside a block snippet you get the following variables: 
+Inside a block snippet you get the following variables:
 
 - `$block`
 - `$content`
 - `$attrs`
 
-Here's an example how the image block is built: 
+Here's an example how the image block is built:
 
 ```php
 <figure>
@@ -74,7 +68,7 @@ Here's an example how the image block is built:
 </figure>
 ```
 
-Check out the other default block snippets in the snippets folder of the editor plugin, to get a better overview of how the blocks are made. 
+Check out the other default block snippets in the snippets folder of the editor plugin, to get a better overview of how the blocks are made.
 
 ## License
 
