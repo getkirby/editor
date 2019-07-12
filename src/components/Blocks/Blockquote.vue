@@ -6,7 +6,12 @@ export default {
   icon: "quote",
   extends: Paragraph,
   breaks: true,
-  placeholder: "Quote"
+  placeholder: "Quote",
+  marks: [
+    'italic',
+    'code',
+    'link'
+  ]
 };
 </script>
 
@@ -21,7 +26,7 @@ export default {
   font-size: 1.25rem;
   line-height: 1.5em;
   padding: 0 0 0 1rem;
-  border-left: 4px solid #000;
+  border-left: 3px solid #000;
 }
 .k-editor-blockquote-block .ProseMirror code {
   position: relative;
@@ -33,5 +38,7 @@ export default {
   border-radius: 3px;
   font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
 }
-
+.k-editor-blockquote-block .k-editor-block-options {
+  top: 0;
+}
 </style>

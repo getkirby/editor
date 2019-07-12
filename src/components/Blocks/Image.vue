@@ -8,7 +8,10 @@
       @keydown.delete="$emit('remove')"
     >
       <template v-if="attrs.src">
-        <img ref="element" tabindex="0" :src="attrs.src" @dblclick="selectFile">
+        <div class="k-editor-image-block-wrapper">
+          <k-button class="k-editor-image-block-options" icon="cog" @click="settings" />
+          <img ref="element" tabindex="0" :src="attrs.src" @dblclick="selectFile">
+        </div>
         <figcaption v-if="attrs.caption" @dblclick="settings">
           {{ attrs.caption }}
         </figcaption>
@@ -108,22 +111,28 @@ export default {
 
 <style lang="scss">
 .k-editor-image-block {
-  margin: 3rem 0;
+  margin: 1.5rem 0;
 }
 .k-editor-image-block figure {
   line-height: 0;
+  text-align: center;
 }
 .k-editor-image-block img:focus {
   outline: 2px solid rgba(#4271ae, 0.25);
   outline-offset: 2px;
 }
 .k-editor-image-block img {
-  max-width: 100%;
   display: block;
+  max-width: 100%;
   max-height: 30rem;
+}
+.k-editor-image-block-wrapper {
+  display: inline-block;
+  position: relative;
   margin: 0 auto;
 }
 .k-editor-image-block figcaption {
+  display: block;
   line-height: 1.5em;
   font-size: .875rem;
   padding-top: .75rem;
@@ -131,6 +140,7 @@ export default {
 }
 .k-editor-image-block-placeholder {
   line-height: 1;
+  width: 100%;
 }
 .k-editor-image-block-placeholder button {
   padding: .75rem;
@@ -138,5 +148,14 @@ export default {
   width: 100%;
   border-radius: 3px;
   border: 1px dashed #ddd;
+}
+.k-editor-image-block-options {
+  position: absolute;
+  top: .75rem;
+  right: .75rem;
+  background: #fff;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 2px;
 }
 </style>

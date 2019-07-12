@@ -1,4 +1,10 @@
 export default {
+  toolbar: {
+    icon: "italic",
+    label: "Italic",
+    action: "toggleMark",
+    args: ["italic"]
+  },
   parseDOM: [
     { tag: "i" },
     { tag: "em" },

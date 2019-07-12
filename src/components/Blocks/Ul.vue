@@ -8,6 +8,12 @@ export default {
   icon: "list-bullet",
   breaks: true,
   placeholder: "List",
+  marks: [
+    'bold',
+    'italic',
+    'code',
+    'link'
+  ],
   methods: {
     indent(indent) {
       this.$emit("update", {
@@ -51,20 +57,17 @@ export default {
 </script>
 
 <style lang="scss">
-.k-editor-ul-block {
+.k-editor-ul-block .k-editable {
   position: relative;
-  padding-left: 1.25rem;
+  margin-left: 1.25rem;
   margin-bottom: .75rem;
   line-height: 1.5em;
 }
-.k-editor-ul-block[data-indent="1"] {
-  margin-left: 1.25rem;
-}
-.k-editor-ul-block:before {
+.k-editor-ul-block .k-editable:before {
   position: absolute;
   content: "";
   top: .55em;
-  left: 0;
+  left: -1.25rem;
   width: 6px;
   height: 6px;
   border-radius: 50%;

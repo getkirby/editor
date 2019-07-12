@@ -38,5 +38,7 @@ export default {
   border-radius: 3px;
   font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
 }
-
+.k-editor-h1-block .k-editor-block-options {
+  top: 8px;
+}
 </style>

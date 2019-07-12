@@ -11,10 +11,10 @@ import Ol from "./Blocks/Ol.vue";
 import Video from "./Blocks/Video.vue";
 
 const components = {
-  paragraph: Paragraph,
   h1: H1,
   h2: H2,
   h3: H3,
+  paragraph: Paragraph,
   ul: Ul,
   ol: Ol,
   blockquote: Blockquote,

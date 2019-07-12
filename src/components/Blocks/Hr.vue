@@ -1,5 +1,6 @@
 <template>
   <hr
+    class="k-editor-hr-block-divider"
     ref="hr"
     tabindex="0"
     @keydown.enter="$emit('append')"
@@ -22,9 +23,9 @@ export default {
 </script>
 
 <style lang="scss">
-.k-editor-hr-block hr {
+.k-editor-hr-block-divider {
   position: relative;
-  height: 3rem;
+  height: 1.5rem;
   border: 0;
   margin-bottom: .75rem;
   color: #ddd;

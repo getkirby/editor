@@ -6,10 +6,17 @@
     @focusin="onFocus"
     @focusout="onBlur"
   >
+    <k-editable-toolbar
+      v-if="editor"
+      v-show="toolbar"
+      ref="toolbar"
+      :marks="toolbar.marks"
+      :options="editor.state.schema.marks"
+      :style="{bottom: toolbar.bottom + 'px', left: toolbar.left + 'px'}"
+      @option="onOption"
+    />
     <span class="k-editable-placeholder" v-if="placeholder && editor && isEmpty()">{{ placeholder }}</span>
-
     <k-link-dialog ref="link" @submit="insertLink" />
-
   </div>
 </template>
 
@@ -35,10 +42,14 @@ import {
 /** Dialogs */
 import LinkDialog from "./Dialogs/Link.vue";
 
+/** Toolbar */
+import Toolbar from "./Toolbar.vue";
+
 export default {
   inheritAttrs: false,
   components: {
-    "k-link-dialog": LinkDialog
+    "k-link-dialog": LinkDialog,
+    "k-editable-toolbar": Toolbar
   },
   fields: {
     link: {
@@ -78,6 +89,7 @@ export default {
   data() {
     return {
       editor: null,
+      toolbar: false
     };
   },
   mounted() {
@@ -97,6 +109,7 @@ export default {
       onPaste: this.onPaste,
       onPrev: this.onPrev,
       onEnter: this.onEnter,
+      onSelect: this.onSelect,
       onShiftEnter: this.onShiftEnter,
       onShiftTab: this.onShiftTab,
       onStrikeThrough: this.onStrikeThrough,
@@ -279,6 +292,7 @@ export default {
       this.toggleMark("bold");
     },
     onBlur() {
+      this.toolbar = false;
       this.$emit("blur");
     },
     onConvert(type) {
@@ -302,11 +316,58 @@ export default {
     onNext() {
       this.$emit("next");
     },
+    onOption(option) {
+      if (!this[option.action]) {
+        return false;
+      }
+
+      const args = option.args || [];
+
+      this[option.action](...args);
+    },
     onPaste(html) {
       this.$emit("paste", html);
     },
     onPrev() {
       this.$emit("prev");
+    },
+    onSelect() {
+
+      const selection = this.editor.state.selection;
+
+      if (selection.empty) {
+        this.toolbar = false;
+        this.$emit("deselect");
+      } else {
+
+        const toolbar = this.$refs.toolbar;
+
+        if (!toolbar) {
+          return false;
+        }
+
+        const { from, to } = selection;
+
+        const start = this.coordsAtPos(from);
+        const end   = this.coordsAtPos(to, true);
+
+        // The box in which the tooltip is positioned, to use as base
+        const box = this.$el.getBoundingClientRect();
+        const el  = toolbar.$el.getBoundingClientRect();
+
+        // Find a center-ish x position from the selection endpoints (when
+        // crossing lines, end may be more to the left)
+        let left   = ((start.left + end.left) / 2) - box.left
+        let bottom = Math.round(box.bottom - start.top);
+
+        this.toolbar = {
+          left: left,
+          bottom: bottom,
+          marks: this.getActiveMarks()
+        };
+
+        this.$emit("select");
+      }
     },
     onShiftEnter() {
       this.$emit("shiftEnter");
@@ -333,7 +394,6 @@ export default {
     },
     onUpdate() {
       this.onInput(this.toHTML());
-      this.onMarks(this.getActiveMarks());
     },
     removeMark(type) {
       const { from, to } = this.selection();

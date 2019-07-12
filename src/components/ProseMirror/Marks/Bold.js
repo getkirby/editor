@@ -1,4 +1,10 @@
 export default {
+  toolbar: {
+    icon: "bold",
+    label: "Bold",
+    action: "toggleMark",
+    args: ["bold"]
+  },
   parseDOM: [
     { tag: "strong" },
     { tag: "b", getAttrs: node => node.style.fontWeight != "normal" && null },

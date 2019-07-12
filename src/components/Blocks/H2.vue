@@ -18,4 +18,7 @@ export default {
   font-weight: 600;
   line-height: 1.5em;
 }
+.k-editor-h2-block .k-editor-block-options {
+  top: -1px;
+}
 </style>

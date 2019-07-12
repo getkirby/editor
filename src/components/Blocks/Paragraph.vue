@@ -30,8 +30,8 @@ export default {
     'italic',
     // 'strikeThrough',
     // 'underline',
-    'link',
     'code',
+    'link',
   ],
   placeholder: null,
   props: {

@@ -1,4 +1,9 @@
 export default {
+  toolbar: {
+    icon: "url",
+    label: "Link",
+    action: "link"
+  },
   attrs: {
     href: {},
     title: {

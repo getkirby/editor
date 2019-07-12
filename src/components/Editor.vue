@@ -1,30 +1,7 @@
 <template>
-  <div class="k-editor" ref="editor" @click="converterDropdown = false; creatorDropdown = false">
-    <div class="k-editor-toolbar">
-      <k-dropdown class="k-editor-toolbar-dropdown">
-        <k-button class="k-editor-toolbar-button" @click="$refs.converter.toggle()" :icon="toolbarBlock.icon">{{ toolbarBlock.label }}</k-button>
-        <k-dropdown-content ref="converter">
-          <k-dropdown-item v-for="definition in $options.blocks" @click="convertTo(definition.type)" :icon="definition.icon">{{ definition.label }}</k-dropdown-item>
-        </k-dropdown-content>
-      </k-dropdown>
-      <span class="k-editor-toolbar-options">
-        <k-button
-          v-for="(option, optionType) in menu"
-          :key="optionType"
-          :class="{'k-editor-toolbar-button': true, 'k-editor-toolbar-button-active': option.isActive}"
-          :icon="option.icon"
-          @click="applyOption(option)"
-        />
-      </span>
-      <k-dropdown>
-        <k-button class="k-editor-toolbar-button" @click="$refs.creator.toggle()" icon="add" />
-        <k-dropdown-content ref="creator" align="right">
-          <k-dropdown-item v-for="definition in $options.blocks" @click="add(definition.type)" :icon="definition.icon">{{ definition.label }}</k-dropdown-item>
-        </k-dropdown-content>
-      </k-dropdown>
-      <k-button class="k-editor-toolbar-button" @click="remove()" icon="trash" />
-    </div>
-      <div class="k-editor-blocks" :key="modified">
+  <div class="k-editor" ref="editor">
+    <div class="k-editor-blocks" :key="modified">
+      <k-draggable :list="blocks" :handle="true" :options="{delay: 2}">
         <div
           v-for="(block, index) in blocks"
           :key="block.id"
@@ -33,6 +10,13 @@
           @focusin="onFocus(index)"
           @focusout="onBlur(index)"
         >
+          <k-editor-options
+            v-if="selected === index"
+            :blocks="$options.blocks"
+            @add="add($event)"
+            @convert="convertTo($event)"
+            @remove="remove"
+          />
           <component
             v-if="blockTypeExists(block.type)"
             :is="'k-editor-' + block.type + '-block'"
@@ -55,7 +39,8 @@
             @split="onSplit(index, $event)"
             @update="onUpdate(index, $event)"
           />
-      </div>
+        </div>
+      </k-draggable>
     </div>
   </div>
 </template>
@@ -64,9 +49,13 @@
 import Blocks from "./Blocks.js";
 import Converters from "./Converters.js";
 import Components from "./Components.js";
+import Options from "./Options.vue";
 
 export default {
-  components: Components,
+  components: {
+    ...Components,
+    "k-editor-options": Options
+  },
   blocks: Blocks,
   props: {
     endpoints: Object,
@@ -83,17 +72,11 @@ export default {
     return {
       selected: null,
       menu: {},
-      creatorDropdown: false,
-      converterDropdown: false,
       blocks: blocks,
-      snapshot: JSON.stringify(blocks),
       modified: new Date()
     };
   },
   computed: {
-    toolbarBlock() {
-      return this.selectedBlockDefinition || this.$options.blocks["paragraph"];
-    },
     selectedBlockDefinition() {
       return this.getSelectedBlockDefinition();
     }
@@ -115,17 +98,6 @@ export default {
   methods: {
     add(type) {
       this.appendAndFocus({ type: type }, this.selected);
-    },
-    applyOption(option) {
-      const block = this.getSelectedBlockComponent();
-
-      if (!block || !block[option.action]) {
-        return false;
-      }
-
-      const args = option.args || [];
-
-      block[option.action](...args);
     },
     createBlock(data) {
       const defaults = {
@@ -209,7 +181,6 @@ export default {
     htmlToBlocks(html) {
       let element = window.document.createElement("div");
       element.innerHTML = html;
-
       return this.htmlElementToBlocks(element);
     },
     prepend(block, before) {
@@ -591,86 +562,32 @@ export default {
 </script>
 
 <style lang="scss">
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background: #efefef;
-}
-
-body {
-  margin: 3rem auto !important;
-  max-width: 50rem;
-}
-
 .k-editor {
   position: relative;
-  border: 1px solid #ddd;
   background: #fff;
   margin-bottom: 1.5rem;
+  box-shadow: rgba(#000, 0.05) 0 2px 5px;
 }
 .k-editor:focus-within {
-  border-color: #4271ae;
-  outline: 2px solid rgba(#4271ae, 0.25);
-}
-
-.k-editor-toolbar {
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  border-bottom: 1px solid #ddd;
-  background: #fff;
-  height: 37px;
-  z-index: 1;
-  box-shadow: rgba(0, 0, 0, 0.05) 0 2px 5px;
-  border-bottom: 1px solid rgba(#000, 0.1);
-  color: #000;
-}
-.k-editor-toolbar-options {
-  display: flex;
-  flex-grow: 1;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-  padding-left: .25rem;
-}
-.k-editor-toolbar-button {
-  display: flex;
-  align-items: center;
-  height: 36px;
-  padding: 0 1rem;
-  font-size: .875rem !important;
-  color: currentColor;
-}
-.k-editor-toolbar-button.k-editor-toolbar-button-active {
-  color: #4271ae;
-}
-.k-editor-toolbar-options .k-editor-toolbar-button {
-  padding: 0 .75rem;
+  /* border-color: #4271ae;
+  outline: 2px solid rgba(#4271ae, 0.25); */
 }
 
 .k-editor-blocks {
-  padding: 1rem;
+  padding: 1.5rem 0;
+}
+.k-editor-block {
+  position: relative;
+  padding: 0 4rem;
 }
 .k-editor-block:last-child {
   margin-bottom: 0;
 }
-
-.k-editor .ProseMirror:focus {
+.k-editor-block .ProseMirror:focus {
   outline: 0;
 }
-.k-editor-block a {
+.k-editor-block .ProseMirror a {
   color: #4271ae;
   text-decoration: underline;
-}
-.k-editor-block {
-  position: relative;
 }
 </style>
