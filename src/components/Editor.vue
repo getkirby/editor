@@ -157,6 +157,61 @@ export default {
 
       return nextIndex;
     },
+    htmlElementToBlocks(element) {
+
+      let blocks   = [];
+      let children = Array.from(element.children);
+
+      children = children.filter(child => {
+        if (['META', 'STYLE'].includes(child.tagName)) {
+          return false;
+        }
+
+        return true;
+      });
+
+      if (children.length === 0) {
+        if (element.innerHTML.length !== 0) {
+          blocks.push({
+            type: "paragraph",
+            content: element.innerHTML
+          });
+        }
+      } else {
+        children.forEach(child => {
+          const tag = child.tagName.toLowerCase();
+
+          if (Converters[tag]) {
+            const block = Converters[tag](child);
+            if (block) {
+              blocks.push(block);
+            }
+          } else {
+            blocks.push(...this.htmlElementToBlocks(child));
+          }
+        });
+      }
+
+      // add all required attributes
+      blocks = this.sanitize(blocks);
+
+      // filter empty paragraphs
+      blocks = blocks.filter(block => {
+        if (block.type === "paragraph" && block.content.length === 0) {
+          return false;
+        }
+
+        return true;
+      });
+
+      return blocks;
+    },
+    htmlToBlocks(html) {
+      let element = window.document.createElement("div");
+      element.innerHTML = html;
+
+      return this.htmlElementToBlocks(element);
+    },
     prepend(block, before) {
       block = this.createBlock(block);
       this.blocks.splice(before, 0, block);
@@ -175,7 +230,7 @@ export default {
     sanitize(blocks) {
       if (blocks.length === 0) {
         blocks = [{
-          type: "paragraph"
+          type: "paragraph",
         }];
       }
 
@@ -391,51 +446,19 @@ export default {
       }
     },
     onPaste(index, html) {
+      let blocks = this.htmlToBlocks(html);
 
-      let element = window.document.createElement("div");
-      element.innerHTML = html;
+      if (blocks.length === 0) {
+        return false;
+      }
 
-      let blocks = [];
-
-      const parseElement = function (element) {
-        const children = Array.from(element.children);
-
-        if (children.length === 0) {
-          blocks.push({
-            type: "paragraph",
-            content: element.innerHTML
-          });
-          return;
-        }
-
-        children.forEach(child => {
-          const tag = child.tagName.toLowerCase();
-
-          if (Converters[tag]) {
-            blocks.push(Converters[tag](child));
-          } else {
-            parseElement(child);
-          }
-        });
-      };
-
-      parseElement(element);
-
-      // add all required attributes
-      blocks = this.sanitize(blocks);
-
-      // filter empty paragraphs
-      blocks = blocks.filter(block => {
-        if (block.type === "paragraph" && block.content.length === 0) {
-          return false;
-        }
-
-        return true;
-      });
-
-      // append all pasted blocks
-      this.blocks.splice(index, 0, ...blocks);
-
+      if (blocks.length === 1) {
+        const selected = this.getSelectedBlockComponent();
+        selected.insertHtml(html);
+      } else {
+        // append all pasted blocks
+        this.blocks.splice(index + 1, 0, ...blocks);
+      }
     },
     onPrev() {
       if (this.hasPreviousBlock(this.selected)) {

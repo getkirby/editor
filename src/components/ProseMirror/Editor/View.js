@@ -19,11 +19,12 @@ export default function (props) {
         props.onUpdate();
       }
     },
-    handlePaste(view, event) {
+    handlePaste(view, event, slice) {
       const html = event.clipboardData.getData('text/html');
+      let result = true;
 
       if (props.onPaste) {
-        props.onPaste(html);
+        result = props.onPaste(html);
       }
 
       return true;

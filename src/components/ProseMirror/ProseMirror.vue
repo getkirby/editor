@@ -16,7 +16,8 @@
 <script>
 /** ProseMirror */
 import { TextSelection, AllSelection } from "prosemirror-state";
-import { DOMSerializer } from "prosemirror-model";
+import { DOMSerializer, Slice, Fragment } from "prosemirror-model";
+import Doc from "./Editor/Document.js";
 
 /** Editor wrapper */
 import Editor from "./Editor/View.js";
@@ -53,6 +54,12 @@ export default {
     breaks: Boolean,
     code: Boolean,
     spellcheck: Boolean,
+    paste: {
+      type: Function,
+      default() {
+        return function () {};
+      }
+    },
     placeholder: String,
     marks: {
       type: Array,
@@ -218,6 +225,10 @@ export default {
           .scrollIntoView()
       );
     },
+    insertHtml(html) {
+      const node = Doc(this.schema(), html);
+      this.dispatch(this.tr().replaceSelectionWith(node).scrollIntoView());
+    },
     insertLink(href) {
       if (!href) {
         this.removeMark("link");
@@ -226,6 +237,9 @@ export default {
           href: href
         });
       }
+    },
+    insertText(text) {
+      this.dispatch(this.tr().insertText(text).scrollIntoView());
     },
     isEmpty() {
       return this.doc().content.size === 0;
