@@ -452,6 +452,7 @@ export default {
 <style>
 .k-editable {
   position: relative;
+  white-space: pre-wrap;
 }
 .k-editable-placeholder {
   position: absolute;
