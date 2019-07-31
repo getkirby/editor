@@ -1,8 +1,4 @@
-import {
-  htmlAfterCursor,
-  htmlBeforeCursor,
-  marker,
-} from "../Utils.js";
+import { undo, redo } from "prosemirror-history";
 
 export default function (props) {
 
@@ -83,7 +79,9 @@ export default function (props) {
     "Cmd-b": onBold,
     "Cmd-i": onItalic,
     "Cmd-u": onUnderline,
+    "Cmd-z": undo,
     "Cmd-Shift-s": onStrikeThrough,
+    "Cmd-Shift-z": redo,
     "Delete": onDelete,
     "Enter": onEnter,
     "Mod-Delete": onDelete,

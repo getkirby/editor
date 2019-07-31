@@ -19,7 +19,8 @@ export default function (props) {
       const nextState = this.state.apply(transaction);
 
       this.updateState(nextState);
-      if (props.onUpdate) {
+
+      if (props.onUpdate && (!lastState || !lastState.doc.eq(this.state.doc))) {
         props.onUpdate();
       }
 

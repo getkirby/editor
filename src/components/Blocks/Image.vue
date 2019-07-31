@@ -124,7 +124,6 @@ export default {
 .k-editor-image-block img {
   display: block;
   max-width: 100%;
-  max-height: 30rem;
 }
 .k-editor-image-block-wrapper {
   display: inline-block;

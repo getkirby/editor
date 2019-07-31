@@ -1,4 +1,5 @@
 import { keymap } from "prosemirror-keymap";
+import { history } from "prosemirror-history";
 import { EditorState } from "prosemirror-state";
 import {
   InputRule,
@@ -19,6 +20,7 @@ export default function (document, keys, props) {
     doc: document,
     plugins: [
       keymap(keys),
+      history(),
       inputRules({
         rules: [
           ellipsis,

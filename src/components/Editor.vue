@@ -574,7 +574,10 @@ export default {
 }
 
 .k-editor-blocks {
+  position: relative;
   padding: 1.5rem 0;
+  max-width: 50rem;
+  margin: 0 auto;
 }
 .k-editor-block {
   position: relative;
