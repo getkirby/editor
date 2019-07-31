@@ -16,11 +16,23 @@ export default function (props) {
     trigger("onShiftEnter");
   };
 
+  const onTab = function () {
+    trigger("onTab");
+    return true;
+  };
+
+  const onShiftTab = function () {
+    trigger("onShiftTab");
+    return true;
+  };
+
   return {
     "Cmd-z": undo,
     "Cmd-Shift-z": redo,
     "Enter": onEnter,
     "Shift-Enter": onShiftEnter,
+    "Shift-Tab": onShiftTab,
+    "Tab": onTab
   };
 
 };

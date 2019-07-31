@@ -18,6 +18,11 @@ export default {
     onShiftEnter() {
       this.$emit("append");
     },
+    onShiftTab() {
+    },
+    onTab() {
+      this.insertText("\t");
+    },
     setLanguage(language) {
       alert(language);
     }
@@ -32,6 +37,7 @@ export default {
 }
 .k-editor-code-block pre {
   background: #000;
+  tab-size: 2;
   color: #fff;
   font-size: .875rem;
   padding: 1rem;

@@ -12192,11 +12192,23 @@ function _default(props) {
     trigger("onShiftEnter");
   };
 
+  var onTab = function onTab() {
+    trigger("onTab");
+    return true;
+  };
+
+  var onShiftTab = function onShiftTab() {
+    trigger("onShiftTab");
+    return true;
+  };
+
   return {
     "Cmd-z": _prosemirrorHistory.undo,
     "Cmd-Shift-z": _prosemirrorHistory.redo,
     "Enter": onEnter,
-    "Shift-Enter": onShiftEnter
+    "Shift-Enter": onShiftEnter,
+    "Shift-Tab": onShiftTab,
+    "Tab": onTab
   };
 }
 
@@ -23701,6 +23713,10 @@ var _default = {
     },
     onShiftEnter: function onShiftEnter() {
       this.$emit("append");
+    },
+    onShiftTab: function onShiftTab() {},
+    onTab: function onTab() {
+      this.insertText("\t");
     },
     setLanguage: function setLanguage(language) {
       alert(language);
