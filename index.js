@@ -11501,37 +11501,7 @@ exports.__parseFromClipboard = parseFromClipboard;
 exports.__endComposition = endComposition;
 //# sourceMappingURL=index.js.map
 
-},{"prosemirror-model":"../node_modules/prosemirror-model/dist/index.js","prosemirror-state":"../node_modules/prosemirror-state/dist/index.js","prosemirror-transform":"../node_modules/prosemirror-transform/dist/index.js"}],"components/ProseMirror/Keymaps/Code.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _default;
-
-function _default(props) {
-  var trigger = function trigger(event) {
-    if (props[event]) {
-      props[event]();
-    }
-  };
-
-  var onEnter = function onEnter() {
-    trigger("onEnter");
-  };
-
-  var onShiftEnter = function onShiftEnter() {
-    trigger("onShiftEnter");
-  };
-
-  return {
-    "Enter": onEnter,
-    "Shift-Enter": onShiftEnter
-  };
-}
-
-;
-},{}],"../node_modules/rope-sequence/dist/index.js":[function(require,module,exports) {
+},{"prosemirror-model":"../node_modules/prosemirror-model/dist/index.js","prosemirror-state":"../node_modules/prosemirror-state/dist/index.js","prosemirror-transform":"../node_modules/prosemirror-transform/dist/index.js"}],"../node_modules/rope-sequence/dist/index.js":[function(require,module,exports) {
 var GOOD_LEAF_SIZE = 200
 
 // :: class<T> A rope sequence is a persistent sequence data structure
@@ -12197,7 +12167,41 @@ exports.undoDepth = undoDepth;
 exports.redoDepth = redoDepth;
 //# sourceMappingURL=history.js.map
 
-},{"rope-sequence":"../node_modules/rope-sequence/dist/index.js","prosemirror-transform":"../node_modules/prosemirror-transform/dist/index.js","prosemirror-state":"../node_modules/prosemirror-state/dist/index.js"}],"components/ProseMirror/Keymaps/Default.js":[function(require,module,exports) {
+},{"rope-sequence":"../node_modules/rope-sequence/dist/index.js","prosemirror-transform":"../node_modules/prosemirror-transform/dist/index.js","prosemirror-state":"../node_modules/prosemirror-state/dist/index.js"}],"components/ProseMirror/Keymaps/Code.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+var _prosemirrorHistory = require("prosemirror-history");
+
+function _default(props) {
+  var trigger = function trigger(event) {
+    if (props[event]) {
+      props[event]();
+    }
+  };
+
+  var onEnter = function onEnter() {
+    trigger("onEnter");
+  };
+
+  var onShiftEnter = function onShiftEnter() {
+    trigger("onShiftEnter");
+  };
+
+  return {
+    "Cmd-z": _prosemirrorHistory.undo,
+    "Cmd-Shift-z": _prosemirrorHistory.redo,
+    "Enter": onEnter,
+    "Shift-Enter": onShiftEnter
+  };
+}
+
+;
+},{"prosemirror-history":"../node_modules/prosemirror-history/dist/history.js"}],"components/ProseMirror/Keymaps/Default.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

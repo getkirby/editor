@@ -1,3 +1,4 @@
+import { undo, redo } from "prosemirror-history";
 
 export default function (props) {
 
@@ -16,6 +17,8 @@ export default function (props) {
   };
 
   return {
+    "Cmd-z": undo,
+    "Cmd-Shift-z": redo,
     "Enter": onEnter,
     "Shift-Enter": onShiftEnter,
   };
