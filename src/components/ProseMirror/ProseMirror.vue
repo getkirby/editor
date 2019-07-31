@@ -452,6 +452,8 @@ export default {
 <style>
 .k-editable {
   position: relative;
+}
+.k-editable .ProseMirror {
   white-space: pre-wrap;
 }
 .k-editable-placeholder {

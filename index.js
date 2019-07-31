@@ -24219,7 +24219,10 @@ exports.default = _default;
             ? [
                 _c(
                   "div",
-                  { staticClass: "k-editor-image-block-wrapper" },
+                  {
+                    staticClass: "k-editor-image-block-wrapper",
+                    attrs: { tabindex: "0" }
+                  },
                   [
                     _c("k-button", {
                       staticClass: "k-editor-image-block-options",
@@ -24229,7 +24232,7 @@ exports.default = _default;
                     _vm._v(" "),
                     _c("img", {
                       ref: "element",
-                      attrs: { tabindex: "0", src: _vm.attrs.src },
+                      attrs: { src: _vm.attrs.src },
                       on: { dblclick: _vm.selectFile }
                     })
                   ],

@@ -8,9 +8,9 @@
       @keydown.delete="$emit('remove')"
     >
       <template v-if="attrs.src">
-        <div class="k-editor-image-block-wrapper">
+        <div class="k-editor-image-block-wrapper" tabindex="0">
           <k-button class="k-editor-image-block-options" icon="cog" @click="settings" />
-          <img ref="element" tabindex="0" :src="attrs.src" @dblclick="selectFile">
+          <img ref="element" :src="attrs.src" @dblclick="selectFile">
         </div>
         <figcaption v-if="attrs.caption" @dblclick="settings">
           {{ attrs.caption }}
@@ -114,10 +114,6 @@ export default {
   line-height: 0;
   text-align: center;
 }
-.k-editor-image-block img:focus {
-  outline: 2px solid rgba(#4271ae, 0.25);
-  outline-offset: 2px;
-}
 .k-editor-image-block img {
   display: block;
   max-width: 100%;
@@ -126,6 +122,13 @@ export default {
   display: inline-block;
   position: relative;
   margin: 0 auto;
+}
+.k-editor-image-block-wrapper:focus {
+  outline: 0;
+}
+.k-editor-image-block-wrapper:focus img {
+  outline: 2px solid rgba(#4271ae, 0.25);
+  outline-offset: 2px;
 }
 .k-editor-image-block figcaption {
   display: block;
