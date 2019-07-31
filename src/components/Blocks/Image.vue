@@ -85,10 +85,6 @@ export default {
           ...data
         }
       });
-
-      this.$nextTick(() => {
-        this.$emit("menu", this.menu());
-      });
     },
     insertFile(file) {
       this.input({ src: file[0].url });
@@ -104,6 +100,7 @@ export default {
     },
     saveSettings() {
       this.$refs.settings.close();
+      this.input(this.attrs);
     }
   }
 };

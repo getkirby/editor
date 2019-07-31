@@ -24117,13 +24117,8 @@ var _default = {
       this.$emit("append");
     },
     input: function input(data) {
-      var _this = this;
-
       this.$emit("input", {
         attrs: _objectSpread({}, this.attrs, data)
-      });
-      this.$nextTick(function () {
-        _this.$emit("menu", _this.menu());
       });
     },
     insertFile: function insertFile(file) {
@@ -24142,6 +24137,7 @@ var _default = {
     },
     saveSettings: function saveSettings() {
       this.$refs.settings.close();
+      this.input(this.attrs);
     }
   }
 };
@@ -24500,14 +24496,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 function getId(url) {
-  var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  var match = url.match(regExp);
+  var youtubePattern = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  var youtubeMatch = url.match(youtubePattern);
 
-  if (match) {
-    return "https://www.youtube.com/embed/" + match[2];
-  } else {
-    return false;
+  if (youtubeMatch) {
+    return "https://www.youtube.com/embed/" + youtubeMatch[2];
   }
+
+  var vimeoPattern = /vimeo\.com\/([0-9]+)/;
+  var vimeoMatch = url.match(vimeoPattern);
+
+  if (vimeoMatch) {
+    return "https://player.vimeo.com/video/" + vimeoMatch[1];
+  }
+
+  return false;
 }
 
 var _default = {
@@ -25913,7 +25916,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57268" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62629" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
