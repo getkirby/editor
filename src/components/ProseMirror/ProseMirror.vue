@@ -325,8 +325,8 @@ export default {
 
       this[option.action](...args);
     },
-    onPaste(html) {
-      this.$emit("paste", html);
+    onPaste(html, text) {
+      this.$emit("paste", { html, text });
     },
     onPrev() {
       this.$emit("prev");

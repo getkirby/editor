@@ -37,15 +37,22 @@ export default function (props) {
 
     },
     handlePaste(view, event, slice) {
-      const html = event.clipboardData.getData('text/html');
-      const text = event.clipboardData.getData('text/plain');
-
-      if (html.length === 0) {
-        return false;
-      }
+      let html = event.clipboardData.getData('text/html');
+      let text = event.clipboardData.getData('text/plain');
 
       if (props.onPaste) {
-        result = props.onPaste(html, text);
+
+        // plain text
+        if (html.length === 0) {
+          html = "<p>" + text.trim() + "</p>";
+          html = html.replace(/\n\n/g, "</p><p>");
+          html = html.replace(/\n/g, "<br>");
+
+          props.onPaste(html, text);
+        } else {
+          props.onPaste(html, text);
+        }
+
       }
 
       return true;

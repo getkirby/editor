@@ -416,7 +416,7 @@ export default {
 
       }
     },
-    onPaste(index, html) {
+    onPaste(index, { html, text }) {
       let blocks = this.htmlToBlocks(html);
 
       if (blocks.length === 0) {
@@ -425,6 +425,7 @@ export default {
 
       if (blocks.length === 1) {
         const selected = this.getSelectedBlockComponent();
+
         selected.insertHtml(html);
       } else {
         // append all pasted blocks
