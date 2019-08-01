@@ -44,9 +44,9 @@ export default function (props) {
 
         // plain text
         if (html.length === 0) {
-          html = "<p>" + text.trim() + "</p>";
-          html = html.replace(/\n\n/g, "</p><p>");
-          html = html.replace(/\n/g, "<br>");
+          html = "<p>" + text + "</p>";
+          html = html.replace(/[\n\r]{2}/g, "</p><p>");
+          html = html.replace(/[\n\r]{1}/g, "<br>");
 
           props.onPaste(html, text);
         } else {
