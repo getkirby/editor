@@ -70,7 +70,12 @@ Kirby::plugin('getkirby/editor', [
                     try {
                         return Json::decode($value);
                     } catch (Exception $e) {
-                        return [];
+                        return [
+                            [
+                                'type'    => 'auto',
+                                'content' => $this->model()->text()->value($value)->kt()->value()
+                            ]
+                        ];
                     }
                 },
                 /**

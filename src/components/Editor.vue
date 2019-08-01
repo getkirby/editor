@@ -222,6 +222,10 @@ export default {
         }];
       }
 
+      if (blocks[0].type === "auto") {
+        blocks = this.htmlToBlocks(blocks[0].content);
+      }
+
       // assign a unique ID to each block
       blocks.map(block => {
         block.id = block.id || this.uuid();

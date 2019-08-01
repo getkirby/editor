@@ -17,6 +17,12 @@ export default {
       content: element.innerHTML
     };
   },
+  blockquote(element) {
+    return {
+      type: "blockquote",
+      content: element.innerHTML
+    };
+  },
   hr() {
     return {
       type: "hr"
