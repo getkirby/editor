@@ -29,7 +29,6 @@
             @back="onBack(index, $event)"
             @convert="onConvert(index, $event)"
             @input="onInput(index, $event)"
-            @menu="onMenu"
             @next="onNext"
             @paste="onPaste(index, $event)"
             @prepend="onPrepend(index, $event)"
@@ -71,7 +70,6 @@ export default {
 
     return {
       selected: null,
-      menu: {},
       blocks: blocks,
       modified: new Date()
     };
@@ -368,14 +366,7 @@ export default {
     },
     onFocus(index) {
       this.selected = index;
-
       const block = this.getSelectedBlockComponent();
-
-      if (block && block.menu) {
-        this.menu = block.menu();
-      } else {
-        this.menu = {};
-      }
     },
     onInput(index, data) {
       if (data.content !== undefined) {
@@ -385,9 +376,6 @@ export default {
       if (data.attrs !== undefined) {
         this.blocks[index].attrs = data.attrs || {};
       }
-    },
-    onMenu(menu) {
-      this.menu = menu;
     },
     onNext() {
       if (this.hasNextBlock(this.selected)) {
@@ -428,6 +416,8 @@ export default {
 
         selected.insertHtml(html);
       } else {
+        const selected = this.getSelectedBlock();
+
         // append all pasted blocks
         this.blocks.splice(index + 1, 0, ...blocks);
       }

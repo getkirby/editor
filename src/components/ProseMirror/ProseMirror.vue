@@ -232,11 +232,20 @@ export default {
         return false;
       }
 
-      this.dispatch(
-        this.tr()
-          .replaceSelectionWith(this.schema().nodes.hard_break.create())
-          .scrollIntoView()
-      );
+      if (this.code) {
+        this.dispatch(
+            this.tr()
+              .insertText("\n")
+              .scrollIntoView()
+        );
+      } else {
+        this.dispatch(
+          this.tr()
+            .replaceSelectionWith(this.schema().nodes.hard_break.create())
+            .scrollIntoView()
+        );
+      }
+
     },
     insertHtml(html) {
       const node = Doc(this.schema(), html);
@@ -299,6 +308,10 @@ export default {
       this.$emit("convert", type);
     },
     onEnter() {
+      if (this.code) {
+        this.insertBreak();
+      }
+
       this.$emit("enter", event);
     },
     onFocus() {
@@ -387,6 +400,10 @@ export default {
       });
     },
     onTab() {
+      if (this.code) {
+        this.insertText("\t");
+      }
+
       this.$emit("tab");
     },
     onUnderline() {

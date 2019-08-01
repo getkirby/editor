@@ -61,20 +61,6 @@ export default {
     focus() {
       this.$refs.element.focus();
     },
-    menu() {
-      return {
-        upload: {
-          icon: "upload",
-          label: "Upload",
-          action: "selectFile",
-        },
-        text: {
-          icon: "text",
-          label: "Settings",
-          action: "settings",
-        },
-      };
-    },
     onAppend() {
       this.$emit("append");
     },

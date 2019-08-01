@@ -43,19 +43,6 @@ export default {
     }
   },
   methods: {
-    menu(marks) {
-      marks = marks || [];
-      let menu = {};
-
-      this.$options.marks.forEach(mark => {
-        if (availableOptions[mark]) {
-          menu[mark] = availableOptions[mark];
-          menu[mark].isActive = marks.includes(mark);
-        }
-      });
-
-      return menu;
-    },
     onEnter() {
       this.$emit("append", {
         type: this.$options.append
@@ -64,11 +51,6 @@ export default {
     onInput(html) {
       this.$emit("input", {
         content: html
-      });
-    },
-    onMarks(marks) {
-      this.$nextTick(() => {
-        this.$emit("menu", this.menu(marks));
       });
     },
     onShiftTab() {
