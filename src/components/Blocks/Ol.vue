@@ -11,7 +11,8 @@ export default {
 
 <style lang="scss">
 .k-editor-ol-block {
-  counter-increment: list
+  counter-increment: list;
+  margin-bottom: .75rem;
 }
 .k-editor-block:not(.k-editor-ol-block) {
   counter-reset: list;
@@ -20,12 +21,11 @@ export default {
   position: relative;
   margin-left: 1.25rem;
   line-height: 1.5em;
-  margin-bottom: .75rem;
 }
 .k-editor-ol-block .k-editable:before {
   position: absolute;
   content: counter(list) ".";
-  top: .025rem;
+  top: .0625rem;
   left: -1.25rem;
   color: #999;
   font-size: .875rem;

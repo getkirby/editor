@@ -4,6 +4,7 @@
       <k-draggable :list="blocks" :handle="true" :options="{delay: 2}">
         <div
           v-for="(block, index) in blocks"
+          v-if="blockTypeExists(block.type)"
           :key="block.id"
           :class="['k-editor-block', 'k-editor-' + block.type + '-block']"
           :data-indent="block.attrs.indent"
@@ -18,7 +19,6 @@
             @remove="remove"
           />
           <component
-            v-if="blockTypeExists(block.type)"
             :is="'k-editor-' + block.type + '-block'"
             :ref="'block-' + index"
             :attrs="block.attrs"
@@ -58,6 +58,7 @@ export default {
   blocks: Blocks,
   props: {
     endpoints: Object,
+    allowed: [Array, Object],
     value: {
       type: [Array, Object],
       default() {
@@ -65,7 +66,7 @@ export default {
       }
     }
   },
-  beforeCreate() {
+  created() {
 
     Object.keys(panel.plugins.components).forEach(key => {
       if (key.match(/k-editor-.*?-block/)) {
@@ -83,6 +84,16 @@ export default {
 
       }
     });
+
+    // discard all unallowed block types
+    if (this.allowed && this.allowed.length > 0) {
+      Object.keys(this.$options.blocks).forEach(type => {
+        if (this.allowed.includes(type) === false) {
+          delete this.$options.blocks[type];
+        }
+      });
+    }
+
   },
   data() {
     const blocks = this.sanitize(this.value);

@@ -1,6 +1,11 @@
 <template>
   <k-field :label="label">
-    <k-editor @input="onInput" :value="value" :endpoints="endpoints" />
+    <k-editor
+      :allowed="allowed"
+      :endpoints="endpoints"
+      :value="value"
+      @input="onInput"
+    />
   </k-field>
 </template>
 
@@ -13,6 +18,7 @@ export default {
   },
   props: {
     endpoints: Object,
+    allowed: [Array, Object],
     label: String,
     value: {
       type: [Array, Object],

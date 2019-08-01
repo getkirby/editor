@@ -57,16 +57,18 @@ export default {
 </script>
 
 <style lang="scss">
+.k-editor-ul-block {
+  margin-bottom: .75rem;
+}
 .k-editor-ul-block .k-editable {
   position: relative;
   margin-left: 1.25rem;
-  margin-bottom: .75rem;
   line-height: 1.5em;
 }
 .k-editor-ul-block .k-editable:before {
   position: absolute;
   content: "";
-  top: .55em;
+  top: .625em;
   left: -1.25rem;
   width: 6px;
   height: 6px;
