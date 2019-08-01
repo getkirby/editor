@@ -65,6 +65,25 @@ export default {
       }
     }
   },
+  beforeCreate() {
+
+    Object.keys(panel.plugins.components).forEach(key => {
+      if (key.match(/k-editor-.*?-block/)) {
+
+        const block = panel.plugins.components[key];
+
+        this.$options.blocks[block.type] = {
+          label: block.label,
+          icon: block.icon,
+          type: block.type,
+          component: block
+        };
+
+        this.$options.components[key] = block;
+
+      }
+    });
+  },
   data() {
     const blocks = this.sanitize(this.value);
 
@@ -226,6 +245,7 @@ export default {
       }
 
       if (!this.$options.components["k-editor-" + type + "-block"]) {
+        console.log("block component does not exist: " + type);
         return false;
       }
 
@@ -326,7 +346,7 @@ export default {
         block = this.getBlockComponent(index) || this.getFirstBlockComponent();
       }
 
-      if (block) {
+      if (block && block.focus) {
         block.focus(cursor);
       }
     },
@@ -355,7 +375,8 @@ export default {
       this.selected = index;
     },
     onConvert(index, type) {
-      const cursor = this.getBlockComponent(index).cursorPosition();
+      const block  = this.getBlockComponent(index);
+      const cursor = block.cursorPosition ? block.cursorPosition() : 0;
 
       this.blocks[index].type = type;
       this.blocks[index].id   = this.uuid();
@@ -377,31 +398,9 @@ export default {
         this.blocks[index].attrs = data.attrs || {};
       }
     },
-    onNext() {
+    onNext(cursor) {
       if (this.hasNextBlock(this.selected)) {
-
-        let pos = "start";
-
-        const selected = this.getSelectedBlockComponent();
-        const next     = this.getNextBlockComponent();
-
-        if (selected.coordsAtCursor && next.coordsAtPos && next.posAtCoords) {
-          const selectedCoords = selected.coordsAtCursor();
-          const nextCoords = next.coordsAtPos(0);
-
-          // calculate the nearest position of the next cursor
-          const nextPos = next.posAtCoords({
-            top: nextCoords.top,
-            left: selectedCoords.left
-          });
-
-          if (nextPos && nextPos.pos) {
-            pos = nextPos.pos;
-          }
-        }
-
-        this.focus(this.selected + 1, pos);
-
+        this.focus(this.selected + 1, cursor);
       }
     },
     onPaste(index, { html, text }) {
@@ -422,30 +421,30 @@ export default {
         this.blocks.splice(index + 1, 0, ...blocks);
       }
     },
-    onPrev() {
+    onPrev(cursor) {
       if (this.hasPreviousBlock(this.selected)) {
 
-        let pos = "end";
+        // let pos = "end";
 
-        const selected = this.getSelectedBlockComponent();
-        const prev     = this.getPreviousBlockComponent();
+        // const selected = this.getSelectedBlockComponent();
+        // const prev     = this.getPreviousBlockComponent();
 
-        if (selected.coordsAtCursor && prev.coordsAtPos && prev.posAtCoords) {
-          const selectedCoords = selected.coordsAtCursor();
-          const prevCoords     = prev.coordsAtEnd();
+        // if (selected.coordsAtCursor && prev.coordsAtPos && prev.posAtCoords) {
+        //   const selectedCoords = selected.coordsAtCursor();
+        //   const prevCoords     = prev.coordsAtEnd();
 
-          // calculate the nearest position of the prev cursor
-          const prevPos = prev.posAtCoords({
-            top: prevCoords.top,
-            left: selectedCoords.left
-          });
+        //   // calculate the nearest position of the prev cursor
+        //   const prevPos = prev.posAtCoords({
+        //     top: prevCoords.top,
+        //     left: selectedCoords.left
+        //   });
 
-          if (prevPos && prevPos.pos) {
-            pos = prevPos.pos;
-          }
-        }
+        //   if (prevPos && prevPos.pos) {
+        //     pos = prevPos.pos;
+        //   }
+        // }
 
-        this.focus(this.selected - 1, pos);
+        this.focus(this.selected - 1, cursor);
       }
     },
     onPrepend(index, block) {
@@ -468,7 +467,9 @@ export default {
     },
     onUpdate(index, data) {
       let block = this.blocks[index];
-      const cursor = this.getSelectedBlockComponent().cursorPosition();
+
+      const selected = this.getSelectedBlockComponent();
+      const cursor   = selected.cursorPosition ? selected.cursorPosition() : 0;
 
       this.$set(this.blocks, index, {
         ...block,

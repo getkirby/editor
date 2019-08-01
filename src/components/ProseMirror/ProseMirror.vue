@@ -61,7 +61,10 @@ export default {
     }
   },
   props: {
-    content: String,
+    content: {
+      type: String,
+      default: ""
+    },
     breaks: Boolean,
     code: Boolean,
     spellcheck: Boolean,
@@ -80,8 +83,8 @@ export default {
           "code",
           "italic",
           "link",
-          "strikeThrough",
-          "underline",
+          // "strikeThrough",
+          // "underline",
         ];
       }
     }
@@ -178,6 +181,24 @@ export default {
     focus(cursor) {
 
       if (cursor) {
+
+        if (typeof cursor === "object") {
+
+          const at     = cursor.at || "start";
+          const coords = (at === "end") ? this.coordsAtEnd() : this.coordsAtStart();
+
+          const pos = this.posAtCoords({
+            top: coords.top,
+            left: cursor.left || 0
+          });
+
+          if (pos && pos.pos) {
+            cursor = pos.pos;
+          } else {
+            cursor = at;
+          }
+
+        }
 
         let selection = null;
 
@@ -323,11 +344,12 @@ export default {
     onItalic() {
       this.toggleMark("italic");
     },
-    onMarks(marks) {
-      this.$emit("marks", marks);
-    },
     onNext() {
-      this.$emit("next");
+      let { left } = this.coordsAtCursor();
+      this.$emit("next", {
+        left: left,
+        at: "start",
+      });
     },
     onOption(option) {
       if (!this[option.action]) {
@@ -342,7 +364,12 @@ export default {
       this.$emit("paste", { html, text });
     },
     onPrev() {
-      this.$emit("prev");
+      let { left } = this.coordsAtCursor();
+
+      this.$emit("prev", {
+        left: left,
+        at: "end"
+      });
     },
     onSelect() {
 
@@ -469,9 +496,13 @@ export default {
 <style>
 .k-editable {
   position: relative;
+  width: 100%;
 }
 .k-editable .ProseMirror {
+  word-wrap: break-word;
   white-space: pre-wrap;
+  -webkit-font-variant-ligatures: none;
+  font-variant-ligatures: none;
 }
 .k-editable-placeholder {
   position: absolute;
