@@ -508,6 +508,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
   color: #bbb;
   pointer-events: none;
 }
