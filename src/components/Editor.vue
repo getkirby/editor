@@ -11,6 +11,7 @@
           @click="focus(index)"
           @focusin="onFocus(index)"
           @focusout="onBlur(index)"
+          @keydown.cmd.d.prevent="duplicate"
         >
           <k-editor-options
             v-if="selected === index"
