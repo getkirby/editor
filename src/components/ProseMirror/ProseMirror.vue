@@ -108,6 +108,7 @@ export default {
       onBold: this.onBold,
       onConvert: this.onConvert,
       onItalic: this.onItalic,
+      onLink: this.onLink,
       onNext: this.onNext,
       onPaste: this.onPaste,
       onPrev: this.onPrev,
@@ -343,6 +344,9 @@ export default {
     },
     onItalic() {
       this.toggleMark("italic");
+    },
+    onLink() {
+      this.link();
     },
     onNext() {
       let { left } = this.coordsAtCursor();

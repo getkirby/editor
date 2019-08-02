@@ -43,6 +43,10 @@ export default function (props) {
     trigger("onItalic");
   };
 
+  const onLink = function () {
+    trigger("onLink");
+  };
+
   const onShiftEnter = function () {
     trigger("onShiftEnter");
   };
@@ -78,6 +82,7 @@ export default function (props) {
     "Backspace": onDelete,
     "Cmd-b": onBold,
     "Cmd-i": onItalic,
+    "Cmd-k": onLink,
     "Cmd-u": onUnderline,
     "Cmd-z": undo,
     "Cmd-Shift-s": onStrikeThrough,
