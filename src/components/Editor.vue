@@ -11,7 +11,7 @@
           @click="focus(index)"
           @focusin="onFocus(index)"
           @focusout="onBlur(index)"
-          @keydown.cmd.d.prevent="duplicate"
+          @keydown.meta.d.prevent="duplicate"
         >
           <k-editor-options
             v-if="selected === index"
@@ -54,6 +54,13 @@ import Converters from "./Converters.js";
 import Components from "./Components.js";
 import Options from "./Options.vue";
 
+window.editor = {
+  blocks: {},
+  block(type, params) {
+    this.blocks[type] = params;
+  }
+};
+
 export default {
   components: {
     ...Components,
@@ -72,21 +79,23 @@ export default {
   },
   created() {
 
-    Object.keys(panel.plugins.components).forEach(key => {
-      if (key.match(/k-editor-.*?-block/)) {
+    Object.keys(window.editor.blocks).forEach(key => {
+      const block = window.editor.blocks[key];
 
-        const block = panel.plugins.components[key];
-
-        this.$options.blocks[block.type] = {
-          label: block.label,
-          icon: block.icon,
-          type: block.type,
-          component: block
-        };
-
-        this.$options.components[key] = block;
-
+      if (block.extends) {
+        block.extends = this.$options.components["k-editor-" + block.extends + "-block"];
       }
+
+      block.inheritAttrs = false;
+
+      this.$options.blocks[block.type] = {
+        label: block.label,
+        icon: block.icon,
+        type: block.type,
+        component: block
+      };
+
+      this.$options.components["k-editor-" + key + "-block"] = block;
     });
 
     // discard all unallowed block types
