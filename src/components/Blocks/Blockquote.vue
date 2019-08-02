@@ -8,6 +8,7 @@ export default {
   breaks: true,
   placeholder: "Quote",
   marks: [
+    'bold',
     'italic',
     'code',
     'link'
