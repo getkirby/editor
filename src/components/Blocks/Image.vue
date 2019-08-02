@@ -1,19 +1,26 @@
 <template>
   <div>
-    <figure
-      ref="figure"
-      @keydown.enter="onAppend"
-      @keydown.up.prevent="$emit('prev')"
-      @keydown.down.prevent="$emit('next')"
-      @keydown.delete="$emit('remove')"
-    >
+    <figure>
       <template v-if="attrs.src">
-        <div class="k-editor-image-block-wrapper" tabindex="0">
+        <div
+          ref="element"
+          class="k-editor-image-block-wrapper"
+          tabindex="0"
+          @keydown.delete="$emit('remove')"
+          @keydown.enter="onAppend"
+          @keydown.up.prevent="$emit('prev')"
+          @keydown.down.prevent="$emit('next')"
+        >
           <k-button class="k-editor-image-block-options" icon="cog" @click="settings" />
-          <img ref="element" :src="attrs.src" @dblclick="selectFile">
+          <img :src="attrs.src" @dblclick="selectFile">
         </div>
-        <figcaption v-if="attrs.caption" @dblclick="settings">
-          {{ attrs.caption }}
+        <figcaption>
+          <k-editable
+            :content="attrs.caption"
+            :breaks="true"
+            placeholder="Add a caption …"
+            @input="attrs.caption = $event"
+          />
         </figcaption>
       </template>
       <template v-else>
@@ -48,13 +55,13 @@ export default {
   },
   fields: {
     alt: {
-      label: "Alt",
+      label: "Alternative text",
       type: "text",
     },
-    caption: {
-      label: "Caption",
-      type: "textarea",
-      buttons: false
+    link: {
+      label: "Link",
+      type: "text",
+      icon: "url",
     }
   },
   methods: {
