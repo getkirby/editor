@@ -7,16 +7,57 @@
       <button type="button" class="k-editor-block-option k-editor-block-options-sort" @mousedown.stop="$refs.blockOptions.toggle()">
         <k-icon type="angle-down" />
       </button>
-      <k-dropdown-content ref="blockOptions" class="k-editor-block-option-dropdown" @mousedown.native.stop>
-        <h4>Turn into …</h4>
-        <ul>
-          <li v-for="definition in blocks" :key="definition.type">
-            <k-dropdown-item @click="$emit('convert', definition.type)" :icon="definition.icon">{{ definition.label }}</k-dropdown-item>
-          </li>
-        </ul>
-        <hr>
-        <k-dropdown-item icon="add" @click="$emit('add', 'paragraph')">Insert block below</k-dropdown-item>
-        <k-dropdown-item icon="trash" @click="$emit('remove')">Delete</k-dropdown-item>
+      <k-dropdown-content ref="blockOptions" class="k-editor-block-option-dropdown" @mousedown.native.stop @close="onClose">
+
+        <!-- insert -->
+        <template v-if="mode === 'insert'">
+          <k-dropdown-item
+            icon="angle-left"
+            class="k-editor-block-option-heading"
+            @click="go()"
+          >
+            Insert below …
+          </k-dropdown-item>
+          <hr>
+          <k-dropdown-item
+            v-for="definition in blocks"
+            :key="definition.type"
+            :icon="definition.icon"
+            @click="$emit('add', definition.type)"
+          >
+            {{ definition.label }}
+          </k-dropdown-item>
+        </template>
+
+        <!-- convert -->
+        <template v-else-if="mode === 'convert'">
+          <k-dropdown-item
+            icon="angle-left"
+            class="k-editor-block-option-heading"
+            @click="go()"
+          >
+            Turn {{ block.label }} into …
+          </k-dropdown-item>
+          <hr>
+          <k-dropdown-item
+            v-for="definition in blocks"
+            v-if="block.type !== definition.type"
+            :key="definition.type"
+            :icon="definition.icon"
+            @click="$emit('convert', definition.type)"
+          >
+            {{ definition.label }}
+          </k-dropdown-item>
+        </template>
+
+        <template v-else>
+          <k-dropdown-item icon="add" @click="go('insert')">Insert below …</k-dropdown-item>
+          <hr>
+          <k-dropdown-item icon="refresh" @click="go('convert')">Turn into …</k-dropdown-item>
+          <k-dropdown-item icon="copy" @click="$emit('duplicate')">Duplicate</k-dropdown-item>
+          <hr>
+          <k-dropdown-item icon="trash" @click="$emit('remove')">Delete</k-dropdown-item>
+        </template>
       </k-dropdown-content>
     </k-dropdown>
   </nav>
@@ -25,8 +66,23 @@
 <script>
 export default {
   props: {
-    blocks: Object
+    blocks: Object,
+    block: Object
   },
+  data() {
+    return {
+      mode: null
+    };
+  },
+  methods: {
+    go(mode) {
+      this.mode = mode;
+      this.$refs.blockOptions.open();
+    },
+    onClose() {
+      this.mode = null;
+    }
+  }
 };
 </script>
 
@@ -64,13 +120,12 @@ export default {
   width: auto;
   height: auto;
 }
-.k-editor-block-option-dropdown ul {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+.k-editor-block-option-dropdown {
+  min-width: 15rem;
+  margin-bottom: 4.5rem;
 }
-.k-editor-block-option-dropdown h4 {
-  padding: .75rem 1rem;
-  font-size: .875rem;
+.k-editor-block-option-heading .k-button-text  {
+  opacity: 1;
   font-weight: 600;
 }
 </style>

@@ -14,8 +14,10 @@
           <k-editor-options
             v-if="selected === index"
             :blocks="$options.blocks"
+            :block="$options.blocks[block.type]"
             @add="add($event)"
             @convert="convertTo($event)"
+            @duplicate="duplicate"
             @remove="remove"
           />
           <component
@@ -156,6 +158,13 @@ export default {
       }
 
       return nextIndex;
+    },
+    duplicate() {
+      const block = this.getSelectedBlock();
+
+      if (block) {
+        this.appendAndFocus(block, this.selected);
+      }
     },
     htmlElementToBlocks(element) {
 
