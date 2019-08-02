@@ -67,6 +67,7 @@ export default {
     { id: "ruby", label: "Ruby" },
     { id: "rust", label: "Rust" },
     { id: "sass", label: "Sass" },
+    { id: "scss", label: "SCSS" },
     { id: "shell", label: "Shell" },
     { id: "sql", label: "SQL" },
     { id: "swift", label: "Swift" },
