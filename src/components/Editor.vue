@@ -8,6 +8,7 @@
           :key="block.id"
           :class="['k-editor-block', 'k-editor-' + block.type + '-block']"
           :data-indent="block.attrs.indent"
+          @click="focus(index)"
           @focusin="onFocus(index)"
           @focusout="onBlur(index)"
         >
@@ -584,11 +585,6 @@ export default {
   margin-bottom: 1.5rem;
   box-shadow: rgba(#000, 0.05) 0 2px 5px;
 }
-.k-editor:focus-within {
-  /* border-color: #4271ae;
-  outline: 2px solid rgba(#4271ae, 0.25); */
-}
-
 .k-editor-blocks {
   position: relative;
   padding: 1.5rem 0;
