@@ -35,7 +35,10 @@
 .k-editor-table-block .k-editable-placeholder {
   padding: .25rem .5rem;
 }
-
+.k-editor-table-block th:focus-within,
+.k-editor-table-block td:focus-within {
+  outline: 2px solid #81a2be;
+}
 .k-editor-table-block-row-options {
   width: 2.5rem;
   text-align: center;

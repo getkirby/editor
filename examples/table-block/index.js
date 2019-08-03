@@ -50,11 +50,21 @@ editor.block("table", {
 
   // block methods
   methods: {
-    prependColumn(before) {
-      this.insertColumn(before);
-    },
     appendColumn(after) {
       this.insertColumn(after + 1);
+    },
+    appendRow(after, column) {
+      this.rows.push([]);
+
+      this.$nextTick(() => {
+        this.focusOnCell(after + 1, column);
+      });
+    },
+    deleteColumn(index) {
+      this.columns.splice(index, 1);
+      this.rows.forEach(row => {
+        this.$delete(row, index);
+      });
     },
     insertColumn(index) {
       this.columns.splice(index, 0, {
@@ -66,14 +76,31 @@ editor.block("table", {
         row.splice(index, 0, "");
       });
     },
-    appendRow(after) {
-      this.rows.push([]);
+    findCell(row, column) {
+      const id = "cell-" + row + "-" + column;
+
+      if (this.$refs[id]) {
+        return this.$refs[id][0];
+      }
     },
-    deleteColumn(index) {
-      this.columns.splice(index, 1);
-      this.rows.forEach(row => {
-        this.$delete(row, index);
-      });
+    focus() {
+      // this.focusOnCell(0, 0);
+    },
+    focusOnCell(row, column) {
+      const cell = this.findCell(row, column);
+
+      if (cell) {
+        cell.focus();
+      }
+    },
+    focusOnPrevCell(row, column) {
+      this.focusOnCell(row, column - 1);
+    },
+    focusOnNextCell(row, column) {
+      this.focusOnCell(row, column + 1);
+    },
+    prependColumn(before) {
+      this.insertColumn(before);
     },
     update() {
       this.$emit("input", {
@@ -106,6 +133,7 @@ editor.block("table", {
                 :marks="[]"
                 placeholder="New column …"
                 @input="updateColumn($event, columnKey)"
+                @next="focusOnCell(0, columnKey)"
               />
               <k-dropdown>
                 <k-button class="k-editor-table-block-column-settings" icon="angle-down" @click="$refs['columnSettings-' + column.id][0].toggle()" />
@@ -122,10 +150,15 @@ editor.block("table", {
         <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
           <td v-for="(column, columnIndex) in columns" :key="column.id + '-' + rowIndex">
             <k-editable
+              :ref="'cell-' + rowIndex + '-' + columnIndex"
               :breaks="true"
               :content="row[columnIndex]"
               @input="updateCell($event, rowIndex, columnIndex)"
-              @enter="appendRow(rowIndex)"
+              @enter="appendRow(rowIndex, columnIndex)"
+              @prev="focusOnCell(rowIndex - 1, columnIndex)"
+              @next="focusOnCell(rowIndex + 1, columnIndex)"
+              @tab="focusOnNextCell(rowIndex, columnIndex)"
+              @shiftTab="focusOnPrevCell(rowIndex, columnIndex)"
             />
           </td>
         </tr>
