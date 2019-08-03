@@ -247,14 +247,14 @@ export default {
       return (this.activeOptions || []).includes(type);
     },
     sanitize(blocks) {
+      if (blocks[0] && blocks[0].type === "auto") {
+        blocks = this.htmlToBlocks(blocks[0].content);
+      }
+
       if (blocks.length === 0) {
         blocks = [{
           type: "paragraph",
         }];
-      }
-
-      if (blocks[0].type === "auto") {
-        blocks = this.htmlToBlocks(blocks[0].content);
       }
 
       // assign a unique ID to each block

@@ -15,7 +15,7 @@ return [
                 return [
                     [
                         'type'    => 'auto',
-                        'content' => $this->model()->text()->value($value)->kt()->value()
+                        'content' => $this->model()->text()->value($value ?? '')->kt()->value()
                     ]
                 ];
             }
