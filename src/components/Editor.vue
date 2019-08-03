@@ -171,9 +171,10 @@ export default {
       return nextIndex;
     },
     duplicate() {
-      const block = this.getSelectedBlock();
+      const block = JSON.parse(JSON.stringify(this.getSelectedBlock()));
 
       if (block) {
+        block.id = this.uuid();
         this.appendAndFocus(block, this.selected);
       }
     },
