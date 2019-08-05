@@ -48,11 +48,13 @@ return [
             ],
             [
                 'pattern' => 'upload',
-                'action' => function () {
+                'method'  => 'POST',
+                'action'  => function () {
                     return $this->field()->upload($this, $this->field()->uploads(), function ($file) {
                         return [
                             'filename' => $file->filename(),
-                            'dragText' => $file->dragText(),
+                            'link'     => $file->panelUrl(true),
+                            'url'      => $file->url(),
                         ];
                     });
                 }
