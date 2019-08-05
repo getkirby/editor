@@ -29,6 +29,7 @@
             :content="block.content"
             :endpoints="endpoints"
             v-bind="$options.blocks[block.type].options"
+            @click.native.stop
             @append="onAppend(index, $event)"
             @back="onBack(index, $event)"
             @convert="onConvert(index, $event)"
