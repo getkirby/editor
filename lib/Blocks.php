@@ -2,8 +2,10 @@
 
 namespace Kirby\Editor;
 
+use Closure;
 use Kirby\Cms\Collection;
 use Kirby\Data\Json;
+use Kirby\Toolkit\Str;
 use Throwable;
 
 class Blocks extends Collection
@@ -24,15 +26,27 @@ class Blocks extends Collection
      * Creates a new block collection from a
      * JSON string
      *
-     * @param string $json
+     * @param string|array $value
      * @param Page|File|User|Site $parent
      * @return Kirby\Editor\Blocks
      */
-    public static function factory(string $json, $parent)
+    public static function factory($blocks, $parent)
     {
-        try {
-            $blocks = Json::decode($json);
-        } catch (Throwable $e) {
+        if (is_array($blocks) === false) {
+            try {
+                $blocks = Json::decode((string)$blocks);
+            } catch (Throwable $e) {
+                $blocks = [
+                    [
+                        'type'    => 'auto',
+                        'content' => $parent->text()->value($blocks ?? '')->kt()->value(),
+                        'id'      => '_' . Str::random(9)
+                    ]
+                ];
+            }
+        }
+
+        if (!is_array($blocks) === true) {
             $blocks = [];
         }
 
@@ -40,7 +54,7 @@ class Blocks extends Collection
 
         foreach ($blocks as $params) {
             $params['parent'] = $parent;
-            $block = new Block($params, $collection);
+            $block = Block::factory($params, $collection);
             $collection->append($block->id(), $block);
         }
 
@@ -61,6 +75,16 @@ class Blocks extends Collection
         }
 
         return implode($html);
+    }
+
+    /**
+     * Convert the blocks to an array
+     *
+     * @return array
+     */
+    public function toArray(Closure $map = null): array
+    {
+        return array_values(parent::toArray($map));
     }
 
 }

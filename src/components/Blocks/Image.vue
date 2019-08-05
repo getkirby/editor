@@ -4,6 +4,7 @@
       <template v-if="attrs.src">
         <div
           ref="element"
+          :style="'padding-bottom:' + 100 / this.attrs.ratio + '%'"
           class="k-editor-image-block-wrapper"
           tabindex="0"
           @keydown.delete="$emit('remove')"
@@ -17,12 +18,12 @@
               <k-dropdown-item icon="cog" @click="settings">Image settings</k-dropdown-item>
               <hr>
               <k-dropdown-item icon="open" @click="open">Open in the browser</k-dropdown-item>
-              <k-dropdown-item icon="edit" @click="edit" :disabled="!attrs.purl">Open in the panel</k-dropdown-item>
+              <k-dropdown-item icon="edit" @click="edit" :disabled="!attrs.guid">Open in the panel</k-dropdown-item>
               <hr>
               <k-dropdown-item icon="refresh" @click="replace">Replace</k-dropdown-item>
             </k-dropdown-content>
           </k-dropdown>
-          <img :src="attrs.src" @dblclick="selectFile">
+          <img :src="attrs.src" :key="attrs.src" @dblclick="selectFile">
         </div>
         <figcaption>
           <k-editable
@@ -85,8 +86,8 @@ export default {
   },
   methods: {
     edit() {
-      if (this.attrs.purl) {
-        this.$router.push(this.attrs.purl);
+      if (this.attrs.guid) {
+        this.$router.push(this.attrs.guid);
       }
     },
     focus() {
@@ -103,19 +104,22 @@ export default {
         }
       });
     },
-    insertFile(file) {
-      this.input({
-        purl: file[0].link,
-        src: file[0].url,
-        id: file[0].id
+    fetchFile(link) {
+      this.$api.get(link).then(response => {
+        this.input({
+          guid: response.link,
+          src: response.url,
+          id: response.id,
+          ratio: response.dimensions.ratio
+        });
       });
     },
+    insertFile(files) {
+      const file = files[0];
+      this.fetchFile(file.link);
+    },
     insertUpload(files, response) {
-      this.input({
-        purl: response[0].link,
-        id: response[0].id,
-        src: response[0].url
-      });
+      this.fetchFile(response[0].link);
     },
     open() {
       window.open(this.attrs.src);

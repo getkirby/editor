@@ -1,8 +1,12 @@
 <?php
 
 load([
+    // base classes
     'kirby\\editor\\block'  => __DIR__ . '/lib/Block.php',
     'kirby\\editor\\blocks' => __DIR__ . '/lib/Blocks.php',
+
+    // block extensions
+    'kirby\\editor\\imageblock' => __DIR__ . '/lib/ImageBlock.php',
 ]);
 
 Kirby::plugin('getkirby/editor', [
@@ -24,5 +28,5 @@ Kirby::plugin('getkirby/editor', [
     ],
     'fields' => [
         'editor' => require __DIR__ . '/field.php'
-    ]
+    ],
 ]);

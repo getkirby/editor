@@ -1,10 +1,11 @@
-<figure<?= attr(['class' => $attrs->css()], ' ') ?>>
+<?php if ($image): ?>
+<figure<?= attr(['class' => $attrs->css()->value()], ' ') ?>>
   <?php if ($attrs->link()->isNotEmpty()): ?>
   <a href="<?= $attrs->link()->toUrl() ?>">
-    <img src="<?= $attrs->src() ?>" alt="<?= $attrs->alt() ?>">
+    <img src="<?= $image->url() ?>" alt="<?= $attrs->alt() ?>">
   </a>
   <?php else: ?>
-  <img src="<?= $attrs->src() ?>" alt="<?= $attrs->alt() ?>">
+  <img src="<?= $image->url() ?>" alt="<?= $attrs->alt() ?>">
   <?php endif ?>
 
   <?php if ($attrs->caption()->isNotEmpty()): ?>
@@ -13,3 +14,4 @@
   </figcaption>
   <?php endif ?>
 </figure>
+<?php endif ?>

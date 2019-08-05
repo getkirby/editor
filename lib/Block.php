@@ -34,6 +34,11 @@ class Block
     protected $id;
 
     /**
+     * @var array
+     */
+    protected $params;
+
+    /**
      * @var Kirby\Cms\Page|Kirby\Cms\Site|Kirby\Cms\User|Kirby\Cms\File
      */
     protected $parent;
@@ -97,19 +102,44 @@ class Block
     }
 
     /**
+     * Controller for the block snippet
+     *
+     * @return array
+     */
+    public function controller(): array
+    {
+        return [
+            'block'   => $this,
+            'content' => $this->content(),
+            'attrs'   => $this->attrs(),
+            'prev'    => $this->prev(),
+            'next'    => $this->next()
+        ];
+    }
+
+    /**
+     * @return Kirby\Editor\Block
+     */
+    public static function factory(array $params, Blocks $blocks)
+    {
+        if (isset($params['type']) === false) {
+            throw new InvalidArgumentException('The block type is missing');
+        }
+
+        $customName = 'Kirby\\Editor\\' . $params['type'] . 'Block';
+        $className  = class_exists($customName) ? $customName : 'Kirby\\Editor\\Block';
+
+        return new $className($params, $blocks);
+    }
+
+    /**
      * Converts the block to HTML
      *
      * @return string
      */
     public function html(): string
     {
-        return snippet('editor/' . $this->type(), [
-            'block'   => $this,
-            'content' => $this->content(),
-            'attrs'   => $this->attrs(),
-            'prev'    => $this->prev(),
-            'next'    => $this->next()
-        ], true);
+        return snippet('editor/' . $this->type(), $this->controller(), true);
     }
 
     /**
@@ -134,6 +164,26 @@ class Block
     }
 
     /**
+     * Returns the Kirby instance
+     *
+     * @return Kirby\Cms\App
+     */
+    public function kirby()
+    {
+        return $this->parent()->kirby();
+    }
+
+    /**
+     * Returns the parent model
+     *
+     * @return Kirby\Cms\Page | Kirby\Cms\Site | Kirby\Cms\File | Kirby\Cms\User
+     */
+    public function parent()
+    {
+        return $this->parent;
+    }
+
+    /**
      * Returns the sibling collection
      * This is required by the HasSiblings trait
      *
@@ -152,6 +202,22 @@ class Block
     public function type(): string
     {
         return $this->type;
+    }
+
+    /**
+     * The result is being sent to the editor
+     * via the API in the panel
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'attrs'   => $this->attrs()->toArray(),
+            'content' => $this->content()->value(),
+            'id'      => $this->id(),
+            'type'    => $this->type(),
+        ];
     }
 
 }

@@ -4,21 +4,7 @@ return [
     'mixins' => ['filepicker', 'upload'],
     'props' => [
         'value' => function ($value = null) {
-
-            if (is_array($value) === true) {
-                return $value;
-            }
-
-            try {
-                return Json::decode($value);
-            } catch (Exception $e) {
-                return [
-                    [
-                        'type'    => 'auto',
-                        'content' => $this->model()->text()->value($value ?? '')->kt()->value()
-                    ]
-                ];
-            }
+            return Kirby\Editor\Blocks::factory($value, $this->model())->toArray();
         },
         /**
          * Sets the options for the files picker

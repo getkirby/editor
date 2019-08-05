@@ -1,7 +1,5 @@
 <?php
 
-use Kirby\Editor\Blocks;
-
 return function ($field) {
-    return Blocks::factory($field->value(), $field->parent());
+    return Kirby\Editor\Blocks::factory($field->value(), $field->parent());
 };
