@@ -1,4 +1,4 @@
-<figure>
+<figure<?= attr(['class' => $attrs->css()], ' ') ?>>
   <?php if ($attrs->link()->isNotEmpty()): ?>
   <a href="<?= $attrs->link()->toUrl() ?>">
     <img src="<?= $attrs->src() ?>" alt="<?= $attrs->alt() ?>">

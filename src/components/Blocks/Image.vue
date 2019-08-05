@@ -11,7 +11,17 @@
           @keydown.up.prevent="$emit('prev')"
           @keydown.down.prevent="$emit('next')"
         >
-          <k-button class="k-editor-image-block-options" icon="cog" @click="settings" />
+          <k-dropdown class="k-editor-image-block-options">
+            <k-button class="k-editor-image-block-options-toggle" icon="dots" @click="$refs.options.toggle()" />
+            <k-dropdown-content ref="options" align="right">
+              <k-dropdown-item icon="cog" @click="settings">Image settings</k-dropdown-item>
+              <hr>
+              <k-dropdown-item icon="open" @click="open">Open in the browser</k-dropdown-item>
+              <k-dropdown-item icon="edit" @click="edit" :disabled="!attrs.purl">Open in the panel</k-dropdown-item>
+              <hr>
+              <k-dropdown-item icon="refresh" @click="replace">Replace</k-dropdown-item>
+            </k-dropdown-content>
+          </k-dropdown>
           <img :src="attrs.src" @dblclick="selectFile">
         </div>
         <figcaption>
@@ -24,8 +34,10 @@
         </figcaption>
       </template>
       <template v-else>
-        <div class="k-editor-image-block-placeholder">
-          <k-button ref="element" icon="image" @click="selectFile">Add an image</k-button>
+        <div class="k-editor-image-block-placeholder" ref="element" tabindex="0">
+          <k-button icon="upload" @click="uploadFile">Upload an image</k-button>
+          or
+          <k-button icon="image" @click="selectFile">Select an image</k-button>
         </div>
       </template>
     </figure>
@@ -57,14 +69,26 @@ export default {
     alt: {
       label: "Alternative text",
       type: "text",
+      icon: "text"
     },
     link: {
       label: "Link",
       type: "text",
       icon: "url",
+      placeholder: "http://"
+    },
+    css: {
+      label: "CSS class",
+      type: "text",
+      icon: "code",
     }
   },
   methods: {
+    edit() {
+      if (this.attrs.purl) {
+        this.$router.push(this.attrs.purl);
+      }
+    },
     focus() {
       this.$refs.element.focus();
     },
@@ -80,12 +104,32 @@ export default {
       });
     },
     insertFile(file) {
-      this.input({ src: file[0].url });
+      this.input({
+        purl: file[0].link,
+        src: file[0].url,
+        id: file[0].id
+      });
+    },
+    insertUpload(files, response) {
+      this.input({
+        purl: response[0].link,
+        id: response[0].id,
+        src: response[0].url
+      });
+    },
+    open() {
+      window.open(this.attrs.src);
+    },
+    replace() {
+      this.$emit("input", {
+        attrs: {}
+      });
     },
     selectFile() {
       this.$refs.fileDialog.open({
         endpoint: this.endpoints.field + "/files",
-        multiple: false
+        multiple: false,
+        selected: [this.attrs.id]
       });
     },
     settings() {
@@ -94,7 +138,14 @@ export default {
     saveSettings() {
       this.$refs.settings.close();
       this.input(this.attrs);
-    }
+    },
+    uploadFile() {
+      this.$refs.fileUpload.open({
+        url: window.panel.api + "/" + this.endpoints.field + "/upload",
+        multiple: false,
+        accept: "image/*"
+      });
+    },
   }
 };
 </script>
@@ -108,13 +159,19 @@ export default {
   text-align: center;
 }
 .k-editor-image-block img {
-  display: block;
-  max-width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
 }
 .k-editor-image-block-wrapper {
-  display: inline-block;
   position: relative;
-  margin: 0 auto;
+  padding-bottom: 66.66%;
+  background: #2d2e36;
 }
 .k-editor-image-block-wrapper:focus {
   outline: 0;
@@ -131,20 +188,35 @@ export default {
   text-align: center;
 }
 .k-editor-image-block-placeholder {
+  display: flex;
   line-height: 1;
+  justify-content: center;
+  align-items: center;
+  font-style: italic;
+  font-size: .875rem;
   width: 100%;
-}
-.k-editor-image-block-placeholder button {
-  padding: .75rem;
-  display: block;
-  width: 100%;
-  border-radius: 3px;
   border: 1px dashed #ddd;
+  border-radius: 3px;
+  text-align: center;
+  color: #bbb;
+}
+.k-editor-image-block-placeholder:focus {
+  outline: 0;
+}
+.k-editor-image-block-placeholder .k-button {
+  padding: .75rem;
+  display: flex;
+  align-items: center;
+  color: #000;
+  margin: 0 .5rem;
 }
 .k-editor-image-block-options {
   position: absolute;
   top: .75rem;
   right: .75rem;
+  z-index: 1;
+}
+.k-editor-image-block-options-toggle {
   background: #fff;
   width: 1.75rem;
   height: 1.75rem;
