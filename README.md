@@ -1,10 +1,10 @@
 # Kirby Editor
 
-Kirby Editor is a new type of WYSIWYG editor for Kirby. It's a mixture between a regular WYSIWYG and a block editor to bring together the best parts of both worlds in a user-friendly interface. 
+Kirby Editor is a new type of WYSIWYG editor for Kirby. It's a mixture between a regular WYSIWYG and a block editor to bring together the best parts of both worlds in a user-friendly interface.
 
 ## Features
 
-- Block types: 
+- Block types:
   - Code
   - Heading 1
   - Heading 2

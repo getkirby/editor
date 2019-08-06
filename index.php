@@ -6,6 +6,9 @@ load([
     'kirby\\editor\\blocks' => __DIR__ . '/lib/Blocks.php',
 
     // block extensions
+    'kirby\\editor\\h1block'    => __DIR__ . '/lib/H1Block.php',
+    'kirby\\editor\\h2block'    => __DIR__ . '/lib/H2Block.php',
+    'kirby\\editor\\h3block'    => __DIR__ . '/lib/H3Block.php',
     'kirby\\editor\\imageblock' => __DIR__ . '/lib/ImageBlock.php',
 ]);
 

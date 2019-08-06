@@ -1,1 +1,1 @@
-<h1 id="<?= Str::slug($content) ?>"><?= $content ?></h1>
+<h<?= $level ?> id="<?= $hash ?>"><?= $content ?></h<?= $level ?>>

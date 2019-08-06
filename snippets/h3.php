@@ -1,1 +1,1 @@
-<h3><?= $content ?></h3>
+<h<?= $level ?>><?= $content ?></h<?= $level ?>>
