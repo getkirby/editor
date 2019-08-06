@@ -3,7 +3,7 @@ import Ul from "./Ul.vue";
 
 export default {
   ...Ul,
-  label: "Ordered List",
+  label: "Numbered List",
   append: "ol",
   icon: "list-numbers",
 };
