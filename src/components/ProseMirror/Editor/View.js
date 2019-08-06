@@ -37,6 +37,11 @@ export default function (props) {
 
     },
     handlePaste(view, event, slice) {
+
+      if (props.code) {
+        return false;
+      }
+
       let html = event.clipboardData.getData('text/html');
       let text = event.clipboardData.getData('text/plain');
 
