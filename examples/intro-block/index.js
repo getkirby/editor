@@ -11,8 +11,4 @@ editor.block("intro", {
 
   // icon for the blocks dropdown
   icon: "text",
-
-  // the type is required and will be used to
-  // load the right component and snippet
-  type: "intro",
 });

@@ -12,10 +12,6 @@ editor.block("todo", {
   // icon for the blocks dropdown
   icon: "check",
 
-  // the type is required and will be used to
-  // load the right component and snippet
-  type: "todo",
-
   // get the content and attrs of the block as props
   props: {
     content: String,

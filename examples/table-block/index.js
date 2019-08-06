@@ -5,10 +5,6 @@ editor.block("table", {
   // icon for the blocks dropdown
   icon: "menu",
 
-  // the type is required and will be used to
-  // load the right component and snippet
-  type: "table",
-
   // get the content and attrs of the block as props
   props: {
     content: String,

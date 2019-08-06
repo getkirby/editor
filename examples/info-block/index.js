@@ -8,10 +8,6 @@ editor.block("info", {
   // icon for the blocks dropdown
   icon: "alert",
 
-  // the type is required and will be used to
-  // load the right component and snippet
-  type: "info",
-
   // get the block content
   props: {
     content: String,
