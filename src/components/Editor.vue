@@ -58,6 +58,24 @@ import Options from "./Options.vue";
 window.editor = {
   blocks: {},
   block(type, params) {
+    const defaults = {
+      type: type,
+      label: type,
+      icon: "page",
+    };
+
+    // extend the params with the defaults
+    params = {
+      ...defaults,
+      ...params
+    };
+
+    // add default methods
+    params.methods = {
+      focus() {},
+      ...params.methods,
+    };
+
     this.blocks[type] = params;
   }
 };
