@@ -5,6 +5,7 @@ import H2 from "./Blocks/H2.vue";
 import H3 from "./Blocks/H3.vue";
 import Hr from "./Blocks/Hr.vue";
 import Image from "./Blocks/Image.vue";
+import Kirbytext from "./Blocks/Kirbytext.vue";
 import Paragraph from "./Blocks/Paragraph.vue";
 import Ul from "./Blocks/Ul.vue";
 import Ol from "./Blocks/Ol.vue";
@@ -22,6 +23,7 @@ const components = {
   code: Code,
   image: Image,
   video: Video,
+  kirbytext: Kirbytext,
 };
 
 let blocks = {};

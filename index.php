@@ -18,6 +18,7 @@ Kirby::plugin('getkirby/editor', [
         'editor/h3'         => __DIR__ . '/snippets/h3.php',
         'editor/hr'         => __DIR__ . '/snippets/hr.php',
         'editor/image'      => __DIR__ . '/snippets/image.php',
+        'editor/kirbytext'  => __DIR__ . '/snippets/kirbytext.php',
         'editor/ol'         => __DIR__ . '/snippets/ol.php',
         'editor/paragraph'  => __DIR__ . '/snippets/paragraph.php',
         'editor/ul'         => __DIR__ . '/snippets/ul.php',
