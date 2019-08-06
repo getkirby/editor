@@ -7,10 +7,11 @@ export default function (schema, html, code) {
   html = html || "";
 
   if (code) {
-    html = "<pre><code>" + html + "</code></pre>";
+    dom.innerHTML = "<pre><code style='white-space: pre-wrap'></code></pre>";
+    dom.querySelector("code").appendChild(document.createTextNode(html));
+  } else {
+    dom.innerHTML = html;
   }
-
-  dom.innerHTML = html;
 
   return DOMParser.fromSchema(schema).parse(dom);
 
