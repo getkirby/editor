@@ -15,6 +15,7 @@
         >
           <k-editor-options
             v-if="selected === index"
+            :ref="'block-options-' + index"
             :blocks="$options.blocks"
             :block="$options.blocks[block.type]"
             @add="add($event)"
@@ -29,7 +30,7 @@
             :content="block.content"
             :endpoints="endpoints"
             v-bind="$options.blocks[block.type].options"
-            @click.native.stop
+            @click.native.stop="$refs['block-options-' + index][0].close()"
             @append="onAppend(index, $event)"
             @back="onBack(index, $event)"
             @convert="onConvert(index, $event)"

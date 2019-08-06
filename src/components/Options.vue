@@ -75,6 +75,9 @@ export default {
     };
   },
   methods: {
+    close() {
+      this.$refs.blockOptions.close();
+    },
     go(mode) {
       this.mode = mode;
       this.$refs.blockOptions.open();
