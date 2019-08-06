@@ -19,14 +19,8 @@
 </template>
 
 <script>
-import ProseMirror from "../ProseMirror/ProseMirror.vue";
-
 export default {
   inheritAttrs: false,
-  components: {
-    "k-editable": ProseMirror
-  },
-  label: "Code",
   icon: "code",
   props: {
     content: String,

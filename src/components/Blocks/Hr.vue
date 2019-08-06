@@ -12,7 +12,6 @@
 
 <script>
 export default {
-  label: "Horizontal line",
   icon: "dots",
   methods: {
     focus() {

@@ -1,9 +1,6 @@
 <script>
-import Ul from "./Ul.vue";
-
 export default {
-  ...Ul,
-  label: "Numbered List",
+  extends: "ul",
   append: "ol",
   icon: "list-numbers",
 };

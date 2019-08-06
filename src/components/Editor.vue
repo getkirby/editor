@@ -1,6 +1,7 @@
 <template>
   <div class="k-editor" ref="editor">
     <div class="k-editor-blocks" :key="modified">
+
       <k-draggable :list="blocks" :handle="true" :options="{delay: 2}">
         <div
           v-for="(block, index) in blocks"
@@ -51,42 +52,17 @@
 </template>
 
 <script>
-import Blocks from "./Blocks.js";
 import Converters from "./Converters.js";
-import Components from "./Components.js";
 import Options from "./Options.vue";
 
-window.editor = {
-  blocks: {},
-  block(type, params) {
-    const defaults = {
-      type: type,
-      label: type,
-      icon: "page",
-    };
-
-    // extend the params with the defaults
-    params = {
-      ...defaults,
-      ...params
-    };
-
-    // add default methods
-    params.methods = {
-      focus() {},
-      ...params.methods,
-    };
-
-    this.blocks[type] = params;
-  }
-};
+import "./Plugins.js";
+import "./Blocks.js";
 
 export default {
   components: {
-    ...Components,
     "k-editor-options": Options
   },
-  blocks: Blocks,
+  blocks: {},
   props: {
     endpoints: Object,
     allowed: [Array, Object],
@@ -97,26 +73,27 @@ export default {
       }
     }
   },
-  created() {
+  beforeCreate() {
 
     Object.keys(window.editor.blocks).forEach(key => {
+
       const block = window.editor.blocks[key];
 
-      if (block.extends) {
-        block.extends = this.$options.components["k-editor-" + block.extends + "-block"];
+      if (block.extends && window.editor.blocks[block.extends]) {
+        block.extends = window.editor.blocks[block.extends];
       }
 
-      block.inheritAttrs = false;
-
-      this.$options.blocks[block.type] = {
-        label: block.label,
+      this.$options.blocks[key] = {
+        label: this.$t("editor.blocks." + key + ".label", block.label || block.type),
         icon: block.icon,
         type: block.type,
-        component: block
       };
 
       this.$options.components["k-editor-" + key + "-block"] = block;
     });
+
+  },
+  created() {
 
     // discard all unallowed block types
     if (this.allowed && this.allowed.length > 0) {
@@ -298,10 +275,6 @@ export default {
     },
     blockTypeExists(type) {
       if (!this.$options.blocks[type]) {
-        return false;
-      }
-
-      if (!this.$options.components["k-editor-" + type + "-block"]) {
         console.log("block component does not exist: " + type);
         return false;
       }

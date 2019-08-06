@@ -1,9 +1,6 @@
 <script>
-import Paragraph from "./Paragraph.vue";
-
 export default {
-  extends: Paragraph,
-  label: "Bulleted List",
+  extends: "paragraph",
   append: "ul",
   icon: "list-bullet",
   breaks: true,

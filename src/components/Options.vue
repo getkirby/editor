@@ -16,7 +16,7 @@
             class="k-editor-block-option-heading"
             @click="go()"
           >
-            Insert below …
+            {{ $t('editor.options.insert.below') }} …
           </k-dropdown-item>
           <hr>
           <k-dropdown-item
@@ -36,7 +36,7 @@
             class="k-editor-block-option-heading"
             @click="go()"
           >
-            Turn {{ block.label }} into …
+            {{ $t('editor.options.convert') }} …
           </k-dropdown-item>
           <hr>
           <k-dropdown-item
@@ -51,12 +51,12 @@
         </template>
 
         <template v-else>
-          <k-dropdown-item icon="add" @click="go('insert')">Insert below …</k-dropdown-item>
+          <k-dropdown-item icon="add" @click="go('insert')">{{ $t('editor.options.insert.below') }} …</k-dropdown-item>
           <hr>
-          <k-dropdown-item icon="refresh" @click="go('convert')">Turn into …</k-dropdown-item>
-          <k-dropdown-item icon="copy" @click="$emit('duplicate')">Duplicate</k-dropdown-item>
+          <k-dropdown-item icon="refresh" @click="go('convert')">{{ $t('editor.options.convert') }} …</k-dropdown-item>
+          <k-dropdown-item icon="copy" @click="$emit('duplicate')">{{ $t('editor.options.duplicate') }}</k-dropdown-item>
           <hr>
-          <k-dropdown-item icon="trash" @click="$emit('remove')">Delete</k-dropdown-item>
+          <k-dropdown-item icon="trash" @click="$emit('remove')">{{ $t('editor.options.delete') }}</k-dropdown-item>
         </template>
       </k-dropdown-content>
     </k-dropdown>

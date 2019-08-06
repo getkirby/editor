@@ -1,10 +1,7 @@
 <script>
-import Paragraph from "./Paragraph.vue";
-
 export default {
-  label: "Quote",
   icon: "quote",
-  extends: Paragraph,
+  extends: "paragraph",
   breaks: true,
   placeholder: "Quote",
   marks: [

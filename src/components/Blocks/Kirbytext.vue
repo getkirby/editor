@@ -3,7 +3,6 @@ import ProseMirror from "../ProseMirror/ProseMirror.vue";
 
 export default {
   extends: ProseMirror,
-  label: "KirbyText",
   icon: "markdown",
   breaks: true,
   code: true,

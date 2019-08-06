@@ -1,10 +1,7 @@
 <script>
-import Paragraph from "./Paragraph.vue";
-
 export default {
-  extends: Paragraph,
+  extends: "paragraph",
   icon: "title",
-  label: "Heading 1",
   placeholder: "Heading 1",
   breaks: true,
   marks: [

@@ -11,39 +11,15 @@ import Ul from "./Blocks/Ul.vue";
 import Ol from "./Blocks/Ol.vue";
 import Video from "./Blocks/Video.vue";
 
-const components = {
-  h1: H1,
-  h2: H2,
-  h3: H3,
-  paragraph: Paragraph,
-  ul: Ul,
-  ol: Ol,
-  blockquote: Blockquote,
-  hr: Hr,
-  code: Code,
-  image: Image,
-  video: Video,
-  kirbytext: Kirbytext,
-};
-
-let blocks = {};
-
-Object.keys(components).forEach(blockType => {
-  const component = components[blockType];
-
-  blocks[blockType] = {
-    label: component.label,
-    icon: component.icon,
-    type: blockType,
-    component: component,
-    options: {
-      append: component.append,
-      breaks: component.breaks,
-      code: component.code,
-      marks: component.marks,
-      placeholder: component.placeholder,
-    }
-  };
-});
-
-export default blocks;
+window.editor.block("paragraph", Paragraph);
+window.editor.block("h1", H1);
+window.editor.block("h2", H2);
+window.editor.block("h3", H3);
+window.editor.block("ul", Ul);
+window.editor.block("ol", Ol);
+window.editor.block("blockquote", Blockquote);
+window.editor.block("hr", Hr);
+window.editor.block("code", Code);
+window.editor.block("image", Image);
+window.editor.block("video", Video);
+window.editor.block("kirbytext", Kirbytext);

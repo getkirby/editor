@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import Image from "./Image.vue";
-
 function getId(url) {
   var youtubePattern = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
   var youtubeMatch   = url.match(youtubePattern);
@@ -47,8 +45,7 @@ function getId(url) {
 }
 
 export default {
-  extends: Image,
-  label: "Video",
+  extends: "image",
   icon: "video",
   fields: {
     src: {

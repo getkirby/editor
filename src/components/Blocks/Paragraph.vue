@@ -21,7 +21,6 @@ const availableOptions = {
 export default {
   extends: ProseMirror,
   append: "paragraph",
-  label: "Text",
   icon: "text",
   breaks: true,
   code: false,

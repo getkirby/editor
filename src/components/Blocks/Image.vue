@@ -15,12 +15,12 @@
           <k-dropdown class="k-editor-image-block-options">
             <k-button class="k-editor-image-block-options-toggle" icon="dots" @click="$refs.options.toggle()" />
             <k-dropdown-content ref="options" align="right">
-              <k-dropdown-item icon="cog" @click="settings">Image settings</k-dropdown-item>
+              <k-dropdown-item icon="cog" @click="settings">{{ $t("editor.blocks.image.settings") }}</k-dropdown-item>
               <hr>
-              <k-dropdown-item icon="open" @click="open">Open in the browser</k-dropdown-item>
-              <k-dropdown-item icon="edit" @click="edit" :disabled="!attrs.guid">Open in the panel</k-dropdown-item>
+              <k-dropdown-item icon="open" @click="open">{{ $t("editor.blocks.image.open.browser") }}</k-dropdown-item>
+              <k-dropdown-item icon="edit" @click="edit" :disabled="!attrs.guid">{{ $t("editor.blocks.image.open.panel") }}</k-dropdown-item>
               <hr>
-              <k-dropdown-item icon="refresh" @click="replace">Replace</k-dropdown-item>
+              <k-dropdown-item icon="refresh" @click="replace">{{ $t("replace") }}</k-dropdown-item>
             </k-dropdown-content>
           </k-dropdown>
           <img :src="attrs.src" :key="attrs.src" @dblclick="selectFile">
@@ -29,16 +29,16 @@
           <k-editable
             :content="attrs.caption"
             :breaks="true"
-            placeholder="Add a caption …"
+            :placeholder="$t('editor.blocks.image.caption.placeholder') + '…'"
             @input="attrs.caption = $event"
           />
         </figcaption>
       </template>
       <template v-else>
         <div class="k-editor-image-block-placeholder" ref="element" tabindex="0">
-          <k-button icon="upload" @click="uploadFile">Upload an image</k-button>
-          or
-          <k-button icon="image" @click="selectFile">Select an image</k-button>
+          <k-button icon="upload" @click="uploadFile">{{ $t('editor.blocks.image.upload') }}</k-button>
+          {{ $t('editor.blocks.image.or') }}
+          <k-button icon="image" @click="selectFile">{{ $t('editor.blocks.image.select') }}</k-button>
         </div>
       </template>
     </figure>
@@ -47,7 +47,7 @@
     <k-upload ref="fileUpload" @success="insertUpload" />
 
     <k-dialog ref="settings" @submit="saveSettings" size="medium">
-      <k-form :fields="$options.fields" v-model="attrs" @submit="saveSettings" />
+      <k-form :fields="fields" v-model="attrs" @submit="saveSettings" />
     </k-dialog>
 
   </div>
@@ -55,7 +55,6 @@
 
 <script>
 export default {
-  label: "Image",
   icon: "image",
   props: {
     endpoints: Object,
@@ -66,22 +65,26 @@ export default {
       }
     }
   },
-  fields: {
-    alt: {
-      label: "Alternative text",
-      type: "text",
-      icon: "text"
-    },
-    link: {
-      label: "Link",
-      type: "text",
-      icon: "url",
-      placeholder: "http://"
-    },
-    css: {
-      label: "CSS class",
-      type: "text",
-      icon: "code",
+  computed: {
+    fields() {
+      return {
+        alt: {
+          label: this.$t('editor.blocks.image.alt.label'),
+          type: "text",
+          icon: "text"
+        },
+        link: {
+          label: this.$t('editor.blocks.image.link.label'),
+          type: "text",
+          icon: "url",
+          placeholder: this.$t('editor.blocks.image.link.placeholder')
+        },
+        css: {
+          label: this.$t('editor.blocks.image.css.label'),
+          type: "text",
+          icon: "code",
+        }
+      };
     }
   },
   methods: {
