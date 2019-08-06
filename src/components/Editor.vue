@@ -283,6 +283,7 @@ export default {
         block.id = block.id || this.uuid();
         block.attrs = block.attrs || {};
         block.content = block.content || "";
+        block.type = this.blockTypeExists(block.type) ? block.type : "paragraph";
         return block;
       });
 
