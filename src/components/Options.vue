@@ -95,7 +95,7 @@ export default {
   methods: {
     open() {
       this.menuItems = this.menu();
-      this.$refs.blockOptions.open();
+      this.$refs.blockOptions.toggle();
     },
     close() {
       this.menuItems = [];
