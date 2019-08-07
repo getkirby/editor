@@ -184,7 +184,6 @@ export default {
 }
 .k-editor-image-block figure {
   line-height: 0;
-  text-align: center;
 }
 .k-editor-image-block img {
   position: absolute;
@@ -210,10 +209,13 @@ export default {
 }
 .k-editor-image-block figcaption {
   display: block;
-  line-height: 1.5em;
-  font-size: .875rem;
-  padding-top: .75rem;
+  margin-top: .75rem;
+}
+.k-editor-image-block .k-editable-placeholder,
+.k-editor-image-block .ProseMirror {
   text-align: center;
+  font-size: .875rem;
+  line-height: 1.5em;
 }
 .k-editor-image-block-placeholder {
   display: flex;

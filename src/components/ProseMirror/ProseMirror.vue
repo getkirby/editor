@@ -509,6 +509,13 @@ export default {
   font-variant-ligatures: none;
   line-height: 1.5em;
 }
+.k-editable .ProseMirror:focus {
+  outline: 0;
+}
+.k-editable .ProseMirror a {
+  color: #4271ae;
+  text-decoration: underline;
+}
 .k-editable-text .ProseMirror strong {
   font-weight: 600;
 }
@@ -529,5 +536,18 @@ export default {
   right: 0;
   color: #bbb;
   pointer-events: none;
+  line-height: 1.5em;
+  font: inherit;
+}
+
+.k-editable-code pre {
+  tab-size: 2;
+  font-size: .875rem;
+  line-height: 2em;
+  overflow-y: scroll;
+  white-space: pre;
+}
+.k-editable-code code {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
 }
 </style>

@@ -1,6 +1,8 @@
 <script>
+import Paragraph from "./Paragraph.vue";
+
 export default {
-  extends: "paragraph",
+  extends: Paragraph,
   icon: "title",
   breaks: true,
   marks: [

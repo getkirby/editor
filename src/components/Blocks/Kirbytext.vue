@@ -21,22 +21,13 @@ export default {
 </script>
 
 <style lang="scss">
-
 .k-editor-kirbytext-block {
   margin: 1.5rem 0;
 }
-.k-editor-kirbytext-block pre {
+.k-editor-kirbytext-block .k-editable-code pre {
   background: #efefef;
-  tab-size: 2;
-  font-size: .875rem;
   padding: 1.5rem;
-  line-height: 2em;
   border-radius: 3px;
-  overflow-y: scroll;
-  margin-bottom: .75rem;
   white-space: pre-wrap;
-}
-.k-editor-kirbytext-block code {
-  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
 }
 </style>

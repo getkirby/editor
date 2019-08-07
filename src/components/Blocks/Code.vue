@@ -140,17 +140,8 @@ export default {
 }
 .k-editor-code-block pre {
   background: #2d2e36;
-  tab-size: 2;
   color: #fff;
-  font-size: .875rem;
   padding: 1.5rem;
-  line-height: 2em;
   border-radius: 3px;
-  overflow-y: scroll;
-  margin-bottom: .75rem;
-  white-space: pre;
-}
-.k-editor-code-block code {
-  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
 }
 </style>

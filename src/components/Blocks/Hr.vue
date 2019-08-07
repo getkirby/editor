@@ -44,10 +44,10 @@ export default {
   }
 
   &:focus {
-    color: #b5d7fe;
+    color: rgba(#4271ae, 0.25);
   }
   &:focus:after {
-    outline: 1px solid #b5d7fe;
+    outline: 1px solid rgba(#4271ae, 0.25);
   }
 
 }

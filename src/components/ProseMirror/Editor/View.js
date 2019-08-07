@@ -38,6 +38,8 @@ export default function (props) {
     },
     handlePaste(view, event, slice) {
 
+      console.log(props);
+
       if (props.code) {
         return false;
       }

@@ -624,11 +624,4 @@ export default {
 .k-editor-block:last-child {
   margin-bottom: 0;
 }
-.k-editor-block .ProseMirror:focus {
-  outline: 0;
-}
-.k-editor-block .ProseMirror a {
-  color: #4271ae;
-  text-decoration: underline;
-}
 </style>

@@ -157,7 +157,7 @@ export default {
   background: #2d2e36;
 }
 .k-editor-video-block-container:focus-within {
-  outline: 2px solid #b5d7fe;
+  outline: 2px solid rgba(#4271ae, 0.25);
   outline-offset: 2px;
 }
 .k-editor-video-block-overlay,
@@ -176,10 +176,13 @@ export default {
 }
 .k-editor-video-block figcaption {
   display: block;
-  line-height: 1.5em;
-  font-size: .875rem;
-  padding-top: .75rem;
+  margin-top: .75rem;
+}
+.k-editor-video-block .k-editable-placeholder,
+.k-editor-video-block .ProseMirror {
   text-align: center;
+  font-size: .875rem;
+  line-height: 1.5em;
 }
 .k-editor-video-block-input {
   position: absolute;

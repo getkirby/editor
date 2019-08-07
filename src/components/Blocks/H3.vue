@@ -1,6 +1,8 @@
 <script>
+import H1 from "./H1.vue";
+
 export default {
-  extends: "h1",
+  ...H1
 };
 </script>
 
