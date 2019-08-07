@@ -4,7 +4,6 @@ export default {
   append: "ul",
   icon: "list-bullet",
   breaks: true,
-  placeholder: "List",
   marks: [
     'bold',
     'italic',

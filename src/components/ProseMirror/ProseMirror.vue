@@ -2,7 +2,7 @@
   <div
     ref="editor"
     :spellcheck="spellcheck"
-    class="k-editable"
+    :class="{ 'k-editable': true, 'k-editable-text': !code, 'k-editable-code': code }"
     @focusin="onFocus"
     @focusout="onBlur"
   >
@@ -497,7 +497,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .k-editable {
   position: relative;
   width: 100%;
@@ -507,6 +507,20 @@ export default {
   white-space: pre-wrap;
   -webkit-font-variant-ligatures: none;
   font-variant-ligatures: none;
+  line-height: 1.5em;
+}
+.k-editable-text .ProseMirror strong {
+  font-weight: 600;
+}
+.k-editable-text .ProseMirror code {
+  position: relative;
+  font-size: .875em;
+  display: inline-block;
+  line-height: 1.325;
+  padding: .05em .325em;
+  background: rgba(#000, .1);
+  border-radius: 3px;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
 }
 .k-editable-placeholder {
   position: absolute;

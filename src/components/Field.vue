@@ -1,5 +1,9 @@
 <template>
-  <k-field :label="label">
+  <k-field
+    :label="label"
+    :required="required"
+    :disabled="disabled"
+  >
     <k-editor
       :allowed="allowed"
       :endpoints="endpoints"
@@ -17,9 +21,11 @@ export default {
     "k-editor": Editor
   },
   props: {
-    endpoints: Object,
     allowed: [Array, Object],
+    disabled: Boolean,
+    endpoints: Object,
     label: String,
+    required: Boolean,
     value: {
       type: [Array, Object],
       default() {

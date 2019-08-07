@@ -32,7 +32,6 @@ export default {
     'code',
     'link',
   ],
-  placeholder: null,
   props: {
     attrs: {
       type: Object,
@@ -79,21 +78,5 @@ export default {
 <style lang="scss">
 .k-editor-paragraph-block {
   margin-bottom: .75rem;
-}
-.k-editor-paragraph-block .ProseMirror {
-  line-height: 1.5em;
-}
-.k-editor-paragraph-block .ProseMirror strong {
-  font-weight: 600;
-}
-.k-editor-paragraph-block .ProseMirror code {
-  position: relative;
-  font-size: .875rem;
-  display: inline-block;
-  line-height: 1.325;
-  padding: .05em .5em;
-  background: rgba(#000, .1);
-  border-radius: 3px;
-  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
 }
 </style>

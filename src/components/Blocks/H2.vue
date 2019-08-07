@@ -1,7 +1,6 @@
 <script>
 export default {
   extends: "h1",
-  placeholder: "Heading 2"
 };
 </script>
 

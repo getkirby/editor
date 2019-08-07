@@ -24,6 +24,11 @@ class ImageBlock extends Block
         }
     }
 
+    public function isEmpty(): bool
+    {
+        return empty($this->image()) === true;
+    }
+
     public function toArray(): array
     {
         $data = parent::toArray();

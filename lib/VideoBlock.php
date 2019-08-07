@@ -23,4 +23,9 @@ class VideoBlock extends Block
         }
     }
 
+    public function isEmpty(): bool
+    {
+        return empty($this->iframe()) === true;
+    }
+
 }

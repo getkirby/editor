@@ -88,8 +88,11 @@ export default {
         label: this.$t("editor.blocks." + key + ".label", block.label || block.type),
         icon: block.icon,
         type: block.type,
-        bind: block.bind
+        bind: block.bind || {}
       };
+
+      // inject the translated placeholder
+      this.$options.blocks[key].bind.placeholder = this.$t("editor.blocks." + key + ".placeholder", block.placeholder || "");
 
       this.$options.components["k-editor-" + key + "-block"] = block;
     });
