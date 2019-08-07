@@ -13,7 +13,7 @@ window.editor = {
     };
 
     // content editable options
-    params.options = {
+    params.bind = {
       append: params.append,
       breaks: params.breaks,
       code: params.code,

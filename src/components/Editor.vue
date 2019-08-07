@@ -31,7 +31,7 @@
             :attrs="block.attrs"
             :content="block.content"
             :endpoints="endpoints"
-            v-bind="$options.blocks[block.type].options"
+            v-bind="$options.blocks[block.type].bind"
             @click.native.stop="closeOptions(index)"
             @append="onAppend(index, $event)"
             @back="onBack(index, $event)"
@@ -88,6 +88,7 @@ export default {
         label: this.$t("editor.blocks." + key + ".label", block.label || block.type),
         icon: block.icon,
         type: block.type,
+        bind: block.bind
       };
 
       this.$options.components["k-editor-" + key + "-block"] = block;
