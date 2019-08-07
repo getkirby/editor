@@ -2,6 +2,8 @@
 
 namespace Kirby\Editor;
 
+use Throwable;
+
 class ImageBlock extends Block
 {
 
