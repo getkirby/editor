@@ -4,7 +4,7 @@
       <k-icon type="sort" />
     </button>
     <k-dropdown>
-      <button type="button" class="k-editor-block-option k-editor-block-options-sort" @mousedown.stop="$refs.blockOptions.toggle()">
+      <button type="button" class="k-editor-block-option k-editor-block-options-sort" @mousedown.stop="open">
         <k-icon type="angle-down" />
       </button>
       <k-dropdown-content ref="blockOptions" class="k-editor-block-option-dropdown" @mousedown.native.stop @close="onClose">
@@ -56,6 +56,15 @@
           <k-dropdown-item icon="refresh" @click="go('convert')">{{ $t('editor.options.convert') }} …</k-dropdown-item>
           <k-dropdown-item icon="copy" @click="$emit('duplicate')">{{ $t('editor.options.duplicate') }}</k-dropdown-item>
           <hr>
+          <template v-if="menuItems.length">
+            <k-dropdown-item
+              v-for="menuItem in menuItems"
+              :icon="menuItem.icon"
+              @click="menuItem.click">
+              {{ menuItem.label }}
+            </k-dropdown-item>
+            <hr>
+          </template>
           <k-dropdown-item icon="trash" @click="$emit('remove')">{{ $t('editor.options.delete') }}</k-dropdown-item>
         </template>
       </k-dropdown-content>
@@ -67,15 +76,29 @@
 export default {
   props: {
     blocks: Object,
-    block: Object
+    block: Object,
+    menu: {
+      type: Function,
+      default() {
+        return function () {
+          return [];
+        };
+      }
+    }
   },
   data() {
     return {
-      mode: null
+      mode: null,
+      menuItems: []
     };
   },
   methods: {
+    open() {
+      this.menuItems = this.menu();
+      this.$refs.blockOptions.open();
+    },
     close() {
+      this.menuItems = [];
       this.$refs.blockOptions.close();
     },
     go(mode) {

@@ -19,6 +19,7 @@
             :ref="'block-options-' + index"
             :blocks="$options.blocks"
             :block="$options.blocks[block.type]"
+            :menu="menu"
             @add="add($event)"
             @convert="convertTo($event)"
             @duplicate="duplicate"
@@ -31,7 +32,7 @@
             :content="block.content"
             :endpoints="endpoints"
             v-bind="$options.blocks[block.type].options"
-            @click.native.stop="$refs['block-options-' + index][0].close()"
+            @click.native.stop="closeOptions(index)"
             @append="onAppend(index, $event)"
             @back="onBack(index, $event)"
             @convert="onConvert(index, $event)"
@@ -136,6 +137,13 @@ export default {
   methods: {
     add(type) {
       this.appendAndFocus({ type: type }, this.selected);
+    },
+    closeOptions(index) {
+      const ref = this.$refs["block-options-" + index];
+
+      if (ref && ref[0] && ref[0].close) {
+        ref[0].close();
+      }
     },
     createBlock(data) {
       const defaults = {
@@ -265,6 +273,15 @@ export default {
       });
 
       return blocks;
+    },
+    menu() {
+      const component = this.getSelectedBlockComponent();
+
+      if (component && component.menu) {
+        return component.menu();
+      }
+
+      return [];
     },
     appendAndFocus(block, after) {
       const next = this.append(block, after);

@@ -8,21 +8,10 @@
           class="k-editor-image-block-wrapper"
           tabindex="0"
           @keydown.delete="$emit('remove')"
-          @keydown.enter="onAppend"
+          @keydown.enter="$emit('append')"
           @keydown.up.prevent="$emit('prev')"
           @keydown.down.prevent="$emit('next')"
         >
-          <k-dropdown class="k-editor-image-block-options">
-            <k-button class="k-editor-image-block-options-toggle" icon="dots" @click="$refs.options.toggle()" />
-            <k-dropdown-content ref="options" align="right">
-              <k-dropdown-item icon="cog" @click="settings">{{ $t("editor.blocks.image.settings") }}</k-dropdown-item>
-              <hr>
-              <k-dropdown-item icon="open" @click="open">{{ $t("editor.blocks.image.open.browser") }}</k-dropdown-item>
-              <k-dropdown-item icon="edit" @click="edit" :disabled="!attrs.guid">{{ $t("editor.blocks.image.open.panel") }}</k-dropdown-item>
-              <hr>
-              <k-dropdown-item icon="refresh" @click="replace">{{ $t("replace") }}</k-dropdown-item>
-            </k-dropdown-content>
-          </k-dropdown>
           <img :src="attrs.src" :key="attrs.src" @dblclick="selectFile">
         </div>
         <figcaption>
@@ -30,7 +19,7 @@
             :content="attrs.caption"
             :breaks="true"
             :placeholder="$t('editor.blocks.image.caption.placeholder') + '…'"
-            @input="attrs.caption = $event"
+            @input="caption"
           />
         </figcaption>
       </template>
@@ -88,6 +77,11 @@ export default {
     }
   },
   methods: {
+    caption(html) {
+      this.input({
+        caption: html
+      });
+    },
     edit() {
       if (this.attrs.guid) {
         this.$router.push(this.attrs.guid);
@@ -95,9 +89,6 @@ export default {
     },
     focus() {
       this.$refs.element.focus();
-    },
-    onAppend() {
-      this.$emit("append");
     },
     input(data) {
       this.$emit("input", {
@@ -123,6 +114,36 @@ export default {
     },
     insertUpload(files, response) {
       this.fetchFile(response[0].link);
+    },
+    menu() {
+
+      if (this.attrs.src) {
+        return [
+          {
+            icon: "open",
+            label: this.$t("editor.blocks.image.open.browser"),
+            click: this.open
+          },
+          {
+            icon: "edit",
+            label: this.$t("editor.blocks.image.open.panel"),
+            click: this.edit
+          },
+          {
+            icon: "cog",
+            label: this.$t("editor.blocks.image.settings"),
+            click: this.$refs.settings.open
+          },
+          {
+            icon: "image",
+            label: this.$t("editor.blocks.image.replace"),
+            click: this.replace
+          },
+        ];
+      } else {
+        return [];
+      }
+
     },
     open() {
       window.open(this.attrs.src);
@@ -216,17 +237,5 @@ export default {
   align-items: center;
   color: #000;
   margin: 0 .5rem;
-}
-.k-editor-image-block-options {
-  position: absolute;
-  top: .75rem;
-  right: .75rem;
-  z-index: 1;
-}
-.k-editor-image-block-options-toggle {
-  background: #fff;
-  width: 1.75rem;
-  height: 1.75rem;
-  border-radius: 2px;
 }
 </style>
