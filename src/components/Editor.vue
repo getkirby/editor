@@ -626,6 +626,9 @@ export default {
   position: relative;
   padding: 0 4rem;
 }
+.k-editor-block:first-child {
+  margin-top: 0;
+}
 .k-editor-block:last-child {
   margin-bottom: 0;
 }
