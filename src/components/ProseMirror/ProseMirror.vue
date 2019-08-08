@@ -536,8 +536,10 @@ export default {
   right: 0;
   color: #bbb;
   pointer-events: none;
-  line-height: 1.5em;
   font: inherit;
+  line-height: 1.5em;
+  -webkit-font-variant-ligatures: none;
+  font-variant-ligatures: none;
 }
 
 .k-editable-code pre {
