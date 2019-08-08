@@ -156,9 +156,11 @@ export default {
       window.open(this.attrs.src);
     },
     onLoad() {
-      if (!this.attrs.ratio) {
+      const image = this.$refs.image;
+
+      if (!this.attrs.ratio && image && image.width && image.height) {
         this.input({
-          ratio: this.$refs.image.width / this.$refs.image.height
+          ratio: image.width / image.height
         });
       }
     },
