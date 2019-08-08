@@ -60,6 +60,7 @@
             <k-dropdown-item
               v-for="menuItem in menuItems"
               :icon="menuItem.icon"
+              :disabled="menuItem.disabled"
               @click="menuItem.click">
               {{ menuItem.label }}
             </k-dropdown-item>

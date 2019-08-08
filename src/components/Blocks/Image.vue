@@ -127,7 +127,8 @@ export default {
           {
             icon: "edit",
             label: this.$t("editor.blocks.image.open.panel"),
-            click: this.edit
+            click: this.edit,
+            disabled: !this.attrs.guid
           },
           {
             icon: "cog",
