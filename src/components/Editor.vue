@@ -114,7 +114,7 @@ export default {
     const blocks = this.sanitize(this.value);
 
     return {
-      selected: null,
+      selected: 0,
       blocks: blocks,
       modified: new Date()
     };
@@ -131,12 +131,17 @@ export default {
       },
       deep: true
     },
+    selected(value) {
+      if (value === undefined || value === null || value === false) {
+        this.selected = 0;
+      }
+    },
     value(value) {
       if (JSON.stringify(value) !== JSON.stringify(this.blocks)) {
         this.blocks = this.sanitize(value);
         this.modified = new Date()
       }
-    }
+    },
   },
   methods: {
     add(type) {
