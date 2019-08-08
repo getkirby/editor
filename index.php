@@ -36,7 +36,14 @@ Kirby::plugin('getkirby/editor', [
         'editor/video'      => __DIR__ . '/snippets/video.php',
     ],
     'translations' => [
-        'de' => require __DIR__ . '/i18n/de.php',
-        'en' => require __DIR__ . '/i18n/en.php',
+        'de'    => require __DIR__ . '/i18n/de.php',
+        'en'    => require __DIR__ . '/i18n/en.php',
+        'es'    => require __DIR__ . '/i18n/es.php',
+        'fr'    => require __DIR__ . '/i18n/fr.php',
+        'it'    => require __DIR__ . '/i18n/it.php',
+        'nl'    => require __DIR__ . '/i18n/nl.php',
+        'pt_BR' => require __DIR__ . '/i18n/pt_BR.php',
+        'pt_PT' => require __DIR__ . '/i18n/pt_PT.php',
+        'sv_SE' => require __DIR__ . '/i18n/sv_SE.php',
     ]
 ]);
