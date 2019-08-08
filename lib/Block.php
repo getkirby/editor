@@ -174,6 +174,16 @@ class Block
     }
 
     /**
+     * Checks if the block is not empty
+     *
+     * @return boolean
+     */
+    public function isNotEmpty(): bool
+    {
+        return $this->isEmpty() === false;
+    }
+
+    /**
      * Returns the Kirby instance
      *
      * @return Kirby\Cms\App

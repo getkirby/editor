@@ -1,11 +1,11 @@
-<?php if ($image): ?>
+<?php if ($block->isNotEmpty()): ?>
 <figure<?= attr(['class' => $attrs->css()->value()], ' ') ?>>
   <?php if ($attrs->link()->isNotEmpty()): ?>
   <a href="<?= $attrs->link()->toUrl() ?>">
-    <img src="<?= $image->url() ?>" alt="<?= $attrs->alt() ?>">
+    <img src="<?= $src ?>" alt="<?= $attrs->alt() ?>">
   </a>
   <?php else: ?>
-  <img src="<?= $image->url() ?>" alt="<?= $attrs->alt() ?>">
+  <img src="<?= $src ?>" alt="<?= $attrs->alt() ?>">
   <?php endif ?>
 
   <?php if ($attrs->caption()->isNotEmpty()): ?>

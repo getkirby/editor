@@ -2,6 +2,7 @@
 
 namespace Kirby\Editor;
 
+use Kirby\Toolkit\F;
 use Throwable;
 
 class ImageBlock extends Block
@@ -10,7 +11,8 @@ class ImageBlock extends Block
     public function controller(): array
     {
         $data = parent::controller();
-        $data['image'] = $this->image();
+        $data['image'] = $image = $this->image();
+        $data['src']   = $image ? $image->url() : $this->attrs()->src();
 
         return $data;
     }
@@ -26,7 +28,7 @@ class ImageBlock extends Block
 
     public function isEmpty(): bool
     {
-        return empty($this->image()) === true;
+        return empty($this->image()) === true && $this->attrs()->src()->isEmpty();
     }
 
     public function toArray(): array
@@ -40,7 +42,7 @@ class ImageBlock extends Block
                 'src'   => $image->url(),
             ]);
         } else {
-            $data['attrs'] = [];
+            unset($data['attrs']['guid']);
         }
 
         return $data;

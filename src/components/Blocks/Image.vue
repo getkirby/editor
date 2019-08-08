@@ -4,7 +4,8 @@
       <template v-if="attrs.src">
         <div
           ref="element"
-          :style="'padding-bottom:' + 100 / this.attrs.ratio + '%'"
+          :style="style"
+          :data-responsive="attrs.ratio"
           class="k-editor-image-block-wrapper"
           tabindex="0"
           @keydown.delete="$emit('remove')"
@@ -12,7 +13,7 @@
           @keydown.up.prevent="$emit('prev')"
           @keydown.down.prevent="$emit('next')"
         >
-          <img :src="attrs.src" :key="attrs.src" @dblclick="selectFile">
+          <img ref="image" :src="attrs.src" :key="attrs.src" @dblclick="selectFile" @load="onLoad">
         </div>
         <figcaption>
           <k-editable
@@ -55,6 +56,11 @@ export default {
     }
   },
   computed: {
+    style() {
+      if (this.attrs.ratio) {
+        return 'padding-bottom:' + 100 / this.attrs.ratio + '%';
+      }
+    },
     fields() {
       return {
         alt: {
@@ -149,6 +155,13 @@ export default {
     open() {
       window.open(this.attrs.src);
     },
+    onLoad() {
+      if (!this.attrs.ratio) {
+        this.input({
+          ratio: this.$refs.image.width / this.$refs.image.height
+        });
+      }
+    },
     replace() {
       this.$emit("input", {
         attrs: {}
@@ -186,17 +199,19 @@ export default {
 .k-editor-image-block figure {
   line-height: 0;
 }
-.k-editor-image-block img {
+.k-editor-image-block-wrapper img {
+  width: 100%;
+}
+.k-editor-image-block-wrapper[data-responsive] img {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   object-fit: contain;
-  width: 100%;
   height: 100%;
 }
-.k-editor-image-block-wrapper {
+.k-editor-image-block-wrapper[data-responsive] {
   position: relative;
   padding-bottom: 66.66%;
   background: #2d2e36;
