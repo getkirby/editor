@@ -51,9 +51,29 @@ export default {
     };
   },
   pre(element) {
+
+    const code = element.querySelector("code");
+
+    if (!code) {
+      return {
+        type: "paragraph",
+        content: element.innerHTML
+      };
+    }
+
+    const className = code.getAttribute("class");
+    let language = null;
+
+    if (className.match(/^language-([a-z_-]+)$/)) {
+      language = className.replace("language-", "");
+    }
+
     return {
       type: "code",
-      content: element.innerHTML
+      content: code.innerHTML,
+      attrs: {
+        language: language
+      }
     };
   },
   li(element) {
