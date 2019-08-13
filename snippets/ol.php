@@ -2,6 +2,6 @@
 <ol>
 <?php endif ?>
 <li><?= $content ?></li>
-<?php if (is_null($next) || && $next->type() !== 'ol'): ?>
+<?php if (is_null($next) || $next->type() !== 'ol'): ?>
 </ol>
 <?php endif ?>
