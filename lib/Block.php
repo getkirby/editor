@@ -111,6 +111,7 @@ class Block
         return [
             'block'   => $this,
             'content' => $this->content(),
+            'id'      => $this->id(),
             'attrs'   => $this->attrs(),
             'prev'    => $this->prev(),
             'next'    => $this->next()
