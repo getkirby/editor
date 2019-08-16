@@ -41,6 +41,7 @@ Kirby::plugin('getkirby/editor', [
         'es'    => require __DIR__ . '/i18n/es.php',
         'fr'    => require __DIR__ . '/i18n/fr.php',
         'it'    => require __DIR__ . '/i18n/it.php',
+        'lt'    => require __DIR__ . '/i18n/lt.php',
         'nl'    => require __DIR__ . '/i18n/nl.php',
         'pt_BR' => require __DIR__ . '/i18n/pt_BR.php',
         'pt_PT' => require __DIR__ . '/i18n/pt_PT.php',
