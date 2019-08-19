@@ -110,7 +110,7 @@ export default {
       onItalic: this.onItalic,
       onLink: this.onLink,
       onNext: this.onNext,
-      onPaste: this.onPaste,
+      onPaste: this.$listeners["paste"] ? this.onPaste : false,
       onPrev: this.onPrev,
       onEnter: this.onEnter,
       onSelect: this.onSelect,

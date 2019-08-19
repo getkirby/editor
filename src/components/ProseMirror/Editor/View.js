@@ -60,9 +60,12 @@ export default function (props) {
           props.onPaste(html, text);
         }
 
+        return true;
+
+      } else {
+        return false;
       }
 
-      return true;
     }
   });
 };
