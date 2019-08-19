@@ -82,6 +82,16 @@ class Block
     }
 
     /**
+     * Converts the object to a string
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->html();
+    }
+
+    /**
      * Returns the attrs object
      *
      * @return Kirby\Cms\Content
