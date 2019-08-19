@@ -1,7 +1,7 @@
-<?php if (is_null($prev) || $prev->type() !== 'ul'): ?>
+<?php if ($prev === null || $prev->type() !== 'ul'): ?>
 <ul>
 <?php endif ?>
 <li><?= $content ?></li>
-<?php if (is_null($next) || $next->type() !== 'ul'): ?>
+<?php if ($next === null || $next->type() !== 'ul'): ?>
 </ul>
 <?php endif ?>
