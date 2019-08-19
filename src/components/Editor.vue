@@ -65,8 +65,9 @@ export default {
   },
   blocks: {},
   props: {
-    endpoints: Object,
+    autofocus: Boolean,
     allowed: [Array, Object],
+    endpoints: Object,
     value: {
       type: [Array, Object],
       default() {
@@ -107,6 +108,10 @@ export default {
           delete this.$options.blocks[type];
         }
       });
+    }
+
+    if (this.autofocus === true) {
+      this.$nextTick(this.focus);
     }
 
   },

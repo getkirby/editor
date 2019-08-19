@@ -5,6 +5,7 @@
     :disabled="disabled"
   >
     <k-editor
+      :autofocus="autofocus"
       :allowed="allowed"
       :endpoints="endpoints"
       :value="value"
@@ -22,6 +23,7 @@ export default {
   },
   props: {
     allowed: [Array, Object],
+    autofocus: Boolean,
     disabled: Boolean,
     endpoints: Object,
     label: String,

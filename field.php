@@ -3,8 +3,8 @@
 return [
     'mixins' => ['filepicker', 'upload'],
     'props' => [
-        'value' => function ($value = null) {
-            return Kirby\Editor\Blocks::factory($value, $this->model())->toArray();
+        'autofocus' => function (bool $autofocus = false) {
+            return $autofocus;
         },
         /**
          * Sets the options for the files picker
@@ -19,6 +19,9 @@ return [
             }
 
             return $files;
+        },
+        'value' => function ($value = null) {
+            return Kirby\Editor\Blocks::factory($value, $this->model())->toArray();
         },
     ],
     'save' => function ($value) {
