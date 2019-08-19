@@ -13,6 +13,7 @@
           @focusin="onFocus(index)"
           @focusout="onBlur(index)"
           @keydown.meta.d.prevent="duplicate"
+          @keydown.meta.shift.o="openOptions(index)"
         >
           <k-editor-options
             v-if="selected === index"
@@ -151,6 +152,13 @@ export default {
   methods: {
     add(type) {
       this.appendAndFocus({ type: type }, this.selected);
+    },
+    openOptions(index) {
+      const ref = this.$refs["block-options-" + index];
+
+      if (ref && ref[0] && ref[0].close) {
+        ref[0].open();
+      }
     },
     closeOptions(index) {
       const ref = this.$refs["block-options-" + index];
