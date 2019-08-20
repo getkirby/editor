@@ -31,6 +31,19 @@ class ImageBlock extends Block
         return empty($this->image()) === true && $this->attrs()->src()->isEmpty();
     }
 
+    public function markdown(): string
+    {
+        $attrs = [
+            'image'   => $this->image()->id(),
+            'alt'     => $this->attrs()->alt(),
+            'link'    => $this->attrs()->link(),
+            'class'   => $this->attrs()->css(),
+            'caption' => $this->attrs()->caption()
+        ];
+
+        return kirbyTagMaker($attrs) . PHP_EOL . PHP_EOL;
+    }
+
     public function toArray(): array
     {
         $data = parent::toArray();

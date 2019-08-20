@@ -28,4 +28,15 @@ class VideoBlock extends Block
         return empty($this->iframe()) === true;
     }
 
+    public function markdown(): string
+    {
+        $attrs = [
+            'video'   => $this->attrs()->src(),
+            'caption' => $this->attrs()->caption(),
+            'class'   => $this->attrs()->class(),
+        ];
+
+        return kirbyTagMaker($attrs) . PHP_EOL . PHP_EOL;
+    }
+
 }

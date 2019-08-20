@@ -24,4 +24,10 @@ class H1Block extends Block
     {
         return option('kirby.editor.headingLevel', 1);
     }
+
+    public function markdown(): string
+    {
+        return str_repeat('#', $this->level()) . ' ' . $this->htmlToMarkdown($this->content()) . PHP_EOL . PHP_EOL;
+    }
+
 }

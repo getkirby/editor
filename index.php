@@ -6,13 +6,37 @@ load([
     'kirby\\editor\\blocks' => __DIR__ . '/lib/Blocks.php',
 
     // block extensions
-    'kirby\\editor\\h1block'    => __DIR__ . '/lib/H1Block.php',
-    'kirby\\editor\\h2block'    => __DIR__ . '/lib/H2Block.php',
-    'kirby\\editor\\h3block'    => __DIR__ . '/lib/H3Block.php',
-    'kirby\\editor\\hrblock'    => __DIR__ . '/lib/HrBlock.php',
-    'kirby\\editor\\imageblock' => __DIR__ . '/lib/ImageBlock.php',
-    'kirby\\editor\\videoblock' => __DIR__ . '/lib/VideoBlock.php',
+    'kirby\\editor\\blockquoteblock' => __DIR__ . '/lib/BlockquoteBlock.php',
+    'kirby\\editor\\h1block'         => __DIR__ . '/lib/H1Block.php',
+    'kirby\\editor\\h2block'         => __DIR__ . '/lib/H2Block.php',
+    'kirby\\editor\\h3block'         => __DIR__ . '/lib/H3Block.php',
+    'kirby\\editor\\hrblock'         => __DIR__ . '/lib/HrBlock.php',
+    'kirby\\editor\\imageblock'      => __DIR__ . '/lib/ImageBlock.php',
+    'kirby\\editor\\olblock'         => __DIR__ . '/lib/OlBlock.php',
+    'kirby\\editor\\ulblock'         => __DIR__ . '/lib/UlBlock.php',
+    'kirby\\editor\\videoblock'      => __DIR__ . '/lib/VideoBlock.php',
 ]);
+
+function kirbyTagMaker(array $attrs = []) {
+
+    array_walk($attrs, function (&$attr, $key) {
+        $attr = (string)$attr;
+
+        if ($attr === null || $attr === false || $attr === '') {
+            $attr = null;
+        } else {
+            $attr = $key . ': ' . $attr;
+        }
+    });
+
+    $attrs = array_filter($attrs);
+
+    if (empty($attrs)) {
+        return null;
+    }
+
+    return '(' . implode(' ', $attrs) . ')';
+}
 
 Kirby::plugin('getkirby/editor', [
     'fieldMethods' => [

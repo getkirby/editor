@@ -154,6 +154,33 @@ class Block
     }
 
     /**
+     * Convert inline html to markdown
+     *
+     * @param string $html
+     * @return string
+     */
+    public function htmlToMarkdown(string $html = null): string
+    {
+
+        $replace = [
+            '<code>'    => '`',
+            '</code>'   => '`',
+            '<strong>'  => '**',
+            '</strong>' => '**',
+            '<b>'       => '**',
+            '</b>'      => '**',
+            '<em>'      => '*',
+            '</em>'     => '*',
+            '<i>'       => '*',
+            '</i>'      => '*',
+        ];
+
+        $html = str_replace(array_keys($replace), array_values($replace), $html);
+
+        return $html;
+    }
+
+    /**
      * Returns the block id
      *
      * @return string
@@ -205,6 +232,16 @@ class Block
     }
 
     /**
+     * Markdown generator
+     *
+     * @return string
+     */
+    public function markdown(): string
+    {
+        return $this->htmlToMarkdown($this->content()) . PHP_EOL . PHP_EOL;
+    }
+
+    /**
      * Returns the parent model
      *
      * @return Kirby\Cms\Page | Kirby\Cms\Site | Kirby\Cms\File | Kirby\Cms\User
@@ -249,6 +286,26 @@ class Block
             'id'      => $this->id(),
             'type'    => $this->type(),
         ];
+    }
+
+    /**
+     * Alias for html()
+     *
+     * @return string
+     */
+    public function toHtml(): string
+    {
+        return $this->html();
+    }
+
+    /**
+     * Converts the block to markdown
+     *
+     * @return string
+     */
+    public function toMarkdown(): string
+    {
+        return $this->markdown();
     }
 
 }

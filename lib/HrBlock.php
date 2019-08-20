@@ -8,4 +8,9 @@ class HrBlock extends Block
     {
         return false;
     }
+
+    public function markdown(): string
+    {
+        return '****' . PHP_EOL . PHP_EOL;
+    }
 }

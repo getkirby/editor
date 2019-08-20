@@ -87,4 +87,30 @@ class Blocks extends Collection
         return array_values(parent::toArray($map));
     }
 
+    /**
+     * Alias for html()
+     *
+     * @return string
+     */
+    public function toHtml(): string
+    {
+        return $this->html();
+    }
+
+    /**
+     * Converts the collection to markdown
+     *
+     * @return string
+     */
+    public function toMarkdown(): string
+    {
+        $md = [];
+
+        foreach ($this->data as $block) {
+            $md[] = $block->toMarkdown();
+        }
+
+        return implode($md);
+    }
+
 }
