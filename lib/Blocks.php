@@ -76,6 +76,22 @@ class Blocks extends Collection
     }
 
     /**
+     * Converts the collection to markdown
+     *
+     * @return string
+     */
+    public function markdown(): string
+    {
+        $md = [];
+
+        foreach ($this->data as $block) {
+            $md[] = $block->markdown();
+        }
+
+        return implode($md);
+    }
+
+    /**
      * Convert the blocks to an array
      *
      * @return array
@@ -96,19 +112,13 @@ class Blocks extends Collection
     }
 
     /**
-     * Converts the collection to markdown
+     * Alias for markdown()
      *
      * @return string
      */
     public function toMarkdown(): string
     {
-        $md = [];
-
-        foreach ($this->data as $block) {
-            $md[] = $block->toMarkdown();
-        }
-
-        return implode($md);
+        return $this->markdown();
     }
 
 }

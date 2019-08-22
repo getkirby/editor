@@ -33,8 +33,10 @@ class ImageBlock extends Block
 
     public function markdown(): string
     {
+        $image = $this->image();
+
         $attrs = [
-            'image'   => $this->image()->id(),
+            'image'   => $image ? $image->id() : $this->attrs()->src(),
             'alt'     => $this->attrs()->alt(),
             'link'    => $this->attrs()->link(),
             'class'   => $this->attrs()->css(),
