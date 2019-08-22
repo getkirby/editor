@@ -26,8 +26,12 @@ class Parser
             ]);
         }
 
+        if (empty($dom) === true) {
+            return [];
+        }
+
         $result = [];
-        $skip   = ['meta', 'style', 'script', 'noscript'];
+        $skip   = ['meta', 'style', 'script', 'noscript', 'title'];
         $inline = [];
 
         foreach ($dom->getChildren() as $element) {
