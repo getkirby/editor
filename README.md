@@ -4,9 +4,9 @@ Kirby Editor is a new type of WYSIWYG editor for Kirby. It's a mixture between a
 
 ![Kirby Editor](https://user-images.githubusercontent.com/24532/62720884-4665e400-ba0b-11e9-9ece-3e756c8b6b4a.png)
 
-## Beta 
+## Beta
 
-We started testing the editor a while ago and it already works great. It is a pretty complex plugin though and we need some more help to get it 100% ready. Please report any issues in the [Issues](https://github.com/getkirby/editor/issues) section. 
+We started testing the editor a while ago and it already works great. It is a pretty complex plugin though and we need some more help to get it 100% ready. Please report any issues in the [Issues](https://github.com/getkirby/editor/issues) section.
 
 ## Features
 
@@ -30,10 +30,6 @@ We started testing the editor a while ago and it already works great. It is a pr
 
 ## Documentation
 https://github.com/getkirby/editor/wiki
-
-## License
-
-MIT
 
 ## Credits
 

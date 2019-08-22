@@ -2,7 +2,6 @@
     "name": "getkirby/editor",
     "description": "Kirby Editor",
     "type": "kirby-plugin",
-    "license": "MIT",
     "authors": [
         {
             "name": "Bastian Allgeier",
