@@ -1,9 +1,13 @@
 <?php
 
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/helpers.php';
+
 load([
     // base classes
     'kirby\\editor\\block'  => __DIR__ . '/lib/Block.php',
     'kirby\\editor\\blocks' => __DIR__ . '/lib/Blocks.php',
+    'kirby\\editor\\parser' => __DIR__ . '/lib/Parser.php',
 
     // block extensions
     'kirby\\editor\\blockquoteblock' => __DIR__ . '/lib/BlockquoteBlock.php',
@@ -17,26 +21,8 @@ load([
     'kirby\\editor\\videoblock'      => __DIR__ . '/lib/VideoBlock.php',
 ]);
 
-function kirbyTagMaker(array $attrs = []) {
-
-    array_walk($attrs, function (&$attr, $key) {
-        $attr = (string)$attr;
-
-        if ($attr === null || $attr === false || $attr === '') {
-            $attr = null;
-        } else {
-            $attr = $key . ': ' . $attr;
-        }
-    });
-
-    $attrs = array_filter($attrs);
-
-    if (empty($attrs)) {
-        return null;
-    }
-
-    return '(' . implode(' ', $attrs) . ')';
-}
+// load all parsers
+Kirby\Editor\Parser::$parsers = require_once __DIR__ . '/parsers.php';
 
 Kirby::plugin('getkirby/editor', [
     'fieldMethods' => [

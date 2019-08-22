@@ -54,7 +54,6 @@
 </template>
 
 <script>
-import Converters from "./Converters.js";
 import Options from "./Options.vue";
 
 import "./Plugins.js";
@@ -205,60 +204,6 @@ export default {
         this.appendAndFocus(block, this.selected);
       }
     },
-    htmlElementToBlocks(element) {
-
-      let blocks   = [];
-      let children = Array.from(element.children);
-
-      children = children.filter(child => {
-        if (['META', 'STYLE'].includes(child.tagName)) {
-          return false;
-        }
-
-        return true;
-      });
-
-      if (children.length === 0) {
-        if (element.innerHTML.length !== 0) {
-          blocks.push({
-            type: "paragraph",
-            content: element.innerHTML
-          });
-        }
-      } else {
-        children.forEach(child => {
-          const tag = child.tagName.toLowerCase();
-
-          if (Converters[tag]) {
-            const block = Converters[tag](child);
-            if (block) {
-              blocks.push(block);
-            }
-          } else {
-            blocks.push(...this.htmlElementToBlocks(child));
-          }
-        });
-      }
-
-      // add all required attributes
-      blocks = this.sanitize(blocks);
-
-      // filter empty paragraphs
-      blocks = blocks.filter(block => {
-        if (block.type === "paragraph" && block.content.length === 0) {
-          return false;
-        }
-
-        return true;
-      });
-
-      return blocks;
-    },
-    htmlToBlocks(html) {
-      let element = window.document.createElement("div");
-      element.innerHTML = html;
-      return this.htmlElementToBlocks(element);
-    },
     prepend(block, before) {
       block = this.createBlock(block);
       this.blocks.splice(before, 0, block);
@@ -275,10 +220,6 @@ export default {
       return (this.activeOptions || []).includes(type);
     },
     sanitize(blocks) {
-      if (blocks[0] && blocks[0].type === "auto") {
-        blocks = this.htmlToBlocks(blocks[0].content);
-      }
-
       if (blocks.length === 0) {
         blocks = [{
           type: "paragraph",
@@ -473,46 +414,31 @@ export default {
       }
     },
     onPaste(index, { html, text }) {
-      let blocks = this.htmlToBlocks(html);
 
-      if (blocks.length === 0) {
-        return false;
-      }
+      this.$api
+        .post(this.endpoints.field + "/paste", { html })
+        .then(blocks => {
 
-      if (blocks.length === 1) {
-        const selected = this.getSelectedBlockComponent();
+          if (blocks.length === 0) {
+            return;
+          }
 
-        selected.insertHtml(html);
-      } else {
-        const selected = this.getSelectedBlock();
+          if (blocks.length === 1) {
+            const selected = this.getSelectedBlockComponent();
+            selected.insertHtml(html);
+            return;
+          }
 
-        // append all pasted blocks
-        this.blocks.splice(index + 1, 0, ...blocks);
-      }
+          const selected = this.getSelectedBlock();
+
+          // append all pasted blocks
+          this.blocks.splice(index + 1, 0, ...blocks);
+
+        });
+
     },
     onPrev(cursor) {
       if (this.hasPreviousBlock(this.selected)) {
-
-        // let pos = "end";
-
-        // const selected = this.getSelectedBlockComponent();
-        // const prev     = this.getPreviousBlockComponent();
-
-        // if (selected.coordsAtCursor && prev.coordsAtPos && prev.posAtCoords) {
-        //   const selectedCoords = selected.coordsAtCursor();
-        //   const prevCoords     = prev.coordsAtEnd();
-
-        //   // calculate the nearest position of the prev cursor
-        //   const prevPos = prev.posAtCoords({
-        //     top: prevCoords.top,
-        //     left: selectedCoords.left
-        //   });
-
-        //   if (prevPos && prevPos.pos) {
-        //     pos = prevPos.pos;
-        //   }
-        // }
-
         this.focus(this.selected - 1, cursor);
       }
     },

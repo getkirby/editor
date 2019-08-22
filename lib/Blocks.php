@@ -36,13 +36,11 @@ class Blocks extends Collection
             try {
                 $blocks = Json::decode((string)$blocks);
             } catch (Throwable $e) {
-                $blocks = [
-                    [
-                        'type'    => 'auto',
-                        'content' => $parent->text()->value($blocks ?? '')->kt()->value(),
-                        'id'      => '_' . Str::random(9)
-                    ]
-                ];
+                $blocks = Parser::parse($blocks);
+                $blocks = array_map(function ($block) {
+                    $block['id'] = '_' . Str::random(9);
+                    return $block;
+                }, $blocks);
             }
         }
 

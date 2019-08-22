@@ -47,7 +47,14 @@ return [
                         ];
                     });
                 }
-            ]
+            ],
+            [
+                'pattern' => 'paste',
+                'method' => 'POST',
+                'action' => function () {
+                    return Kirby\Editor\Blocks::factory(get('html'), $this->field()->model())->toArray();
+                }
+            ],
         ];
     },
 ];
