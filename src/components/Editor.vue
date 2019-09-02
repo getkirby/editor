@@ -119,9 +119,9 @@ export default {
     const blocks = this.sanitize(this.value);
 
     return {
-      selected: 0,
       blocks: blocks,
-      modified: new Date()
+      modified: new Date(),
+      selected: 0,
     };
   },
   computed: {
@@ -152,35 +152,6 @@ export default {
     add(type) {
       this.appendAndFocus({ type: type }, this.selected);
     },
-    openOptions(index) {
-      const ref = this.$refs["block-options-" + index];
-
-      if (ref && ref[0] && ref[0].close) {
-        ref[0].open();
-      }
-    },
-    closeOptions(index) {
-      const ref = this.$refs["block-options-" + index];
-
-      if (ref && ref[0] && ref[0].close) {
-        ref[0].close();
-      }
-    },
-    createBlock(data) {
-      const defaults = {
-        attrs: {},
-        content: "",
-        id: this.uuid(),
-        type: "paragraph",
-      };
-
-      let block = {
-        ...defaults,
-        ...data
-      };
-
-      return block;
-    },
     append(block, after) {
       block = this.createBlock(block);
 
@@ -196,56 +167,6 @@ export default {
 
       return nextIndex;
     },
-    duplicate() {
-      const block = JSON.parse(JSON.stringify(this.getSelectedBlock()));
-
-      if (block) {
-        block.id = this.uuid();
-        this.appendAndFocus(block, this.selected);
-      }
-    },
-    prepend(block, before) {
-      block = this.createBlock(block);
-      this.blocks.splice(before, 0, block);
-      return before;
-    },
-    prependAndFocus(block, before) {
-      const prev = this.prepend(block, before);
-
-      this.$nextTick(() => {
-        this.focus(before);
-      });
-    },
-    optionIsActive(type) {
-      return (this.activeOptions || []).includes(type);
-    },
-    sanitize(blocks) {
-      if (blocks.length === 0) {
-        blocks = [{
-          type: "paragraph",
-        }];
-      }
-
-      // assign a unique ID to each block
-      blocks.map(block => {
-        block.id = block.id || this.uuid();
-        block.attrs = block.attrs || {};
-        block.content = block.content || "";
-        block.type = this.blockTypeExists(block.type) ? block.type : "paragraph";
-        return block;
-      });
-
-      return blocks;
-    },
-    menu() {
-      const component = this.getSelectedBlockComponent();
-
-      if (component && component.menu) {
-        return component.menu();
-      }
-
-      return [];
-    },
     appendAndFocus(block, after) {
       const next = this.append(block, after);
 
@@ -260,6 +181,13 @@ export default {
       }
 
       return true;
+    },
+    closeOptions(index) {
+      const ref = this.$refs["block-options-" + index];
+
+      if (ref && ref[0] && ref[0].close) {
+        ref[0].close();
+      }
     },
     convertTo(type) {
       let block          = this.getSelectedBlock();
@@ -287,65 +215,28 @@ export default {
       });
 
     },
-    getBlock(index) {
-      return this.blocks[index];
-    },
-    getBlockDefinition(index) {
-      const block = this.getBlock(index);
+    createBlock(data) {
+      const defaults = {
+        attrs: {},
+        content: "",
+        id: this.uuid(),
+        type: "paragraph",
+      };
 
-      if (block && this.$options.blocks[block.type]) {
-        return this.$options.blocks[block.type];
-      }
-    },
-    getNextBlock(index) {
-      return this.blocks[index + 1];
-    },
-    getPreviousBlock(index) {
-      return this.blocks[index - 1];
-    },
-    getSelectedBlock() {
-      if (this.selected !== null && this.selected !== undefined) {
-        return this.blocks[this.selected];
-      }
-    },
-    getSelectedBlockDefinition() {
-      if (this.selected !== null && this.selected !== undefined) {
-        return this.getBlockDefinition(this.selected);
-      }
-    },
-    getBlockComponent(index) {
-      if (index === undefined || index === null) {
-        return false;
-      }
+      let block = {
+        ...defaults,
+        ...data
+      };
 
-      const block = this.$refs['block-' + index];
+      return block;
+    },
+    duplicate() {
+      const block = JSON.parse(JSON.stringify(this.getSelectedBlock()));
 
-      if (block && block[0]) {
-        return block[0];
+      if (block) {
+        block.id = this.uuid();
+        this.appendAndFocus(block, this.selected);
       }
-
-      return false;
-    },
-    getFirstBlockComponent() {
-      return this.getBlockComponent(0);
-    },
-    getLastBlockComponent() {
-      return this.getBlockComponent(this.blocks.length - 1);
-    },
-    getNextBlockComponent() {
-      return this.getBlockComponent(this.selected + 1);
-    },
-    getPreviousBlockComponent() {
-      return this.getBlockComponent(this.selected - 1);
-    },
-    getSelectedBlockComponent() {
-      return this.getBlockComponent(this.selected);
-    },
-    hasPreviousBlock(index) {
-      return this.blocks[index - 1] !== undefined;
-    },
-    hasNextBlock(index) {
-      return this.blocks[index + 1] !== undefined;
     },
     focus(index, cursor) {
       let block = null;
@@ -360,8 +251,28 @@ export default {
         block.focus(cursor);
       }
     },
-    onAppend(index, block) {
-      this.appendAndFocus(block, index);
+    getBlock(index) {
+      return this.blocks[index];
+    },
+    getBlockComponent(index) {
+      if (index === undefined || index === null) {
+        return false;
+      }
+
+      const block = this.$refs['block-' + index];
+
+      if (block && block[0]) {
+        return block[0];
+      }
+
+      return false;
+    },
+    getBlockDefinition(index) {
+      const block = this.getBlock(index);
+
+      if (block && this.$options.blocks[block.type]) {
+        return this.$options.blocks[block.type];
+      }
     },
     getBlockTextLength(index) {
       const block = this.getBlock(index);
@@ -374,6 +285,77 @@ export default {
 
       return 0;
     },
+    getFirstBlockComponent() {
+      return this.getBlockComponent(0);
+    },
+    getLastBlockComponent() {
+      return this.getBlockComponent(this.blocks.length - 1);
+    },
+    getNextBlock(index) {
+      return this.blocks[index + 1];
+    },
+    getNextBlockComponent() {
+      return this.getBlockComponent(this.selected + 1);
+    },
+    getPreviousBlock(index) {
+      return this.blocks[index - 1];
+    },
+    getPreviousBlockComponent() {
+      return this.getBlockComponent(this.selected - 1);
+    },
+    getSelectedBlock() {
+      if (this.selected !== null && this.selected !== undefined) {
+        return this.blocks[this.selected];
+      }
+    },
+    getSelectedBlockComponent() {
+      return this.getBlockComponent(this.selected);
+    },
+    getSelectedBlockDefinition() {
+      if (this.selected !== null && this.selected !== undefined) {
+        return this.getBlockDefinition(this.selected);
+      }
+    },
+    hasNextBlock(index) {
+      return this.blocks[index + 1] !== undefined;
+    },
+    hasPreviousBlock(index) {
+      return this.blocks[index - 1] !== undefined;
+    },
+    menu() {
+      const component = this.getSelectedBlockComponent();
+
+      if (component && component.menu) {
+        return component.menu();
+      }
+
+      return [];
+    },
+    mergeWithPreviousBlock(index) {
+
+      const block         = this.getBlock(index);
+      const previousBlock = this.getPreviousBlock(index);
+
+      if (!block || !previousBlock) {
+        return false;
+      }
+
+      const previousBlockComponent = this.getPreviousBlockComponent(index);
+      const cursorAtEnd            = this.getBlockTextLength(index - 1);
+
+      previousBlock.content += block.content;
+      previousBlock.id       = this.uuid();
+
+      this.removeBlock(index);
+
+      this.$nextTick(() => {
+        this.focus(index - 1, cursorAtEnd);
+      });
+
+    },
+    onAppend(index, block) {
+      this.appendAndFocus(block, index);
+    },
     onBack(index, data) {
       if (data.html.length === 0) {
         this.onRemove(index);
@@ -385,11 +367,11 @@ export default {
       this.selected = index;
     },
     onConvert(index, type) {
-      const block  = this.getBlockComponent(index);
+      const block = this.getBlockComponent(index);
       const cursor = block.cursorPosition ? block.cursorPosition() : 0;
 
       this.blocks[index].type = type;
-      this.blocks[index].id   = this.uuid();
+      this.blocks[index].id = this.uuid();
 
       this.$nextTick(() => {
         this.focus(index, cursor);
@@ -437,14 +419,17 @@ export default {
         });
 
     },
+    onPrepend(index, block) {
+      this.prepend(block, index);
+      this.selected = index + 1;
+    },
     onPrev(cursor) {
       if (this.hasPreviousBlock(this.selected)) {
         this.focus(this.selected - 1, cursor);
       }
     },
-    onPrepend(index, block) {
-      this.prepend(block, index);
-      this.selected = index + 1;
+    onRemove(index) {
+      this.remove(index);
     },
     onSelectAll() {
       this.blocks.forEach((block, index) => {
@@ -456,9 +441,6 @@ export default {
     },
     onSplit(index, data) {
       this.split(index, data);
-    },
-    onRemove(index) {
-      this.remove(index);
     },
     onUpdate(index, data) {
       let block = this.blocks[index];
@@ -476,43 +458,24 @@ export default {
         this.focus(index, cursor);
       });
     },
-    mergeWithPreviousBlock(index) {
+    openOptions(index) {
+      const ref = this.$refs["block-options-" + index];
 
-      const block         = this.getBlock(index);
-      const previousBlock = this.getPreviousBlock(index);
-
-      if (!block || !previousBlock) {
-        return false;
+      if (ref && ref[0] && ref[0].close) {
+        ref[0].open();
       }
-
-      const previousBlockComponent = this.getPreviousBlockComponent(index);
-      const cursorAtEnd            = this.getBlockTextLength(index - 1);
-
-      previousBlock.content += block.content;
-      previousBlock.id       = this.uuid();
-
-      this.removeBlock(index);
-
-      this.$nextTick(() => {
-        this.focus(index - 1, cursorAtEnd);
-      });
-
     },
-    split(index, data) {
-      let selectedBlock = this.getSelectedBlock();
-
-      this.append({
-        type: data.type || selectedBlock.type,
-        content: data.after
-      }, index);
-
-      selectedBlock.content = data.before;
-      selectedBlock.id      = this.uuid();
+    prepend(block, before) {
+      block = this.createBlock(block);
+      this.blocks.splice(before, 0, block);
+      return before;
+    },
+    prependAndFocus(block, before) {
+      const prev = this.prepend(block, before);
 
       this.$nextTick(() => {
-        this.focus(index + 1, "start");
+        this.focus(before);
       });
-
     },
     remove(index) {
       if (index === null || index === undefined) {
@@ -540,6 +503,40 @@ export default {
     },
     removeSelectedBlock() {
       this.removeBlock(this.selected);
+    },
+    sanitize(blocks) {
+      if (blocks.length === 0) {
+        blocks = [{
+          type: "paragraph",
+        }];
+      }
+
+      // assign a unique ID to each block
+      blocks.map(block => {
+        block.id = block.id || this.uuid();
+        block.attrs = block.attrs || {};
+        block.content = block.content || "";
+        block.type = this.blockTypeExists(block.type) ? block.type : "paragraph";
+        return block;
+      });
+
+      return blocks;
+    },
+    split(index, data) {
+      let selectedBlock = this.getSelectedBlock();
+
+      this.append({
+        type: data.type || selectedBlock.type,
+        content: data.after
+      }, index);
+
+      selectedBlock.content = data.before;
+      selectedBlock.id      = this.uuid();
+
+      this.$nextTick(() => {
+        this.focus(index + 1, "start");
+      });
+
     },
     uuid() {
       return '_' + Math.random().toString(36).substr(2, 9);
