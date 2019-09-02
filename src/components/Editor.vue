@@ -16,7 +16,7 @@
           @keydown.meta.shift.o="openOptions(index)"
         >
           <k-editor-options
-            v-if="selected === index"
+            v-if="focused === index"
             :ref="'block-options-' + index"
             :blocks="$options.blocks"
             :block="$options.blocks[block.type]"
@@ -43,7 +43,6 @@
             @prepend="onPrepend(index, $event)"
             @prev="onPrev"
             @remove="onRemove(index, $event)"
-            @selectAll="onSelectAll(index, $event)"
             @split="onSplit(index, $event)"
             @update="onUpdate(index, $event)"
           />
@@ -121,12 +120,12 @@ export default {
     return {
       blocks: blocks,
       modified: new Date(),
-      selected: 0,
+      focused: 0,
     };
   },
   computed: {
-    selectedBlockDefinition() {
-      return this.getSelectedBlockDefinition();
+    focusedBlockDefinition() {
+      return this.getFocusedBlockDefinition();
     }
   },
   watch: {
@@ -136,9 +135,9 @@ export default {
       },
       deep: true
     },
-    selected(value) {
+    focused(value) {
       if (value === undefined || value === null || value === false) {
-        this.selected = 0;
+        this.focused = 0;
       }
     },
     value(value) {
@@ -150,7 +149,7 @@ export default {
   },
   methods: {
     add(type) {
-      this.appendAndFocus({ type: type }, this.selected);
+      this.appendAndFocus({ type: type }, this.focused);
     },
     append(block, after) {
       block = this.createBlock(block);
@@ -190,8 +189,8 @@ export default {
       }
     },
     convertTo(type) {
-      let block          = this.getSelectedBlock();
-      let blockComponent = this.getSelectedBlockComponent();
+      let block          = this.getFocusedBlock();
+      let blockComponent = this.getFocusedBlockComponent();
 
       if (!block) {
         return false;
@@ -211,7 +210,7 @@ export default {
       block.id   = this.uuid();
 
       this.$nextTick(() => {
-        this.focus(this.selected, cursor);
+        this.focus(this.focused, cursor);
       });
 
     },
@@ -231,18 +230,18 @@ export default {
       return block;
     },
     duplicate() {
-      const block = JSON.parse(JSON.stringify(this.getSelectedBlock()));
+      const block = JSON.parse(JSON.stringify(this.getFocusedBlock()));
 
       if (block) {
         block.id = this.uuid();
-        this.appendAndFocus(block, this.selected);
+        this.appendAndFocus(block, this.focused);
       }
     },
     focus(index, cursor) {
       let block = null;
 
       if (index === null || index === undefined) {
-        block = this.getSelectedBlockComponent() || this.getFirstBlockComponent();
+        block = this.getFocusedBlockComponent() || this.getFirstBlockComponent();
       } else {
         block = this.getBlockComponent(index) || this.getFirstBlockComponent();
       }
@@ -295,25 +294,25 @@ export default {
       return this.blocks[index + 1];
     },
     getNextBlockComponent() {
-      return this.getBlockComponent(this.selected + 1);
+      return this.getBlockComponent(this.focused + 1);
     },
     getPreviousBlock(index) {
       return this.blocks[index - 1];
     },
     getPreviousBlockComponent() {
-      return this.getBlockComponent(this.selected - 1);
+      return this.getBlockComponent(this.focused - 1);
     },
-    getSelectedBlock() {
-      if (this.selected !== null && this.selected !== undefined) {
-        return this.blocks[this.selected];
+    getFocusedBlock() {
+      if (this.focused !== null && this.focused !== undefined) {
+        return this.blocks[this.focused];
       }
     },
-    getSelectedBlockComponent() {
-      return this.getBlockComponent(this.selected);
+    getFocusedBlockComponent() {
+      return this.getBlockComponent(this.focused);
     },
-    getSelectedBlockDefinition() {
-      if (this.selected !== null && this.selected !== undefined) {
-        return this.getBlockDefinition(this.selected);
+    getFocusedBlockDefinition() {
+      if (this.focused !== null && this.focused !== undefined) {
+        return this.getBlockDefinition(this.focused);
       }
     },
     hasNextBlock(index) {
@@ -323,7 +322,7 @@ export default {
       return this.blocks[index - 1] !== undefined;
     },
     menu() {
-      const component = this.getSelectedBlockComponent();
+      const component = this.getFocusedBlockComponent();
 
       if (component && component.menu) {
         return component.menu();
@@ -364,7 +363,7 @@ export default {
       }
     },
     onBlur(index) {
-      this.selected = index;
+      this.focused = index;
     },
     onConvert(index, type) {
       const block = this.getBlockComponent(index);
@@ -378,8 +377,8 @@ export default {
       });
     },
     onFocus(index) {
-      this.selected = index;
-      const block = this.getSelectedBlockComponent();
+      this.focused = index;
+      const block = this.getFocusedBlockComponent();
     },
     onInput(index, data) {
       if (data.content !== undefined) {
@@ -391,8 +390,8 @@ export default {
       }
     },
     onNext(cursor) {
-      if (this.hasNextBlock(this.selected)) {
-        this.focus(this.selected + 1, cursor);
+      if (this.hasNextBlock(this.focused)) {
+        this.focus(this.focused + 1, cursor);
       }
     },
     onPaste(index, { html, text }) {
@@ -406,12 +405,10 @@ export default {
           }
 
           if (blocks.length === 1) {
-            const selected = this.getSelectedBlockComponent();
-            selected.insertHtml(html);
+            const focused = this.getFocusedBlockComponent();
+            focused.insertHtml(html);
             return;
           }
-
-          const selected = this.getSelectedBlock();
 
           // append all pasted blocks
           this.blocks.splice(index + 1, 0, ...blocks);
@@ -421,23 +418,15 @@ export default {
     },
     onPrepend(index, block) {
       this.prepend(block, index);
-      this.selected = index + 1;
+      this.focused = index + 1;
     },
     onPrev(cursor) {
-      if (this.hasPreviousBlock(this.selected)) {
-        this.focus(this.selected - 1, cursor);
+      if (this.hasPreviousBlock(this.focused)) {
+        this.focus(this.focused - 1, cursor);
       }
     },
     onRemove(index) {
       this.remove(index);
-    },
-    onSelectAll() {
-      this.blocks.forEach((block, index) => {
-        const component = this.getBlockComponent(index);
-        if (component.select) {
-          component.select();
-        }
-      });
     },
     onSplit(index, data) {
       this.split(index, data);
@@ -445,8 +434,8 @@ export default {
     onUpdate(index, data) {
       let block = this.blocks[index];
 
-      const selected = this.getSelectedBlockComponent();
-      const cursor   = selected.cursorPosition ? selected.cursorPosition() : 0;
+      const focused = this.getFocusedBlockComponent();
+      const cursor  = focused.cursorPosition ? focused.cursorPosition() : 0;
 
       this.$set(this.blocks, index, {
         ...block,
@@ -479,7 +468,7 @@ export default {
     },
     remove(index) {
       if (index === null || index === undefined) {
-        index = this.selected;
+        index = this.focused;
       }
 
       this.removeBlock(index);
@@ -488,10 +477,10 @@ export default {
         const previousBlock = this.getPreviousBlockComponent();
 
         if (previousBlock) {
-          this.selected = index - 1;
+          this.focused = index - 1;
           previousBlock.focus("end");
         } else {
-          this.selected = null;
+          this.focused = null;
         }
       } else {
         this.appendAndFocus();
@@ -501,8 +490,8 @@ export default {
     removeBlock(index) {
       this.blocks.splice(index, 1);
     },
-    removeSelectedBlock() {
-      this.removeBlock(this.selected);
+    removeFocusedBlock() {
+      this.removeBlock(this.focused);
     },
     sanitize(blocks) {
       if (blocks.length === 0) {
@@ -523,15 +512,15 @@ export default {
       return blocks;
     },
     split(index, data) {
-      let selectedBlock = this.getSelectedBlock();
+      let focusedBlock = this.getFocusedBlock();
 
       this.append({
-        type: data.type || selectedBlock.type,
+        type: data.type || focusedBlock.type,
         content: data.after
       }, index);
 
-      selectedBlock.content = data.before;
-      selectedBlock.id      = this.uuid();
+      focusedBlock.content = data.before;
+      focusedBlock.id      = this.uuid();
 
       this.$nextTick(() => {
         this.focus(index + 1, "start");
