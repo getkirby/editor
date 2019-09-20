@@ -15,23 +15,21 @@ class Parser
         return $parser(...$args);
     }
 
-    public static function parse($dom)
+    public static function parse($dom, bool $markdown = false)
     {
+        // convert html to dom element if a string is being passed
         if (is_string($dom) === true) {
-            $html = $dom;
-            $dom  = new Dom;
-            $dom->load($html, [
-                'whitespaceTextNode' => false,
-                'preserveLineBreaks' => true
-            ]);
+            $dom = static::dom($dom);
         }
 
         if (empty($dom) === true) {
             return [];
         }
 
-        $result = [];
+        // don't even work with those guys
         $skip   = ['meta', 'style', 'script', 'noscript', 'title'];
+
+        $result = [];
         $inline = [];
 
         foreach ($dom->getChildren() as $element) {
@@ -42,20 +40,44 @@ class Parser
             // kill all style attributes
             $element->removeAttribute('style');
 
+            // skip empty text nodes
+            if ($name === 'text' && empty(trim($element->innerHtml))) {
+                continue;
+            }
+
+            // convert markdown on text nodes if activated
+            if ($name === 'text' && $markdown === true) {
+                $html   = static::markdown($element->innerHTML);
+                $result = array_merge($result, static::parse($html));
+                continue;
+            }
+
+            // ignore unwanted elements
             if (in_array($name, $skip)) {
                 continue;
             }
 
+            // add all inline elements to the inline array
             if (static::isInline($name)) {
-                $inline[] = $element->outerHtml;
+                if ($name !== 'text') {
+                    // check for nested non-inline blocks
+                    $blocks = static::parse($element);
+
+                    foreach ($blocks as $childBlock) {
+                        if ($childBlock['type'] !== 'paragraph') {
+                            static::inlineEnd($inline, $result);
+                            $result[] = $childBlock;
+                        } else {
+                            $inline[] = $element->outerHtml;
+                        }
+                    }
+                } else {
+                    $inline[] = $element->outerHtml;
+                }
+
             } else {
 
-                // convert all previous inline elements
-                // to a new block
-                if (empty($inline) === false) {
-                    $result[] = static::inlineToParagraph($inline);
-                    $inline = [];
-                };
+                static::inlineEnd($inline, $result);
 
                 $blocks = static::$name($element);
 
@@ -65,17 +87,78 @@ class Parser
             }
         }
 
-        if (empty($inline) === false) {
-            $result[] = static::inlineToParagraph($inline);
-        }
+        static::inlineEnd($inline, $result);
 
         return $result;
-
     }
 
-    public static function sanitize(string $html, string $tags = '<a><b><em><i><strong><code>')
+    public static function dom($html)
     {
-        return trim(strip_tags($html, $tags));
+        $dom = new Dom;
+        $dom->load($html, [
+            'whitespaceTextNode' => false,
+            'preserveLineBreaks' => true
+        ]);
+
+        return $dom;
+    }
+
+    public static function sanitize(string $html, string $tags = '<a><b><em><i><strong><code><br>')
+    {
+        $html = trim(strip_tags($html, $tags));
+        $dom  = static::dom($html);
+
+        static::sanitizeAttributes($dom);
+
+        // rude replacements
+        $replace = [
+            '<b>'  => '<strong>',
+            '</b>' => '</strong>',
+            '<i>'  => '<em>',
+            '</i>' => '</em>',
+        ];
+
+        $html = $dom->outerHTML;
+        $html = str_replace(array_keys($replace), array_values($replace), $html);
+
+        return $html;
+    }
+
+    public static function sanitizeAttributes($element)
+    {
+        $keep = ['href', 'target', 'title'];
+
+        if (method_exists($element, 'getAttributes') === true) {
+            foreach ($element->getAttributes() as $key => $value) {
+                if (in_array($key, $keep) === false) {
+                    $element->removeAttribute($key);
+                }
+            }
+        }
+
+        if (method_exists($element, 'getChildren') === true) {
+            foreach ($element->getChildren() as $child) {
+                static::sanitizeAttributes($child);
+            }
+        }
+    }
+
+    public static function removeStyles($element)
+    {
+        if (method_exists($element, 'removeAttribute') === true) {
+            $element->removeAttribute('style');
+        }
+
+        if (method_exists($element, 'getChildren') === true) {
+            foreach ($element->getChildren() as $child) {
+                static::removeStyles($child);
+            }
+        }
+    }
+
+    public static function markdown($text)
+    {
+        return kirbytext($text);
     }
 
     public static function isInline($tag): bool
@@ -94,7 +177,7 @@ class Parser
             'em',
             'font',
             'i',
-            'img',
+            // 'img', => can be converted to its own block
             'input',
             'kbd',
             'label',
@@ -118,11 +201,31 @@ class Parser
         return in_array($tag, $inline) === true;
     }
 
-    public static function inlineToParagraph(array $inline): array
+    public static function inlineEnd(&$inline, &$result)
     {
+        // convert all previous inline elements
+        // to a new block
+        if (empty($inline) === false) {
+            if ($paragraph = static::inlineToParagraph($inline)) {
+                $result[] = $paragraph;
+            }
+
+            $inline = [];
+        };
+    }
+
+    public static function inlineToParagraph(array $inline)
+    {
+        $html = static::sanitize(implode($inline));
+        $skip = ['<br>', '<br/>', '<br />', ''];
+
+        if (in_array($html, $skip)) {
+            return false;
+        }
+
         return [
             'type'    => 'paragraph',
-            'content' => static::sanitize(implode($inline)),
+            'content' => $html,
         ];
     }
 

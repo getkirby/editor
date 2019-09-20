@@ -24,6 +24,11 @@ return [
             return Kirby\Editor\Blocks::factory($value, $this->model())->toArray();
         },
     ],
+    'computed' => [
+        'default' => function () {
+            return $this->value($this->default);
+        }
+    ],
     'save' => function ($value) {
         return json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     },

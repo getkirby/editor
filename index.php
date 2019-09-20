@@ -11,6 +11,7 @@ load([
 
     // block extensions
     'kirby\\editor\\blockquoteblock' => __DIR__ . '/lib/BlockquoteBlock.php',
+    'kirby\\editor\\codeblock'       => __DIR__ . '/lib/CodeBlock.php',
     'kirby\\editor\\h1block'         => __DIR__ . '/lib/H1Block.php',
     'kirby\\editor\\h2block'         => __DIR__ . '/lib/H2Block.php',
     'kirby\\editor\\h3block'         => __DIR__ . '/lib/H3Block.php',

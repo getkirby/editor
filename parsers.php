@@ -42,7 +42,7 @@ return [
         return [
             [
                 'type'    => 'h1',
-                'content' => $element->innerHtml,
+                'content' => Parser::sanitize($element->innerHtml),
                 'attrs'   => [
                     'id' => $element->getAttribute('id')
                 ]
@@ -53,7 +53,7 @@ return [
         return [
             [
                 'type'    => 'h2',
-                'content' => $element->innerHtml,
+                'content' => Parser::sanitize($element->innerHtml),
             ]
         ];
     },
@@ -61,7 +61,7 @@ return [
         return [
             [
                 'type'    => 'h3',
-                'content' => $element->innerHtml,
+                'content' => Parser::sanitize($element->innerHtml),
             ]
         ];
     },
@@ -82,6 +82,13 @@ return [
             $src = 'https://youtube.com/watch?v=' . $array[1];
         } else if (preg_match('!youtube-nocookie.com\/embed\/([a-zA-Z0-9_-]+)!', $src, $array) === 1) {
             $src = 'https://youtube.com/watch?v=' . $array[1];
+        } else {
+            return [
+                [
+                    'type' => 'kirbytext',
+                    'content' => $iframe->outerHTML,
+                ]
+            ];
         }
 
         return [
@@ -136,31 +143,7 @@ return [
 
     },
     'p' => function ($element) {
-
-        $images = $element->find('img');
-        $blocks = Parser::parse($element);
-        $append = [];
-
-        foreach ($blocks as $block) {
-            if ($block['type'] !== 'paragraph') {
-                $append[] = $block;
-            }
-        }
-
-        $paragraph = [
-            'type'    => 'paragraph',
-            'content' => Parser::sanitize($element->innerHtml),
-        ];
-
-        if (empty($paragraph['content']) && empty($append)) {
-            return null;
-        }
-
-        if (empty($paragraph['content'])) {
-            return $append;
-        }
-
-        return array_merge([$paragraph], $append);
+        return Parser::parse($element);
     },
     'pre' => function ($element) {
 
@@ -179,7 +162,7 @@ return [
                 [
                     'type'     => 'code',
                     'content'  => Html::decode($code->innerHtml),
-                    'language' => $lang
+                    'attrs'    => ['language' => $lang]
                 ]
             ];
         } else {
@@ -205,11 +188,14 @@ return [
 
         return $list;
     },
-    'tr' => function ($element) {
+    'table' => function ($element) {
+
+        Parser::removeStyles($element);
+
         return [
             [
-                'type'    => 'paragraph',
-                'content' => Parser::sanitize($element->innerHtml)
+                'type'    => 'kirbytext',
+                'content' => $element->outerHTML
             ]
         ];
     },
@@ -228,20 +214,6 @@ return [
         return $list;
     },
     'unknown' => function ($element) {
-        if ($element->tag->name() === 'text') {
-            $paragraphs = Str::split($element->innerHTML, PHP_EOL . PHP_EOL);
-            $blocks     = [];
-
-            foreach ($paragraphs as $paragraph) {
-                $blocks[] = [
-                    'type'    => 'paragraph',
-                    'content' => $paragraph
-                ];
-            }
-
-            return $blocks;
-        } else {
-            return Parser::parse($element);
-        }
+        return Parser::parse($element);
     }
 ];
