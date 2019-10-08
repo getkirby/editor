@@ -122,11 +122,11 @@ return [
             $filename = basename($match[2]);
 
             if ($parent = kirby()->$type($path)) {
-                $file = $parent->file($filename);
-
-                $attrs['id']    = $file->id();
-                $attrs['guid']  = $file->panelUrl(true);
-                $attrs['ratio'] = $file->ratio();
+                if ($file = $parent->file($filename)) {
+                    $attrs['id']    = $file->id();
+                    $attrs['guid']  = $file->panelUrl(true);
+                    $attrs['ratio'] = $file->ratio();
+                }
             }
         }
 

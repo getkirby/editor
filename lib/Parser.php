@@ -3,10 +3,12 @@
 namespace Kirby\Editor;
 
 use PHPHtmlParser\Dom;
+use PHPHtmlParser\Dom\HtmlNode;
 
 class Parser
 {
 
+    public static $parent = null;
     public static $parsers = [];
 
     public static function __callStatic(string $name, array $args = [])
@@ -15,8 +17,10 @@ class Parser
         return $parser(...$args);
     }
 
-    public static function parse($dom, bool $markdown = false)
+    public static function parse($dom, bool $markdown = false, $parent = null)
     {
+        static::$parent = $parent;
+
         // convert html to dom element if a string is being passed
         if (is_string($dom) === true) {
             $dom = static::dom($dom);
@@ -41,14 +45,7 @@ class Parser
             $element->removeAttribute('style');
 
             // skip empty text nodes
-            if ($name === 'text' && empty(trim($element->innerHtml))) {
-                continue;
-            }
-
-            // convert markdown on text nodes if activated
-            if ($name === 'text' && $markdown === true) {
-                $html   = static::markdown($element->innerHTML);
-                $result = array_merge($result, static::parse($html));
+            if ($name === 'text' && $element->innerHtml == '') {
                 continue;
             }
 
@@ -63,21 +60,25 @@ class Parser
                     // check for nested non-inline blocks
                     $blocks = static::parse($element);
 
-                    foreach ($blocks as $childBlock) {
-                        if ($childBlock['type'] !== 'paragraph') {
-                            static::inlineEnd($inline, $result);
-                            $result[] = $childBlock;
-                        } else {
-                            $inline[] = $element->outerHtml;
+                    if (empty($blocks) === true) {
+                        $inline[] = $element->outerHtml;
+                    } else {
+                        foreach ($blocks as $childBlock) {
+                            if ($childBlock['type'] !== 'paragraph') {
+                                static::inlineEnd($inline, $result, $markdown);
+                                $result[] = $childBlock;
+                            } else {
+                                $inline[] = $element->outerHtml;
+                            }
                         }
                     }
+
                 } else {
                     $inline[] = $element->outerHtml;
                 }
 
             } else {
-
-                static::inlineEnd($inline, $result);
+                static::inlineEnd($inline, $result, $markdown);
 
                 $blocks = static::$name($element);
 
@@ -87,7 +88,22 @@ class Parser
             }
         }
 
-        static::inlineEnd($inline, $result);
+        static::inlineEnd($inline, $result, $markdown);
+
+        // trim the content of each block
+        foreach ($result as $index => $block) {
+
+            if (isset($block['content'])) {
+                $content = trim($block['content'] ?? '');
+                $result[$index]['content'] = $content;
+
+                // remove empty paragraphs
+                if ($block['type'] === 'paragraph' && empty($content) === true) {
+                    unset($result[$index]);
+                }
+            }
+
+        }
 
         return $result;
     }
@@ -96,16 +112,20 @@ class Parser
     {
         $dom = new Dom;
         $dom->load($html, [
-            'whitespaceTextNode' => false,
+            'whitespaceTextNode' => true,
             'preserveLineBreaks' => true
         ]);
 
         return $dom;
     }
 
-    public static function sanitize(string $html, string $tags = '<a><b><em><i><strong><code><br>')
+    public static function sanitize(string $html, bool $trim = true, string $tags = '<a><b><em><i><strong><code><br><del>')
     {
-        $html = trim(strip_tags($html, $tags));
+        if ($trim === true) {
+            $html = trim($html);
+        }
+
+        $html = strip_tags($html, $tags);
         $dom  = static::dom($html);
 
         static::sanitizeAttributes($dom);
@@ -158,7 +178,9 @@ class Parser
 
     public static function markdown($text)
     {
-        return kirbytext($text);
+        return kirbytext($text, [
+            'parent' => static::$parent
+        ]);
     }
 
     public static function isInline($tag): bool
@@ -173,6 +195,7 @@ class Parser
             'button',
             'cite',
             'code',
+            'del',
             'dfn',
             'em',
             'font',
@@ -201,12 +224,16 @@ class Parser
         return in_array($tag, $inline) === true;
     }
 
-    public static function inlineEnd(&$inline, &$result)
+    public static function inlineEnd(&$inline, &$result, $markdown = false)
     {
         // convert all previous inline elements
         // to a new block
         if (empty($inline) === false) {
-            if ($paragraph = static::inlineToParagraph($inline)) {
+
+            if ($markdown === true) {
+                $html   = static::markdown(implode($inline));
+                $result = array_merge($result, static::parse($html));
+            } elseif ($paragraph = static::inlineToParagraph($inline)) {
                 $result[] = $paragraph;
             }
 
@@ -216,7 +243,7 @@ class Parser
 
     public static function inlineToParagraph(array $inline)
     {
-        $html = static::sanitize(implode($inline));
+        $html = static::sanitize(implode($inline), false);
         $skip = ['<br>', '<br/>', '<br />', ''];
 
         if (in_array($html, $skip)) {

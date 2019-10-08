@@ -40,7 +40,7 @@ class Blocks extends Collection
             try {
                 $blocks = Json::decode((string)$blocks);
             } catch (Throwable $e) {
-                $blocks = Parser::parse($blocks, true);
+                $blocks = Parser::parse($blocks, true, $parent);
                 $blocks = array_map(function ($block) {
                     $block['id'] = '_' . Str::random(9);
                     return $block;
