@@ -13,7 +13,7 @@ return [
     'editor.blocks.hr.label'                  => 'Linie',
     'editor.blocks.image.alt.label'           => 'Alternativer Text',
     'editor.blocks.image.caption.placeholder' => 'Bildunterschrift hinzufügen',
-    'editor.blocks.image.css.label'           => 'CSS Selektor',
+    'editor.blocks.image.css.label'           => 'CSS-Klasse',
     'editor.blocks.image.label'               => 'Bild',
     'editor.blocks.image.link.label'          => 'Link',
     'editor.blocks.image.link.placeholder'    => 'http://',
