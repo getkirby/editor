@@ -120,6 +120,9 @@ export default {
     },
     insertUpload(files, response) {
       this.fetchFile(response[0].link);
+      this.$events.$emit("file.create");
+      this.$events.$emit("model.update");
+      this.$store.dispatch("notification/success", ":)");
     },
     menu() {
 
