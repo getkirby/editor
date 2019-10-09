@@ -26,11 +26,13 @@
         </figcaption>
       </template>
       <template v-else>
-        <div class="k-editor-image-block-placeholder" ref="element" tabindex="0">
-          <k-button icon="upload" @click="uploadFile">{{ $t('editor.blocks.image.upload') }}</k-button>
-          {{ $t('editor.blocks.image.or') }}
-          <k-button icon="image" @click="selectFile">{{ $t('editor.blocks.image.select') }}</k-button>
-        </div>
+        <k-dropzone @drop="onDrop">
+          <div class="k-editor-image-block-placeholder" ref="element" tabindex="0">
+            <k-button icon="upload" @click="uploadFile">{{ $t('editor.blocks.image.upload') }}</k-button>
+            {{ $t('editor.blocks.image.or') }}
+            <k-button icon="image" @click="selectFile">{{ $t('editor.blocks.image.select') }}</k-button>
+          </div>
+        </k-dropzone>
       </template>
     </figure>
 
@@ -159,6 +161,13 @@ export default {
     },
     open() {
       window.open(this.attrs.src);
+    },
+    onDrop(files) {
+      this.$refs.fileUpload.drop(files, {
+        url: window.panel.api + "/" + this.endpoints.field + "/upload",
+        multiple: false,
+        accept: "image/*"
+      });
     },
     onLoad() {
       const image = this.$refs.image;
