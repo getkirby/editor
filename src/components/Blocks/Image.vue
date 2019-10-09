@@ -1,11 +1,6 @@
 <template>
   <div>
-    <figure
-      @keydown.delete="$emit('remove')"
-      @keydown.enter="$emit('append')"
-      @keydown.up.prevent="$emit('prev')"
-      @keydown.down.prevent="$emit('next')"
-    >
+    <figure>
       <template v-if="attrs.src">
         <div
           ref="element"
@@ -13,6 +8,10 @@
           :data-responsive="attrs.ratio"
           class="k-editor-image-block-wrapper"
           tabindex="0"
+          @keydown.delete="$emit('remove')"
+          @keydown.enter="$emit('append')"
+          @keydown.up="$emit('prev')"
+          @keydown.down="$emit('next')"
         >
           <img ref="image" :src="attrs.src" :key="attrs.src" @dblclick="selectFile" @load="onLoad">
         </div>
@@ -22,6 +21,10 @@
             :breaks="true"
             :placeholder="$t('editor.blocks.image.caption.placeholder') + '…'"
             :spellcheck="spellcheck"
+            @prev="focus"
+            @shiftTab="focus"
+            @tab="$emit('next')"
+            @next="$emit('next')"
             @input="caption"
           />
         </figcaption>
@@ -31,6 +34,10 @@
           ref="element"
           class="k-editor-image-block-placeholder"
           tabindex="0"
+          @keydown.native.delete="$emit('remove')"
+          @keydown.native.enter="$emit('append')"
+          @keydown.native.up.prevent="$emit('prev')"
+          @keydown.native.down.prevent="$emit('next')"
           @drop="onDrop"
         >
           <k-button icon="upload" @click="uploadFile" @keydown.enter.native.stop>{{ $t('editor.blocks.image.upload') }}</k-button>
@@ -102,7 +109,11 @@ export default {
       }
     },
     focus() {
-      this.$refs.element.$el.focus();
+      if (this.attrs.src) {
+        this.$refs.element.focus();
+      } else {
+        this.$refs.element.$el.focus();
+      }
     },
     input(data) {
       this.$emit("input", {
