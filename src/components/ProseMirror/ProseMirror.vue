@@ -126,6 +126,18 @@ export default {
   destroyed() {
     this.editor.destroy();
   },
+  computed: {
+    info() {
+      if (!this.editor) {
+        return {};
+      }
+
+      return {
+        top: this.coordsAtStart().top,
+        bottom: this.coordsAtEnd().bottom
+      };
+    }
+  },
   methods: {
     addMark(type, attrs) {
       const { from, to } = this.selection();
@@ -189,7 +201,7 @@ export default {
           const coords = (at === "end") ? this.coordsAtEnd() : this.coordsAtStart();
 
           const pos = this.posAtCoords({
-            top: coords.top,
+            top: coords.top + 1,
             left: cursor.left || 0
           });
 
@@ -211,6 +223,7 @@ export default {
             selection = TextSelection.atEnd(this.doc());
             break;
           default:
+
             try {
               selection = TextSelection.near(this.doc().resolve(cursor));
             } catch (e) {
