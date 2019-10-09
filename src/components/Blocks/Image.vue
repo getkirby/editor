@@ -1,6 +1,11 @@
 <template>
   <div>
-    <figure>
+    <figure
+      @keydown.delete="$emit('remove')"
+      @keydown.enter="$emit('append')"
+      @keydown.up.prevent="$emit('prev')"
+      @keydown.down.prevent="$emit('next')"
+    >
       <template v-if="attrs.src">
         <div
           ref="element"
@@ -8,10 +13,6 @@
           :data-responsive="attrs.ratio"
           class="k-editor-image-block-wrapper"
           tabindex="0"
-          @keydown.delete="$emit('remove')"
-          @keydown.enter="$emit('append')"
-          @keydown.up.prevent="$emit('prev')"
-          @keydown.down.prevent="$emit('next')"
         >
           <img ref="image" :src="attrs.src" :key="attrs.src" @dblclick="selectFile" @load="onLoad">
         </div>
@@ -26,12 +27,15 @@
         </figcaption>
       </template>
       <template v-else>
-        <k-dropzone @drop="onDrop">
-          <div class="k-editor-image-block-placeholder" ref="element" tabindex="0">
-            <k-button icon="upload" @click="uploadFile">{{ $t('editor.blocks.image.upload') }}</k-button>
-            {{ $t('editor.blocks.image.or') }}
-            <k-button icon="image" @click="selectFile">{{ $t('editor.blocks.image.select') }}</k-button>
-          </div>
+        <k-dropzone
+          ref="element"
+          class="k-editor-image-block-placeholder"
+          tabindex="0"
+          @drop="onDrop"
+        >
+          <k-button icon="upload" @click="uploadFile" @keydown.enter.native.stop>{{ $t('editor.blocks.image.upload') }}</k-button>
+          {{ $t('editor.blocks.image.or') }}
+          <k-button icon="image" @click="selectFile" @keydown.enter.native.stop>{{ $t('editor.blocks.image.select') }}</k-button>
         </k-dropzone>
       </template>
     </figure>
@@ -98,7 +102,7 @@ export default {
       }
     },
     focus() {
-      this.$refs.element.focus();
+      this.$refs.element.$el.focus();
     },
     input(data) {
       this.$emit("input", {
@@ -257,13 +261,15 @@ export default {
   font-style: italic;
   font-size: .875rem;
   width: 100%;
-  border: 1px dashed #ddd;
+  background: #efefef;
+  border: 1px solid #efefef;
   border-radius: 3px;
   text-align: center;
   color: #bbb;
 }
 .k-editor-image-block-placeholder:focus {
-  outline: 0;
+  outline: 2px solid rgba(#4271ae, 0.25);
+  outline-offset: 2px;
 }
 .k-editor-image-block-placeholder .k-button {
   padding: .75rem;
