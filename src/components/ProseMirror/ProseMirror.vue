@@ -307,6 +307,9 @@ export default {
 
       return selection.from === 0 && selection.to === end;
     },
+    length() {
+      return this.cursorAtEnd().pos;
+    },
     link() {
       const attrs = this.getMarkAttrs("link");
       this.$refs.link.open(attrs.href);

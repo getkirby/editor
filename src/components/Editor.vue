@@ -276,12 +276,10 @@ export default {
       }
     },
     getBlockTextLength(index) {
-      const block = this.getBlock(index);
+      const block = this.getBlockComponent(index);
 
-      if (block) {
-        let div = document.createElement("div");
-        div.innerHTML = block.content;
-        return div.innerText.length;
+      if (block && typeof block.length === "function") {
+        return block.length();
       }
 
       return 0;
