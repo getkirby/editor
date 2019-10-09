@@ -20,6 +20,7 @@
             :content="attrs.caption"
             :breaks="true"
             :placeholder="$t('editor.blocks.image.caption.placeholder') + '…'"
+            :spellcheck="spellcheck"
             @input="caption"
           />
         </figcaption>
@@ -47,13 +48,14 @@
 export default {
   icon: "image",
   props: {
-    endpoints: Object,
     attrs: {
       type: Object,
       default() {
         return {};
       }
-    }
+    },
+    endpoints: Object,
+    spellcheck: Boolean
   },
   computed: {
     style() {

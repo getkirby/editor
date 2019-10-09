@@ -19,6 +19,7 @@
           :content="attrs.caption"
           :breaks="true"
           :placeholder="$t('editor.blocks.video.caption.placeholder') + '…'"
+          :spellcheck="spellcheck"
           @input="caption"
         />
       </figcaption>
@@ -55,7 +56,8 @@ export default {
           src: null
         }
       }
-    }
+    },
+    spellcheck: Boolean
   },
   computed: {
     embedSrc() {

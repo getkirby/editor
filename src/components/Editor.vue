@@ -30,6 +30,7 @@
             :is="'k-editor-' + block.type + '-block'"
             :ref="'block-' + index"
             :attrs="block.attrs"
+            :spellcheck="spellcheck"
             :content="block.content"
             :endpoints="endpoints"
             v-bind="$options.blocks[block.type].bind"
@@ -67,6 +68,7 @@ export default {
     autofocus: Boolean,
     allowed: [Array, Object],
     endpoints: Object,
+    spellcheck: Boolean,
     value: {
       type: [Array, Object],
       default() {

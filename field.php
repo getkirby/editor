@@ -20,6 +20,9 @@ return [
 
             return $files;
         },
+        'spellcheck' => function (bool $spellcheck = true) {
+            return $spellcheck;
+        },
         'value' => function ($value = null) {
             return Kirby\Editor\Blocks::factory($value, $this->model())->toArray();
         },
@@ -30,6 +33,14 @@ return [
         }
     ],
     'save' => function ($value) {
+        if (empty($value)) {
+            return '';
+        }
+
+        if (count($value) === 1 && $value[0]['type'] === 'paragraph' && empty($value[0]['content']) === true) {
+            return '';
+        }
+
         return json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     },
     'api' => function () {

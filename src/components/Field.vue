@@ -8,6 +8,7 @@
       :autofocus="autofocus"
       :allowed="allowed"
       :endpoints="endpoints"
+      :spellcheck="spellcheck"
       :value="value"
       @input="onInput"
     />
@@ -26,6 +27,7 @@ export default {
     autofocus: Boolean,
     disabled: Boolean,
     endpoints: Object,
+    spellcheck: Boolean,
     label: String,
     required: Boolean,
     value: {
