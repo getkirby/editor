@@ -137,7 +137,8 @@ class Block
             throw new InvalidArgumentException('The block type is missing');
         }
 
-        $customName = 'Kirby\\Editor\\' . $params['type'] . 'Block';
+        $name = str_replace(['.', '-', '_'], '', $params['type']);
+        $customName = 'Kirby\\Editor\\' . $name . 'Block';
         $className  = class_exists($customName) ? $customName : 'Kirby\\Editor\\Block';
 
         return new $className($params, $blocks);
