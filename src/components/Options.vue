@@ -1,6 +1,6 @@
 <template>
   <nav class="k-editor-block-options">
-    <button type="button" class="k-editor-block-option k-sort-handle">
+    <button :disabled="!sortable" type="button" class="k-editor-block-option k-sort-handle">
       <k-icon type="sort" />
     </button>
     <k-dropdown>
@@ -85,6 +85,10 @@ export default {
           return [];
         };
       }
+    },
+    sortable: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -123,6 +127,10 @@ export default {
   padding: .25rem 0;
   align-items: center;
   justify-content: center;
+}
+.k-editor-block-option[disabled] {
+  visibility: hidden;
+  pointer-events: none;
 }
 .k-editor-block-option {
   cursor: pointer;

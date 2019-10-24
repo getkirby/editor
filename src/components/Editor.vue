@@ -1,18 +1,6 @@
 <template>
   <div class="k-editor" ref="editor">
-    <div class="k-editor-placeholder" v-if="blocks.length === 0">
-      <nav>
-        <k-button
-          v-for="blockType in $options.blocks"
-          :key="blockType.type"
-          :icon="blockType.icon"
-          @click="appendAndFocus({ type: blockType.type })"
-        >
-          {{ blockType.label }}
-        </k-button>
-      </nav>
-    </div>
-    <div v-else class="k-editor-blocks" :key="modified">
+    <div v-if="blocks.length" class="k-editor-blocks" :key="modified">
       <div class="k-editor-container">
         <k-draggable :list="blocks" :handle="true" :options="{delay: 2}">
           <div
@@ -33,6 +21,7 @@
               :blocks="$options.blocks"
               :block="$options.blocks[block.type]"
               :menu="menu"
+              :sortable="sortable"
               @add="add($event)"
               @convert="convertTo($event)"
               @duplicate="duplicate"
@@ -62,6 +51,18 @@
           </div>
         </k-draggable>
       </div>
+    </div>
+    <div v-else class="k-editor-placeholder">
+      <nav>
+        <k-button
+          v-for="blockType in $options.blocks"
+          :key="blockType.type"
+          :icon="blockType.icon"
+          @click="appendAndFocus({ type: blockType.type })"
+        >
+          {{ blockType.label }}
+        </k-button>
+      </nav>
     </div>
   </div>
 </template>
@@ -150,6 +151,9 @@ export default {
   computed: {
     focusedBlockDefinition() {
       return this.getFocusedBlockDefinition();
+    },
+    sortable() {
+      return this.blocks.length > 1;
     }
   },
   watch: {
