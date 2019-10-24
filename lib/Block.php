@@ -19,12 +19,12 @@ class Block
     use HasSiblings;
 
     /**
-     * @var Kirby\Cms\Content
+     * @var \Kirby\Cms\Content
      */
     protected $attrs;
 
     /**
-     * @var Kirby\Cms\Field
+     * @var \Kirby\Cms\Field
      */
     protected $content;
 
@@ -39,12 +39,12 @@ class Block
     protected $params;
 
     /**
-     * @var Kirby\Cms\Page|Kirby\Cms\Site|Kirby\Cms\User|Kirby\Cms\File
+     * @var \Kirby\Cms\Page|\Kirby\Cms\Site|\Kirby\Cms\User|\Kirby\Cms\File
      */
     protected $parent;
 
     /**
-     * @var Kirby\Editor\Blocks
+     * @var \Kirby\Editor\Blocks
      */
     protected $siblings;
 
@@ -57,7 +57,7 @@ class Block
      * Creates a new block object
      *
      * @param array $params
-     * @param Kirby\Editor\Blocks $siblings
+     * @param \Kirby\Editor\Blocks $siblings
      */
     public function __construct(array $params, Blocks $siblings = null)
     {
@@ -73,7 +73,7 @@ class Block
         $this->content  = $params['content'] ?? '';
         $this->id       = $params['id'];
         $this->parent   = $params['parent'] ?? null;
-        $this->siblings = $siblings;
+        $this->siblings = $siblings ?? new Blocks();
         $this->type     = $params['type'];
 
         // create content and attrs objects
@@ -94,7 +94,7 @@ class Block
     /**
      * Returns the attrs object
      *
-     * @return Kirby\Cms\Content
+     * @return \Kirby\Cms\Content
      */
     public function attrs()
     {
@@ -104,7 +104,7 @@ class Block
     /**
      * Returns the content object
      *
-     * @return Kirby\Cms\Field
+     * @return \Kirby\Cms\Field
      */
     public function content()
     {
@@ -129,7 +129,7 @@ class Block
     }
 
     /**
-     * @return Kirby\Editor\Block
+     * @return \Kirby\Editor\Block
      */
     public static function factory(array $params, Blocks $blocks)
     {
@@ -137,7 +137,7 @@ class Block
             throw new InvalidArgumentException('The block type is missing');
         }
 
-        $name = str_replace(['.', '-', '_'], '', $params['type']);
+        $name       = str_replace(['.', '-', '_'], '', $params['type']);
         $customName = 'Kirby\\Editor\\' . $name . 'Block';
         $className  = class_exists($customName) ? $customName : 'Kirby\\Editor\\Block';
 
@@ -194,7 +194,7 @@ class Block
     /**
      * Compares the block to another one
      *
-     * @param Block $block
+     * @param \Kirby\Editor\Block $block
      * @return boolean
      */
     public function is(Block $block): bool
@@ -225,7 +225,7 @@ class Block
     /**
      * Returns the Kirby instance
      *
-     * @return Kirby\Cms\App
+     * @return \Kirby\Cms\App
      */
     public function kirby()
     {
@@ -245,7 +245,7 @@ class Block
     /**
      * Returns the parent model
      *
-     * @return Kirby\Cms\Page | Kirby\Cms\Site | Kirby\Cms\File | Kirby\Cms\User
+     * @return \Kirby\Cms\Page | \Kirby\Cms\Site | \Kirby\Cms\File | \Kirby\Cms\User
      */
     public function parent()
     {
@@ -256,7 +256,7 @@ class Block
      * Returns the sibling collection
      * This is required by the HasSiblings trait
      *
-     * @return Kirby\Editor\Blocks
+     * @return \Kirby\Editor\Blocks
      */
     protected function siblingsCollection()
     {
@@ -287,6 +287,19 @@ class Block
             'id'      => $this->id(),
             'type'    => $this->type(),
         ];
+    }
+
+    /**
+     * Converts the block to html first
+     * and then places that inside a field
+     * object. This can be used further
+     * with all available field methods
+     *
+     * @return \Kirby\Cms\Field;
+     */
+    public function toField()
+    {
+        return new Field($this->parent, $this->id, $this->html());
     }
 
     /**
