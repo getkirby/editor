@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/helpers.php';
+@include_once __DIR__ . '/vendor/autoload.php';
+@include_once __DIR__ . '/helpers.php';
 
 load([
     // base classes
@@ -23,15 +23,15 @@ load([
 ]);
 
 // load all parsers
-Kirby\Editor\Parser::$parsers = require_once __DIR__ . '/parsers.php';
+Kirby\Editor\Parser::$parsers = @include_once __DIR__ . '/parsers.php';
 
 Kirby::plugin('getkirby/editor', [
     'fieldMethods' => [
-        'blocks'   => $method = require __DIR__ . '/method.php',
+        'blocks'   => $method = @include_once __DIR__ . '/method.php',
         'toBlocks' => $method,
     ],
     'fields' => [
-        'editor' => require __DIR__ . '/field.php'
+        'editor' => @include_once __DIR__ . '/field.php'
     ],
     'snippets' => [
         'editor/blockquote' => __DIR__ . '/snippets/blockquote.php',
@@ -48,17 +48,17 @@ Kirby::plugin('getkirby/editor', [
         'editor/video'      => __DIR__ . '/snippets/video.php',
     ],
     'translations' => [
-        'de'    => require __DIR__ . '/i18n/de.php',
-        'en'    => require __DIR__ . '/i18n/en.php',
-        'es'    => require __DIR__ . '/i18n/es.php',
-        'fr'    => require __DIR__ . '/i18n/fr.php',
-        'it'    => require __DIR__ . '/i18n/it.php',
-        'lt'    => require __DIR__ . '/i18n/lt.php',
-        'nl'    => require __DIR__ . '/i18n/nl.php',
-        'pt_BR' => require __DIR__ . '/i18n/pt_BR.php',
-        'pt_PT' => require __DIR__ . '/i18n/pt_PT.php',
-        'ru'    => require __DIR__ . '/i18n/ru.php',
-        'sv_SE' => require __DIR__ . '/i18n/sv_SE.php',
-        'tr'    => require __DIR__ . '/i18n/tr.php',
+        'de'    => @include_once __DIR__ . '/i18n/de.php',
+        'en'    => @include_once __DIR__ . '/i18n/en.php',
+        'es'    => @include_once __DIR__ . '/i18n/es.php',
+        'fr'    => @include_once __DIR__ . '/i18n/fr.php',
+        'it'    => @include_once __DIR__ . '/i18n/it.php',
+        'lt'    => @include_once __DIR__ . '/i18n/lt.php',
+        'nl'    => @include_once __DIR__ . '/i18n/nl.php',
+        'pt_BR' => @include_once __DIR__ . '/i18n/pt_BR.php',
+        'pt_PT' => @include_once __DIR__ . '/i18n/pt_PT.php',
+        'ru'    => @include_once __DIR__ . '/i18n/ru.php',
+        'sv_SE' => @include_once __DIR__ . '/i18n/sv_SE.php',
+        'tr'    => @include_once __DIR__ . '/i18n/tr.php',
     ]
 ]);
