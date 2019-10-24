@@ -64,6 +64,26 @@ class Blocks extends Collection
     }
 
     /**
+     * Checks if there's a block of the given type
+     *
+     * @param string $type
+     * @return bool
+     */
+    public function hasBlock($type): bool
+    {
+        $result = false;
+
+        foreach ($this->data as $block) {
+            if ($block->type() === $type) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Convert all blocks to HTML
      *
      * @return string
