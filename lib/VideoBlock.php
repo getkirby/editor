@@ -6,7 +6,6 @@ use Throwable;
 
 class VideoBlock extends Block
 {
-
     public function controller(): array
     {
         $data = parent::controller();
@@ -38,5 +37,4 @@ class VideoBlock extends Block
 
         return kirbyTagMaker($attrs) . PHP_EOL . PHP_EOL;
     }
-
 }

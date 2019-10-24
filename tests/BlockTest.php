@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class BlockTest extends TestCase
 {
-
     public function test__construct()
     {
         $block = new Block([
@@ -174,5 +173,4 @@ class BlockTest extends TestCase
 
         $this->assertEquals("Test\n\n", $block->toMarkdown());
     }
-
 }

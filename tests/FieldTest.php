@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 class FieldTest extends TestCase
 {
-
     public function field(array $args = [])
     {
         $model = new Page([
@@ -87,5 +86,4 @@ class FieldTest extends TestCase
 
         $this->assertEquals([], $field->default());
     }
-
 }

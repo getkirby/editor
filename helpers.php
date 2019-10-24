@@ -1,7 +1,7 @@
 <?php
 
-function kirbyTagMaker(array $attrs = []) {
-
+function kirbyTagMaker(array $attrs = [])
+{
     array_walk($attrs, function (&$attr, $key) {
         $attr = (string)$attr;
 
@@ -20,4 +20,3 @@ function kirbyTagMaker(array $attrs = []) {
 
     return '(' . implode(' ', $attrs) . ')';
 }
-

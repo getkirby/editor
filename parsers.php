@@ -20,7 +20,6 @@ return [
         ];
     },
     'figure' => function ($element) {
-
         $caption = null;
 
         if ($figcaption = $element->find('figcaption')[0]) {
@@ -36,7 +35,6 @@ return [
                 'caption' => $caption
             ]);
         }
-
     },
     'h1' => function ($element) {
         return [
@@ -73,14 +71,13 @@ return [
         ];
     },
     'iframe' => function ($iframe, array $attrs = []) {
-
         $src = $iframe->getAttribute('src');
 
         if (preg_match('!player.vimeo.com\/video\/([0-9]+)!i', $src, $array) === 1) {
             $src = 'https://vimeo.com/' . $array[1];
-        } else if (preg_match('!youtube.com\/embed\/([a-zA-Z0-9_-]+)!', $src, $array) === 1) {
+        } elseif (preg_match('!youtube.com\/embed\/([a-zA-Z0-9_-]+)!', $src, $array) === 1) {
             $src = 'https://youtube.com/watch?v=' . $array[1];
-        } else if (preg_match('!youtube-nocookie.com\/embed\/([a-zA-Z0-9_-]+)!', $src, $array) === 1) {
+        } elseif (preg_match('!youtube-nocookie.com\/embed\/([a-zA-Z0-9_-]+)!', $src, $array) === 1) {
             $src = 'https://youtube.com/watch?v=' . $array[1];
         } else {
             return [
@@ -101,7 +98,6 @@ return [
         ];
     },
     'img' => function ($image, array $attrs = []) {
-
         $parent = $image->getParent();
         $link   = null;
 
@@ -140,15 +136,12 @@ return [
                 ], $attrs)
             ]
         ];
-
     },
     'p' => function ($element) {
         return Parser::parse($element);
     },
     'pre' => function ($element) {
-
         if ($code = $element->find('code')[0]) {
-
             $class = $code->getAttribute('class');
             $lang  = null;
 
@@ -189,7 +182,6 @@ return [
         return $list;
     },
     'table' => function ($element) {
-
         Parser::removeStyles($element);
 
         return [

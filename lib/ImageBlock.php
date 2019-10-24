@@ -2,12 +2,10 @@
 
 namespace Kirby\Editor;
 
-use Kirby\Toolkit\F;
 use Throwable;
 
 class ImageBlock extends Block
 {
-
     public function controller(): array
     {
         $data = parent::controller();
@@ -62,5 +60,4 @@ class ImageBlock extends Block
 
         return $data;
     }
-
 }

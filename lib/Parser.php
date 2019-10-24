@@ -3,11 +3,9 @@
 namespace Kirby\Editor;
 
 use PHPHtmlParser\Dom;
-use PHPHtmlParser\Dom\HtmlNode;
 
 class Parser
 {
-
     public static $parent = null;
     public static $parsers = [];
 
@@ -37,7 +35,6 @@ class Parser
         $inline = [];
 
         foreach ($dom->getChildren() as $element) {
-
             $tag  = $element->tag;
             $name = $tag->name();
 
@@ -72,11 +69,9 @@ class Parser
                             }
                         }
                     }
-
                 } else {
                     $inline[] = $element->outerHtml;
                 }
-
             } else {
                 static::inlineEnd($inline, $result, $markdown);
 
@@ -92,7 +87,6 @@ class Parser
 
         // trim the content of each block
         foreach ($result as $index => $block) {
-
             if (isset($block['content'])) {
                 $content = trim($block['content'] ?? '');
                 $result[$index]['content'] = $content;
@@ -102,7 +96,6 @@ class Parser
                     unset($result[$index]);
                 }
             }
-
         }
 
         return $result;
@@ -110,7 +103,7 @@ class Parser
 
     public static function dom($html)
     {
-        $dom = new Dom;
+        $dom = new Dom();
         $dom->loadStr($html, [
             'whitespaceTextNode' => true,
             'preserveLineBreaks' => true
@@ -229,7 +222,6 @@ class Parser
         // convert all previous inline elements
         // to a new block
         if (empty($inline) === false) {
-
             if ($markdown === true) {
                 $html   = static::markdown(implode($inline));
                 $result = array_merge($result, static::parse($html));
@@ -238,7 +230,7 @@ class Parser
             }
 
             $inline = [];
-        };
+        }
     }
 
     public static function inlineToParagraph(array $inline)
@@ -255,5 +247,4 @@ class Parser
             'content' => $html,
         ];
     }
-
 }

@@ -16,5 +16,9 @@
     },
     "config": {
         "optimize-autoloader": true
+    },
+    "scripts": {
+        "analyze": "phpstan analyse",
+        "fix": "php-cs-fixer fix --config .php_cs"
     }
 }

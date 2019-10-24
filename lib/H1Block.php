@@ -29,5 +29,4 @@ class H1Block extends Block
     {
         return str_repeat('#', $this->level()) . ' ' . $this->htmlToMarkdown($this->content()) . PHP_EOL . PHP_EOL;
     }
-
 }

@@ -10,7 +10,6 @@ use Throwable;
 
 class Blocks extends Collection
 {
-
     /**
      * Return HTML when the collection is
      * converted to a string
@@ -34,7 +33,7 @@ class Blocks extends Collection
     public static function factory($blocks, $parent, array $options = [])
     {
         if (empty($blocks) === true) {
-            return new static;
+            return new static();
         }
 
         if (is_array($blocks) === false) {
@@ -53,7 +52,7 @@ class Blocks extends Collection
             $blocks = [];
         }
 
-        $collection = new static;
+        $collection = new static();
 
         foreach ($blocks as $params) {
             $params['parent']  = $parent;
@@ -126,5 +125,4 @@ class Blocks extends Collection
     {
         return $this->markdown();
     }
-
 }

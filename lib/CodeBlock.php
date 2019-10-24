@@ -2,8 +2,6 @@
 
 namespace Kirby\Editor;
 
-use Kirby\Toolkit\Str;
-
 class CodeBlock extends Block
 {
     public function markdown(): string

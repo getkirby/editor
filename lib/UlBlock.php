@@ -4,7 +4,6 @@ namespace Kirby\Editor;
 
 class UlBlock extends Block
 {
-
     public function prefix()
     {
         return '-';
@@ -21,5 +20,4 @@ class UlBlock extends Block
 
         return $this->prefix() . ' ' . $this->htmlToMarkdown($this->content()) . $break;
     }
-
 }

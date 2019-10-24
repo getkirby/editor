@@ -15,7 +15,6 @@ use Kirby\Cms\HasSiblings;
  */
 class Block
 {
-
     use HasSiblings;
 
     /**
@@ -168,7 +167,6 @@ class Block
      */
     public function htmlToMarkdown(string $html = null): string
     {
-
         $replace = [
             '<code>'    => '`',
             '</code>'   => '`',
@@ -201,7 +199,7 @@ class Block
      * Compares the block to another one
      *
      * @param \Kirby\Editor\Block $block
-     * @return boolean
+     * @return bool
      */
     public function is(Block $block): bool
     {
@@ -211,7 +209,7 @@ class Block
     /**
      * Checks if the block is empty
      *
-     * @return boolean
+     * @return bool
      */
     public function isEmpty(): bool
     {
@@ -221,7 +219,7 @@ class Block
     /**
      * Checks if the block is not empty
      *
-     * @return boolean
+     * @return bool
      */
     public function isNotEmpty(): bool
     {
@@ -337,5 +335,4 @@ class Block
     {
         return $this->markdown();
     }
-
 }

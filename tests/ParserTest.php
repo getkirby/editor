@@ -3,14 +3,11 @@
 namespace Kirby\Editor;
 
 use Kirby\Cms\App;
-use Kirby\Cms\Page;
-use Kirby\Toolkit\Dir;
 use Kirby\Toolkit\F;
 use PHPUnit\Framework\TestCase;
 
 class ParserTest extends TestCase
 {
-
     public function testParser()
     {
         $examples = glob(__DIR__ . '/fixtures/ParserTest/*.html');
@@ -47,5 +44,4 @@ class ParserTest extends TestCase
 
         $this->assertEquals('/pages/test/files/test.jpg', $block->attrs()->guid());
     }
-
 }

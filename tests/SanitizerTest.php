@@ -2,13 +2,10 @@
 
 namespace Kirby\Editor;
 
-use Kirby\Toolkit\Dir;
-use Kirby\Toolkit\F;
 use PHPUnit\Framework\TestCase;
 
 class SanitizerTest extends TestCase
 {
-
     public function provider()
     {
         return [
@@ -51,5 +48,4 @@ class SanitizerTest extends TestCase
         $html = Parser::sanitize($input);
         $this->assertEquals($expected, $html);
     }
-
 }
