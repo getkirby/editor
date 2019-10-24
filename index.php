@@ -27,7 +27,8 @@ Kirby\Editor\Parser::$parsers = require_once __DIR__ . '/parsers.php';
 
 Kirby::plugin('getkirby/editor', [
     'fieldMethods' => [
-        'blocks' => require __DIR__ . '/method.php'
+        'blocks'   => $method = require __DIR__ . '/method.php',
+        'toBlocks' => $method,
     ],
     'fields' => [
         'editor' => require __DIR__ . '/field.php'
