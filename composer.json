@@ -12,7 +12,12 @@
         }
     ],
     "require": {
-        "getkirby/composer-installer": "^1.1"
+        "php": ">=7.1.0",
+        "getkirby/composer-installer": "^1.1",
+        "paquettg/php-html-parser": "^2.1"
+    },
+    "require-dev": {
+        "getkirby/kirby": "^3.2",
     },
     "config": {
         "optimize-autoloader": true
