@@ -37,10 +37,6 @@ return [
             return '';
         }
 
-        if (count($value) === 1 && $value[0]['type'] === 'paragraph' && empty($value[0]['content']) === true) {
-            return '';
-        }
-
         return json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     },
     'api' => function () {

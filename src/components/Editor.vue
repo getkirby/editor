@@ -1,54 +1,67 @@
 <template>
   <div class="k-editor" ref="editor">
-    <div class="k-editor-blocks" :key="modified">
-
-      <k-draggable :list="blocks" :handle="true" :options="{delay: 2}">
-        <div
-          v-for="(block, index) in blocks"
-          v-if="blockTypeExists(block.type)"
-          :key="block.id"
-          :class="['k-editor-block', 'k-editor-' + block.type + '-block']"
-          :data-indent="block.attrs.indent"
-          @click="focus(index)"
-          @focusin="onFocus(index)"
-          @focusout="onBlur(index)"
-          @keydown.meta.d.prevent="duplicate"
-          @keydown.meta.shift.o="openOptions(index)"
+    <div class="k-editor-placeholder" v-if="blocks.length === 0">
+      <nav>
+        <k-button
+          v-for="blockType in $options.blocks"
+          :key="blockType.type"
+          :icon="blockType.icon"
+          @click="appendAndFocus({ type: blockType.type })"
         >
-          <k-editor-options
-            v-if="focused === index"
-            :ref="'block-options-' + index"
-            :blocks="$options.blocks"
-            :block="$options.blocks[block.type]"
-            :menu="menu"
-            @add="add($event)"
-            @convert="convertTo($event)"
-            @duplicate="duplicate"
-            @remove="remove"
-          />
-          <component
-            :is="'k-editor-' + block.type + '-block'"
-            :ref="'block-' + index"
-            :attrs="block.attrs"
-            :spellcheck="spellcheck"
-            :content="block.content"
-            :endpoints="endpoints"
-            v-bind="$options.blocks[block.type].bind"
-            @click.native.stop="closeOptions(index)"
-            @append="onAppend(index, $event)"
-            @back="onBack(index, $event)"
-            @convert="onConvert(index, $event)"
-            @input="onInput(index, $event)"
-            @next="onNext"
-            @paste="onPaste(index, $event)"
-            @prepend="onPrepend(index, $event)"
-            @prev="onPrev"
-            @remove="onRemove(index, $event)"
-            @split="onSplit(index, $event)"
-            @update="onUpdate(index, $event)"
-          />
-        </div>
-      </k-draggable>
+          {{ blockType.label }}
+        </k-button>
+      </nav>
+    </div>
+    <div v-else class="k-editor-blocks" :key="modified">
+      <div class="k-editor-container">
+        <k-draggable :list="blocks" :handle="true" :options="{delay: 2}">
+          <div
+            v-for="(block, index) in blocks"
+            v-if="blockTypeExists(block.type)"
+            :key="block.id"
+            :class="['k-editor-block', 'k-editor-' + block.type + '-block']"
+            :data-indent="block.attrs.indent"
+            @click="focus(index)"
+            @focusin="onFocus(index)"
+            @focusout="onBlur(index)"
+            @keydown.meta.d.prevent="duplicate"
+            @keydown.meta.shift.o="openOptions(index)"
+          >
+            <k-editor-options
+              v-if="focused === index"
+              :ref="'block-options-' + index"
+              :blocks="$options.blocks"
+              :block="$options.blocks[block.type]"
+              :menu="menu"
+              @add="add($event)"
+              @convert="convertTo($event)"
+              @duplicate="duplicate"
+              @remove="remove"
+            />
+            <component
+              :is="'k-editor-' + block.type + '-block'"
+              :ref="'block-' + index"
+              :attrs="block.attrs"
+              :spellcheck="spellcheck"
+              :content="block.content"
+              :endpoints="endpoints"
+              v-bind="$options.blocks[block.type].bind"
+              @click.native.stop="closeOptions(index)"
+              @append="onAppend(index, $event)"
+              @back="onBack(index, $event)"
+              @convert="onConvert(index, $event)"
+              @input="onInput(index, $event)"
+              @next="onNext"
+              @paste="onPaste(index, $event)"
+              @prepend="onPrepend(index, $event)"
+              @prev="onPrev"
+              @remove="onRemove(index, $event)"
+              @split="onSplit(index, $event)"
+              @update="onUpdate(index, $event)"
+            />
+          </div>
+        </k-draggable>
+      </div>
     </div>
   </div>
 </template>
@@ -102,6 +115,15 @@ export default {
   },
   created() {
 
+    this.$store.subscribeAction({
+      after: (action, state) => {
+        if (action.type === "form/revert") {
+          this.blocks = this.sanitize(this.value);
+          this.modified = new Date()
+        }
+      }
+    });
+
     // discard all unallowed block types
     if (this.allowed && this.allowed.length > 0) {
       Object.keys(this.$options.blocks).forEach(type => {
@@ -141,13 +163,7 @@ export default {
       if (value === undefined || value === null || value === false) {
         this.focused = 0;
       }
-    },
-    value(value) {
-      if (JSON.stringify(value) !== JSON.stringify(this.blocks)) {
-        this.blocks = this.sanitize(value);
-        this.modified = new Date()
-      }
-    },
+    }
   },
   methods: {
     add(type) {
@@ -482,8 +498,6 @@ export default {
         } else {
           this.focused = null;
         }
-      } else {
-        this.appendAndFocus();
       }
 
     },
@@ -495,6 +509,7 @@ export default {
     },
     sanitize(blocks) {
       if (blocks.length === 0) {
+        return [];
         blocks = [{
           type: "paragraph",
         }];
@@ -535,17 +550,39 @@ export default {
 </script>
 
 <style lang="scss">
-.k-editor {
-  position: relative;
+.k-editor-placeholder nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: .75rem;
+}
+.k-editor-placeholder .k-button {
+  display: flex;
+  background: rgba(#000, .075);
+  text-align: left;
+  padding: .5rem .75rem;
+  align-items: center;
+  height: 38px;
+  white-space: nowrap;
+  border-radius: 2px;
+  transition: all .2s;
+}
+.k-editor-placeholder .k-button:hover {
   background: #fff;
-  margin-bottom: 1.5rem;
   box-shadow: rgba(#000, 0.05) 0 2px 5px;
 }
-.k-editor-blocks {
+
+
+.k-editor-container {
   position: relative;
   padding: 1.5rem 0;
   max-width: 50rem;
   margin: 0 auto;
+}
+.k-editor-blocks {
+  position: relative;
+  background: #fff;
+  margin-bottom: 1.5rem;
+  box-shadow: rgba(#000, 0.05) 0 2px 5px;
 }
 .k-editor-block {
   position: relative;
