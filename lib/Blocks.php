@@ -28,9 +28,10 @@ class Blocks extends Collection
      *
      * @param string|array $value
      * @param Page|File|User|Site $parent
+     * @param array $options
      * @return Kirby\Editor\Blocks
      */
-    public static function factory($blocks, $parent)
+    public static function factory($blocks, $parent, array $options = [])
     {
         if (empty($blocks) === true) {
             return new static;
@@ -55,7 +56,8 @@ class Blocks extends Collection
         $collection = new static;
 
         foreach ($blocks as $params) {
-            $params['parent'] = $parent;
+            $params['parent']  = $parent;
+            $params['options'] = $options;
             $block = Block::factory($params, $collection);
             $collection->append($block->id(), $block);
         }

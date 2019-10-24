@@ -51,15 +51,6 @@ export default {
     "k-link-dialog": LinkDialog,
     "k-editable-toolbar": Toolbar
   },
-  fields: {
-    link: {
-      href: {
-        label: "URL",
-        type: "text",
-        icon: "url"
-      }
-    }
-  },
   props: {
     content: {
       type: String,

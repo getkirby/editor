@@ -22,7 +22,7 @@ class H1Block extends Block
 
     public function level(): int
     {
-        return option('kirby.editor.headingLevel', 1);
+        return $this->options['headingLevel'] ?? option('kirby.editor.headingLevel', 1);
     }
 
     public function markdown(): string

@@ -36,6 +36,11 @@ class Block
     /**
      * @var array
      */
+    protected $options;
+
+    /**
+     * @var array
+     */
     protected $params;
 
     /**
@@ -72,6 +77,7 @@ class Block
         $this->attrs    = $params['attrs'] ?? [];
         $this->content  = $params['content'] ?? '';
         $this->id       = $params['id'];
+        $this->options  = $params['options'] ?? [];
         $this->parent   = $params['parent'] ?? null;
         $this->siblings = $siblings ?? new Blocks();
         $this->type     = $params['type'];
@@ -240,6 +246,16 @@ class Block
     public function markdown(): string
     {
         return $this->htmlToMarkdown($this->content()) . PHP_EOL . PHP_EOL;
+    }
+
+    /**
+     * Returns all blog options
+     *
+     * @return array
+     */
+    public function options(): array
+    {
+        return $this->options;
     }
 
     /**
