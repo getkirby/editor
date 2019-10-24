@@ -111,7 +111,7 @@ class Parser
     public static function dom($html)
     {
         $dom = new Dom;
-        $dom->load($html, [
+        $dom->loadStr($html, [
             'whitespaceTextNode' => true,
             'preserveLineBreaks' => true
         ]);
