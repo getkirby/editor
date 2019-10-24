@@ -20,7 +20,17 @@ export default {
     }
   }],
   toDOM(node) {
-    let { href, title } = node.attrs;
-    return ["a", { href, title }, 0];
+    let a = document.createElement("a");
+
+    a.setAttribute("title", node.attrs.title);
+    a.setAttribute("href", node.attrs.href);
+
+    a.addEventListener("click", function (e) {
+      if (e.altKey === true) {
+        window.open(node.attrs.href);
+      }
+    });
+
+    return a;
   }
 };
