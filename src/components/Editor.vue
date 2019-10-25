@@ -18,8 +18,8 @@
             <k-editor-options
               v-if="focused === index"
               :ref="'block-options-' + index"
-              :blocks="$options.blocks"
-              :block="$options.blocks[block.type]"
+              :blocks="blockTypes"
+              :block="blockTypes[block.type]"
               :menu="menu"
               :sortable="sortable"
               @add="add($event)"
@@ -34,7 +34,7 @@
               :spellcheck="spellcheck"
               :content="block.content"
               :endpoints="endpoints"
-              v-bind="$options.blocks[block.type].bind"
+              v-bind="blockTypes[block.type].bind"
               @click.native.stop="closeOptions(index)"
               @append="onAppend(index, $event)"
               @back="onBack(index, $event)"
@@ -55,7 +55,7 @@
     <div v-else class="k-editor-placeholder">
       <nav>
         <k-button
-          v-for="blockType in $options.blocks"
+          v-for="blockType in blockTypes"
           :key="blockType.type"
           :icon="blockType.icon"
           @click="appendAndFocus({ type: blockType.type })"
@@ -128,8 +128,8 @@ export default {
     // discard all unallowed block types
     if (this.allowed && this.allowed.length > 0) {
       Object.keys(this.$options.blocks).forEach(type => {
-        if (this.allowed.includes(type) === false) {
-          delete this.$options.blocks[type];
+        if (this.allowed.includes(type) === true) {
+          this.blockTypes[type] = this.$options.blocks[type];
         }
       });
     }
@@ -144,6 +144,7 @@ export default {
 
     return {
       blocks: blocks,
+      blockTypes: {},
       modified: new Date(),
       focused: 0,
     };
@@ -196,7 +197,7 @@ export default {
       });
     },
     blockTypeExists(type) {
-      if (!this.$options.blocks[type]) {
+      if (!this.blockTypes[type]) {
         console.log("block component does not exist: " + type);
         return false;
       }
@@ -291,8 +292,8 @@ export default {
     getBlockDefinition(index) {
       const block = this.getBlock(index);
 
-      if (block && this.$options.blocks[block.type]) {
-        return this.$options.blocks[block.type];
+      if (block && this.blockTypes[block.type]) {
+        return this.blockTypes[block.type];
       }
     },
     getBlockTextLength(index) {

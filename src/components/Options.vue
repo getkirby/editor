@@ -53,7 +53,7 @@
         <template v-else>
           <k-dropdown-item icon="add" @click="go('insert')">{{ $t('editor.options.insert.below') }} …</k-dropdown-item>
           <hr>
-          <k-dropdown-item icon="refresh" @click="go('convert')">{{ $t('editor.options.convert') }} …</k-dropdown-item>
+          <k-dropdown-item v-if="Object.keys(blocks).length > 1" icon="refresh" @click="go('convert')">{{ $t('editor.options.convert') }} …</k-dropdown-item>
           <k-dropdown-item icon="copy" @click="$emit('duplicate')">{{ $t('editor.options.duplicate') }}</k-dropdown-item>
           <hr>
           <template v-if="menuItems.length">

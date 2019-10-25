@@ -7,3 +7,4 @@
 # Composer files
 
 /.cache
+/.php_cs.cache
