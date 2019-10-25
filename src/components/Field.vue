@@ -1,12 +1,15 @@
 <template>
   <k-field
-    :label="label"
-    :required="required"
     :disabled="disabled"
+    :label="label"
+    :name="name"
+    :required="required"
+    :type="type"
   >
     <k-editor
       :autofocus="autofocus"
       :allowed="allowed"
+      :disabled="disabled"
       :endpoints="endpoints"
       :spellcheck="spellcheck"
       :value="value"
@@ -19,6 +22,7 @@
 import Editor from "./Editor.vue";
 
 export default {
+  inheritAttrs: false,
   components: {
     "k-editor": Editor
   },
@@ -27,9 +31,11 @@ export default {
     autofocus: Boolean,
     disabled: Boolean,
     endpoints: Object,
-    spellcheck: Boolean,
     label: String,
+    name: String,
     required: Boolean,
+    spellcheck: Boolean,
+    type: String,
     value: {
       type: [Array, Object],
       default() {

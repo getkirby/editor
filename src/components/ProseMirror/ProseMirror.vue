@@ -52,20 +52,13 @@ export default {
     "k-editable-toolbar": Toolbar
   },
   props: {
+    breaks: Boolean,
+    code: Boolean,
     content: {
       type: String,
       default: ""
     },
-    breaks: Boolean,
-    code: Boolean,
-    spellcheck: Boolean,
-    paste: {
-      type: Function,
-      default() {
-        return function () {};
-      }
-    },
-    placeholder: String,
+    disabled: Boolean,
     marks: {
       type: Array,
       default() {
@@ -78,7 +71,15 @@ export default {
           // "underline",
         ];
       }
-    }
+    },
+    paste: {
+      type: Function,
+      default() {
+        return function () {};
+      }
+    },
+    placeholder: String,
+    spellcheck: Boolean,
   },
   data() {
     return {
@@ -91,6 +92,7 @@ export default {
       breaks: this.breaks,
       code: this.code,
       content: this.content,
+      disabled: this.disabled,
       element: this.$el,
       marks: this.marks,
       onUpdate: this.onUpdate,

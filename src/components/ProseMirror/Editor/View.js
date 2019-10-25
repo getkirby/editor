@@ -13,7 +13,14 @@ export default function (props) {
 
   return new EditorView(props.element, {
     state: state,
+    editable() {
+      return props.disabled === true ? false : true;
+    },
     dispatchTransaction(transaction) {
+
+      if (props.disabled === true) {
+        return false;
+      }
 
       const lastState = this.state;
       const nextState = this.state.apply(transaction);
@@ -37,8 +44,6 @@ export default function (props) {
 
     },
     handlePaste(view, event, slice) {
-
-      console.log(props);
 
       if (props.code) {
         return false;

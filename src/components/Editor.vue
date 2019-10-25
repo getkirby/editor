@@ -16,7 +16,7 @@
             @keydown.meta.shift.o="openOptions(index)"
           >
             <k-editor-options
-              v-if="focused === index"
+              v-if="disabled !== true && focused === index"
               :ref="'block-options-' + index"
               :blocks="blockTypes"
               :block="blockTypes[block.type]"
@@ -28,12 +28,13 @@
               @remove="remove"
             />
             <component
+              :attrs="block.attrs"
+              :content="block.content"
+              :disabled="disabled"
+              :endpoints="endpoints"
               :is="'k-editor-' + block.type + '-block'"
               :ref="'block-' + index"
-              :attrs="block.attrs"
               :spellcheck="spellcheck"
-              :content="block.content"
-              :endpoints="endpoints"
               v-bind="blockTypes[block.type].bind"
               @click.native.stop="closeOptions(index)"
               @append="onAppend(index, $event)"
@@ -56,6 +57,7 @@
       <nav>
         <k-button
           v-for="blockType in blockTypes"
+          :disabled="disabled"
           :key="blockType.type"
           :icon="blockType.icon"
           @click="appendAndFocus({ type: blockType.type })"
@@ -74,6 +76,7 @@ import "./Plugins.js";
 import "./Blocks.js";
 
 export default {
+  inheritAttrs: false,
   components: {
     "k-editor-options": Options
   },
@@ -81,6 +84,7 @@ export default {
   props: {
     autofocus: Boolean,
     allowed: [Array, Object],
+    disabled: Boolean,
     endpoints: Object,
     spellcheck: Boolean,
     value: {
@@ -132,6 +136,8 @@ export default {
           this.blockTypes[type] = this.$options.blocks[type];
         }
       });
+    } else {
+      this.blockTypes = this.$options.blocks;
     }
 
     if (this.autofocus === true) {
@@ -197,7 +203,7 @@ export default {
       });
     },
     blockTypeExists(type) {
-      if (!this.blockTypes[type]) {
+      if (this.blockTypes && !this.blockTypes[type]) {
         console.log("block component does not exist: " + type);
         return false;
       }
@@ -555,6 +561,9 @@ export default {
 </script>
 
 <style lang="scss">
+.k-field[data-disabled] .k-editor {
+  pointer-events: none;
+}
 .k-editor-placeholder nav {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
