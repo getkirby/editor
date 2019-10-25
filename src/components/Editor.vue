@@ -2,7 +2,7 @@
   <div class="k-editor" ref="editor">
     <div v-if="blocks.length" class="k-editor-blocks" :key="modified">
       <div class="k-editor-container">
-        <k-draggable :list="blocks" :handle="true" :options="{delay: 2}">
+        <k-draggable :list="blocks" :handle="true" @end="onSort">
           <div
             v-for="(block, index) in blocks"
             v-if="blockTypeExists(block.type)"
@@ -454,6 +454,12 @@ export default {
     },
     onRemove(index) {
       this.remove(index);
+    },
+    onSort(event) {
+      const item  = event.item;
+      const index = [].indexOf.call(item.parentNode.children, item);
+
+      this.focus(index);
     },
     onSplit(index, data) {
       this.split(index, data);
