@@ -122,7 +122,7 @@ export default {
 
     this.$store.subscribeAction({
       after: (action, state) => {
-        if (action.type === "form/revert") {
+        if (action.type === "form/revert" || action.type === "content/revert") {
           this.blocks = this.sanitize(this.value);
           this.modified = new Date()
         }

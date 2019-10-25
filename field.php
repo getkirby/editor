@@ -27,17 +27,41 @@ return [
             return $spellcheck;
         },
         'value' => function ($value = null) {
-            return Kirby\Editor\Blocks::factory($value, $this->model())->toArray();
+            return $this->toValue($value);
         },
     ],
     'computed' => [
         'default' => function () {
-            return Kirby\Editor\Blocks::factory($this->default, $this->model())->toArray();
+            return $this->toValue($this->default);
+        }
+    ],
+    'methods' => [
+        'toBlocks' => function($value) {
+            return Kirby\Editor\Blocks::factory($value, $this->model());
+        },
+        'toValue' => function ($value) {
+            if ($this->inline) {
+                if (is_array($value) === false) {
+                    try {
+                        $value = Json::decode((string)$value);
+                    } catch (Throwable $e) {
+                        return $value;
+                    }
+                }
+
+                return $this->toBlocks($value)->toHtml();
+            } else {
+                return $this->toBlocks($value)->toArray();
+            }
         }
     ],
     'save' => function ($value) {
         if (empty($value)) {
             return '';
+        }
+
+        if ($this->inline) {
+            return $value;
         }
 
         return json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);

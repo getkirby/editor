@@ -53,7 +53,9 @@ export default function (props) {
 
   const onShiftTab = function () {
     trigger("onShiftTab");
-    return true;
+    if (props["onShiftTab"]) {
+      return true;
+    }
   };
 
   const onStrikeThrough = function () {
@@ -62,7 +64,9 @@ export default function (props) {
 
   const onTab = function () {
     trigger("onTab");
-    return true;
+    if (props["onTab"]) {
+      return true;
+    }
   };
 
   const onUnderline = function () {

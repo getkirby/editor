@@ -108,9 +108,9 @@ export default {
       onEnter: this.onEnter,
       onSelect: this.onSelect,
       onShiftEnter: this.onShiftEnter,
-      onShiftTab: this.onShiftTab,
+      onShiftTab: this.$listeners["shiftTab"] ? this.onShiftTab : false,
       onStrikeThrough: this.onStrikeThrough,
-      onTab: this.onTab,
+      onTab: this.$listeners["tab"] ? this.onTab : false,
       onUnderline: this.onUnderline,
     });
 
