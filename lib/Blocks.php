@@ -41,10 +41,6 @@ class Blocks extends Collection
                 $blocks = Json::decode((string)$blocks);
             } catch (Throwable $e) {
                 $blocks = Parser::parse($blocks, true, $parent);
-                $blocks = array_map(function ($block) {
-                    $block['id'] = '_' . Str::random(9);
-                    return $block;
-                }, $blocks);
             }
         }
 
@@ -52,6 +48,15 @@ class Blocks extends Collection
             $blocks = [];
         }
 
+        // inject ids, if they are missing
+        $blocks = array_map(function ($block) {
+            if (empty($block['id']) === true) {
+                $block['id'] = '_' . Str::random(9);
+            }
+            return $block;
+        }, $blocks);
+
+        // create a new collection of blocks
         $collection = new static();
 
         foreach ($blocks as $params) {

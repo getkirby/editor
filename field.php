@@ -6,6 +6,9 @@ return [
         'autofocus' => function (bool $autofocus = false) {
             return $autofocus;
         },
+        'default' => function ($default = null) {
+            return $default;
+        },
         /**
          * Sets the options for the files picker
          */
@@ -29,7 +32,7 @@ return [
     ],
     'computed' => [
         'default' => function () {
-            return $this->value($this->default);
+            return Kirby\Editor\Blocks::factory($this->default, $this->model())->toArray();
         }
     ],
     'save' => function ($value) {
