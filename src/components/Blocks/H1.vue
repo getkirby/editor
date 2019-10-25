@@ -7,6 +7,8 @@ export default {
   breaks: true,
   marks: [
     'italic',
+    'strikeThrough',
+    'underline',
     'code',
     'link'
   ]

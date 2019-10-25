@@ -1,5 +1,5 @@
 export default {
-  icon: "s",
+  icon: "strikethrough",
   label: "Strike-through",
   type: "strikeThrough",
   action: "toggleMark",

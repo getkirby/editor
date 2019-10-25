@@ -63,12 +63,12 @@ export default {
       type: Array,
       default() {
         return [
-          "bold",
-          "code",
-          "italic",
-          "link",
-          // "strikeThrough",
-          // "underline",
+          'bold',
+          'italic',
+          'strikeThrough',
+          'underline',
+          'code',
+          'link'
         ];
       }
     },

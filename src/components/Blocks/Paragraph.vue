@@ -24,14 +24,6 @@ export default {
   icon: "text",
   breaks: true,
   code: false,
-  marks: [
-    'bold',
-    'italic',
-    // 'strikeThrough',
-    // 'underline',
-    'code',
-    'link',
-  ],
   props: {
     attrs: {
       type: Object,

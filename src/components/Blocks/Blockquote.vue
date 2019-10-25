@@ -3,12 +3,6 @@ export default {
   icon: "quote",
   extends: "paragraph",
   breaks: true,
-  marks: [
-    'bold',
-    'italic',
-    'code',
-    'link'
-  ]
 };
 </script>
 

@@ -1,6 +1,6 @@
 export default {
   toolbar: {
-    icon: "u",
+    icon: "underline",
     label: "Underline",
     action: "toggleMark",
     args: ["underline"]

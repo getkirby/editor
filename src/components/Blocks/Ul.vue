@@ -4,12 +4,6 @@ export default {
   append: "ul",
   icon: "list-bullet",
   breaks: true,
-  marks: [
-    'bold',
-    'italic',
-    'code',
-    'link'
-  ],
   methods: {
     indent(indent) {
       this.$emit("update", {

@@ -1,5 +1,5 @@
 export default {
-  icon: "u",
+  icon: "underline",
   label: "Underline",
   type: "underline",
   action: "toggleMark",

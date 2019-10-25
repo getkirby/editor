@@ -1,6 +1,6 @@
 export default {
   toolbar: {
-    icon: "s",
+    icon: "strikethrough",
     label: "Strike-through",
     action: "toggleMark",
     args: ["strikeThrough"]
