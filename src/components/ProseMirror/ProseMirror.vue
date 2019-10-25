@@ -555,7 +555,8 @@ export default {
   tab-size: 2;
   font-size: .875rem;
   line-height: 2em;
-  overflow-y: scroll;
+  overflow-x: auto;
+  overflow-y: hidden;
   white-space: pre;
 }
 .k-editable-code code {

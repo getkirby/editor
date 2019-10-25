@@ -120,11 +120,13 @@ export default {
 }
 .k-editor-code-block-languages {
   position: absolute;
-  bottom: .5rem;
-  right: .5rem;
+  bottom: 0;
+  right: 0;
 }
 .k-editor-code-block-languages-toggle {
   color: #fff;
+  padding: 0 .5rem .5rem;
+  border-radius: 3px;
 }
 .k-editor-code-block-languages .k-dropdown-content {
   background: #fff;
