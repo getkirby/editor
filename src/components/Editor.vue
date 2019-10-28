@@ -85,6 +85,7 @@ export default {
     autofocus: Boolean,
     allowed: [Array, Object],
     disabled: Boolean,
+    disallowed: [Array, Object],
     endpoints: Object,
     spellcheck: Boolean,
     value: {
@@ -129,11 +130,19 @@ export default {
       }
     });
 
-    // discard all unallowed block types
+    // only include allowed block types
     if (this.allowed && this.allowed.length > 0) {
       Object.keys(this.$options.blocks).forEach(type => {
         if (this.allowed.includes(type) === true) {
           this.blockTypes[type] = this.$options.blocks[type];
+        }
+      });
+    // discard all disallowed block types
+    } else if (this.disallowed && this.disallowed.length > 0) {
+      this.blockTypes = this.$options.blocks;
+      Object.keys(this.$options.blocks).forEach(type => {
+        if (this.disallowed.includes(type) === true) {
+          this.$delete(this.blockTypes, type);
         }
       });
     } else {

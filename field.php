@@ -3,11 +3,17 @@
 return [
     'mixins' => ['filepicker', 'upload'],
     'props' => [
+        'allowed' => function (array $allowed = null) {
+            return $allowed;
+        },
         'autofocus' => function (bool $autofocus = false) {
             return $autofocus;
         },
         'default' => function ($default = null) {
             return $default;
+        },
+        'disallowed' => function (array $disallowed = null) {
+            return $disallowed;
         },
         /**
          * Sets the options for the files picker

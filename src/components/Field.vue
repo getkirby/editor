@@ -33,6 +33,7 @@
         :autofocus="autofocus"
         :allowed="allowed"
         :disabled="disabled"
+        :disallowed="disallowed"
         :endpoints="endpoints"
         :spellcheck="spellcheck"
         :value="value"
@@ -91,6 +92,7 @@ export default {
     allowed: [Array, Object],
     autofocus: Boolean,
     disabled: Boolean,
+    disallowed: [Array, Object],
     endpoints: Object,
     inline: Boolean,
     label: String,
