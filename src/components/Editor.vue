@@ -342,6 +342,9 @@ export default {
         return this.getBlockDefinition(this.focused);
       }
     },
+    importBlocks(blocks) {
+      this.blocks = this.blocks.concat(blocks);
+    },
     hasNextBlock(index) {
       return this.blocks[index + 1] !== undefined;
     },
@@ -517,6 +520,9 @@ export default {
         }
       }
 
+    },
+    removeAll() {
+      this.blocks = [];
     },
     removeBlock(index) {
       this.blocks.splice(index, 1);

@@ -94,6 +94,48 @@ return [
                     return Kirby\Editor\Blocks::factory(get('html'), $this->field()->model())->toArray();
                 }
             ],
+            [
+                'pattern' => 'import',
+                'method' => 'POST',
+                'action' => function () {
+                    $api   = $this;
+                    $field = $this->field();
+
+                    return $this->upload(function ($source, $filename) use ($api, $field) {
+                        $html   = F::read($source);
+                        $blocks = Kirby\Editor\Blocks::factory($html, $field->model())->toArray();
+
+                        return $blocks;
+                    });
+                }
+            ],
+            [
+                'pattern' => 'export',
+                'method' => 'POST',
+                'action' => function () {
+
+                    $data = get('data');
+                    $type = get('type');
+
+                    $blocks = Kirby\Editor\Blocks::factory($data, $this->field()->model());
+
+                    switch ($type) {
+                        case 'md':
+                            $result = $blocks->toMarkdown();
+                            break;
+                        case 'html':
+                            $result = $blocks->toHtml();
+                            break;
+                        default:
+                            $result = json_encode($blocks->toArray(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+                            break;
+                    }
+
+                    return [
+                        'data' => $result
+                    ];
+                }
+            ],
         ];
     },
 ];
