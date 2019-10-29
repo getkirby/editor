@@ -1,5 +1,5 @@
 <template>
-  <div class="k-editor" ref="editor">
+  <div class="k-editor" ref="editor" @mouseleave="onMouseLeave">
     <div v-if="blocks.length" class="k-editor-blocks" :key="modified">
       <div class="k-editor-container">
         <k-draggable :list="blocks" :handle="true" @end="onSort">
@@ -442,6 +442,9 @@ export default {
     },
     onMouseEnter(index) {
       this.over = index;
+    },
+    onMouseLeave() {
+      this.over = null;
     },
     onNext(cursor) {
       if (this.hasNextBlock(this.focused)) {
