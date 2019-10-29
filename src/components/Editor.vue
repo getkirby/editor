@@ -13,9 +13,10 @@
             @focusout="onBlur(index)"
             @keydown.meta.d.prevent="duplicate"
             @keydown.meta.shift.o="openOptions(index)"
+            @mouseenter="onMouseEnter(index)"
           >
             <k-editor-options
-              v-if="disabled !== true && focused === index"
+              v-if="showOptions(index)"
               :ref="'block-options-' + index"
               :blocks="blockTypes"
               :block="blockTypes[block.type]"
@@ -161,8 +162,9 @@ export default {
     return {
       blocks: blocks,
       blockTypes: {},
-      modified: new Date(),
       focused: 0,
+      modified: new Date(),
+      over: null
     };
   },
   computed: {
@@ -438,6 +440,9 @@ export default {
         this.blocks[index].attrs = data.attrs || {};
       }
     },
+    onMouseEnter(index) {
+      this.over = index;
+    },
     onNext(cursor) {
       if (this.hasNextBlock(this.focused)) {
         this.focus(this.focused + 1, cursor);
@@ -482,6 +487,7 @@ export default {
       const index = [].indexOf.call(item.parentNode.children, item);
 
       this.focus(index);
+      this.over = index;
     },
     onSplit(index, data) {
       this.split(index, data);
@@ -567,6 +573,22 @@ export default {
       });
 
       return blocks;
+    },
+    showOptions(index) {
+
+      if (this.disabled) {
+        return false;
+      }
+
+      if (this.$store.state.drag) {
+        return false;
+      }
+
+      if (this.over !== index) {
+        return false;
+      }
+
+      return true;
     },
     split(index, data) {
       let focusedBlock = this.getFocusedBlock();
