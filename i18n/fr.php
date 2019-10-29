@@ -23,6 +23,7 @@ return [
     'editor.blocks.kirbytext.label'           => 'KirbyText',
     'editor.blocks.ol.label'                  => 'Liste numérotée',
     'editor.blocks.paragraph.label'           => 'Texte',
+    'editor.blocks.paragraph.placeholder'     => 'Texte',
     'editor.blocks.ul.label'                  => 'Liste à puces',
     'editor.blocks.video.caption.placeholder' => 'Ajouter une légende',
     'editor.blocks.video.css.label'           => 'Classe CSS',

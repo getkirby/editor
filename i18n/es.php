@@ -23,6 +23,7 @@ return [
     'editor.blocks.kirbytext.label'           => 'KirbyText',
     'editor.blocks.ol.label'                  => 'Lista numerada',
     'editor.blocks.paragraph.label'           => 'Texto',
+    'editor.blocks.paragraph.placeholder'     => 'Texto',
     'editor.blocks.ul.label'                  => 'Lista con viñetas',
     'editor.blocks.video.caption.placeholder' => 'Añadir leyenda',
     'editor.blocks.video.css.label'           => 'Clase CSS',

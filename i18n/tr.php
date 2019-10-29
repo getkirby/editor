@@ -28,7 +28,7 @@ return [
     'editor.blocks.ol.label'                  => 'Numaralı liste',
     'editor.blocks.ol.placeholder'            => 'Liste',
     'editor.blocks.paragraph.label'           => 'Metin',
-    'editor.blocks.paragraph.placeholder'     => '',
+    'editor.blocks.paragraph.placeholder'     => 'Metin',
     'editor.blocks.ul.label'                  => 'Maddeli liste',
     'editor.blocks.ul.placeholder'            => 'Liste',
     'editor.blocks.video.caption.placeholder' => 'Bir başlık ekle',

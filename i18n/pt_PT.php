@@ -23,6 +23,7 @@ return [
     'editor.blocks.kirbytext.label'           => 'KirbyText',
     'editor.blocks.ol.label'                  => 'Lista ordenada',
     'editor.blocks.paragraph.label'           => 'Texto',
+    'editor.blocks.paragraph.placeholder'     => 'Texto',
     'editor.blocks.ul.label'                  => 'Lista não ordenada',
     'editor.blocks.video.caption.placeholder' => 'Adicionar legenda',
     'editor.blocks.video.css.label'           => 'Classe CSS',

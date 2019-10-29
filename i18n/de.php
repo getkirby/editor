@@ -28,7 +28,7 @@ return [
     'editor.blocks.ol.label'                  => 'Nummerierte Liste',
     'editor.blocks.ol.placeholder'            => 'Liste',
     'editor.blocks.paragraph.label'           => 'Text',
-    'editor.blocks.paragraph.placeholder'     => '',
+    'editor.blocks.paragraph.placeholder'     => 'Text',
     'editor.blocks.ul.label'                  => 'Ungeordnete Liste',
     'editor.blocks.ul.placeholder'            => 'Liste',
     'editor.blocks.video.caption.placeholder' => 'Add a caption',
