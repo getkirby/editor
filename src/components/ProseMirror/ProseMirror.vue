@@ -507,6 +507,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "variables.scss";
+
 .k-editable {
   position: relative;
   width: 100%;
@@ -522,7 +524,7 @@ export default {
   outline: 0;
 }
 .k-editable .ProseMirror a {
-  color: #4271ae;
+  color: $color-focus;
   text-decoration: underline;
 }
 .k-editable-text .ProseMirror strong {
@@ -530,36 +532,35 @@ export default {
 }
 .k-editable-text .ProseMirror code {
   position: relative;
-  font-size: .875em;
+  font-size: .925em;
   display: inline-block;
   line-height: 1.325;
   padding: .05em .325em;
-  background: rgba(#000, .1);
-  border-radius: 3px;
-  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+  background: $color-background-transparent;
+  border-radius: $border-radius;
+  font-family: $font-family-mono;
 }
 .k-editable-placeholder {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  color: #bbb;
+  color: $color-text-lighter;
   pointer-events: none;
   font: inherit;
   line-height: 1.5em;
   -webkit-font-variant-ligatures: none;
   font-variant-ligatures: none;
 }
-
 .k-editable-code pre {
   tab-size: 2;
-  font-size: .875rem;
+  font-size: $font-size-small;
   line-height: 2em;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: pre;
 }
 .k-editable-code code {
-  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+  font-family: $font-family-mono;
 }
 </style>

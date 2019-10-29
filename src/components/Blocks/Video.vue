@@ -150,16 +150,19 @@ export default {
 </script>
 
 <style lang="scss">
+@import "variables.scss";
+
 .k-editor-video-block {
-  margin: 1.5rem 0;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 .k-editor-video-block-container {
   position: relative;
   padding-bottom: 56.25%;
-  background: #2d2e36;
+  background: $color-background-transparent;
 }
 .k-editor-video-block-container:focus-within {
-  outline: 2px solid rgba(#4271ae, 0.25);
+  outline: 2px solid $color-focus-outline;
   outline-offset: 2px;
 }
 .k-editor-video-block-overlay,
@@ -183,7 +186,7 @@ export default {
 .k-editor-video-block .k-editable-placeholder,
 .k-editor-video-block .ProseMirror {
   text-align: center;
-  font-size: .875rem;
+  font-size: $font-size-small;
   line-height: 1.5em;
 }
 .k-editor-video-block-input {
@@ -195,9 +198,11 @@ export default {
   padding: .5rem;
   height: 100%;
   text-align: center;
-  color: #fff;
 }
 .k-editor-video-block-input:focus {
   outline: 0;
+}
+.k-editor-video-block .k-editor-block-options {
+  top: 20px;
 }
 </style>

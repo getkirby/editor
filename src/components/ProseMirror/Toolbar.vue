@@ -25,28 +25,28 @@ export default {
 </script>
 
 <style lang="scss">
+@import "variables.scss";
+
 .k-editable-toolbar {
   position: absolute;
   display: flex;
-  border-bottom: 1px solid #ddd;
-  background: #000;
-  height: 37px;
+  background: $color-black;
+  height: 36px;
   transform: translateX(-50%) translateY(-.75rem);
   z-index: 1;
-  box-shadow: rgba(0, 0, 0, 0.05) 0 2px 5px;
-  border-bottom: 1px solid rgba(#000, 0.1);
-  color: #fff;
-  border-radius: 3px;
+  box-shadow: $box-shadow;
+  color: $color-white;
+  border-radius: $border-radius;
 }
 .k-editable-toolbar-button {
   display: flex;
   align-items: center;
   height: 36px;
-  padding: 0 .75rem;
-  font-size: .875rem !important;
+  padding: 0 .5rem;
+  font-size: $font-size-small !important;
   color: currentColor;
 }
 .k-editable-toolbar-button.k-editable-toolbar-button-active {
-  color: #81a2be;
+  color: $color-focus-light;
 }
 </style>

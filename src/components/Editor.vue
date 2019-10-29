@@ -8,7 +8,6 @@
             v-if="blockTypeExists(block.type)"
             :key="block.id"
             :class="['k-editor-block', 'k-editor-' + block.type + '-block']"
-            :data-indent="block.attrs.indent"
             @click="focus(index)"
             @focusin="onFocus(index)"
             @focusout="onBlur(index)"
@@ -27,28 +26,30 @@
               @duplicate="duplicate"
               @remove="remove"
             />
-            <component
-              :attrs="block.attrs"
-              :content="block.content"
-              :disabled="disabled"
-              :endpoints="endpoints"
-              :is="'k-editor-' + block.type + '-block'"
-              :ref="'block-' + index"
-              :spellcheck="spellcheck"
-              v-bind="blockTypes[block.type].bind"
-              @click.native.stop="closeOptions(index)"
-              @append="onAppend(index, $event)"
-              @back="onBack(index, $event)"
-              @convert="onConvert(index, $event)"
-              @input="onInput(index, $event)"
-              @next="onNext"
-              @paste="onPaste(index, $event)"
-              @prepend="onPrepend(index, $event)"
-              @prev="onPrev"
-              @remove="onRemove(index, $event)"
-              @split="onSplit(index, $event)"
-              @update="onUpdate(index, $event)"
-            />
+            <div class="k-editor-block-container">
+              <component
+                :attrs="block.attrs"
+                :content="block.content"
+                :disabled="disabled"
+                :endpoints="endpoints"
+                :is="'k-editor-' + block.type + '-block'"
+                :ref="'block-' + index"
+                :spellcheck="spellcheck"
+                v-bind="blockTypes[block.type].bind"
+                @click.native.stop="closeOptions(index)"
+                @append="onAppend(index, $event)"
+                @back="onBack(index, $event)"
+                @convert="onConvert(index, $event)"
+                @input="onInput(index, $event)"
+                @next="onNext"
+                @paste="onPaste(index, $event)"
+                @prepend="onPrepend(index, $event)"
+                @prev="onPrev"
+                @remove="onRemove(index, $event)"
+                @split="onSplit(index, $event)"
+                @update="onUpdate(index, $event)"
+              />
+            </div>
           </div>
         </k-draggable>
       </div>
@@ -227,6 +228,11 @@ export default {
       }
     },
     convertTo(type) {
+
+      if (this.blockTypeExists(type) === false) {
+        return false;
+      }
+
       let block          = this.getFocusedBlock();
       let blockComponent = this.getFocusedBlockComponent();
 
@@ -405,6 +411,10 @@ export default {
       this.focused = index;
     },
     onConvert(index, type) {
+      if (this.blockTypeExists(type) === false) {
+        return false;
+      }
+
       const block = this.getBlockComponent(index);
       const cursor = block.cursorPosition ? block.cursorPosition() : 0;
 
@@ -582,6 +592,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "variables.scss";
 .k-field[data-disabled] .k-editor {
   pointer-events: none;
 }
@@ -602,11 +613,9 @@ export default {
   transition: all .2s;
 }
 .k-editor-placeholder .k-button:hover {
-  background: #fff;
-  box-shadow: rgba(#000, 0.05) 0 2px 5px;
+  background: $color-white;
+  box-shadow: $box-shadow;
 }
-
-
 .k-editor-container {
   position: relative;
   padding: 1.5rem 0;
@@ -615,13 +624,33 @@ export default {
 }
 .k-editor-blocks {
   position: relative;
-  background: #fff;
+  background: $color-white;
   margin-bottom: 1.5rem;
-  box-shadow: rgba(#000, 0.05) 0 2px 5px;
+  box-shadow: $box-shadow;
 }
 .k-editor-block {
   position: relative;
-  padding: 0 4rem;
+  padding: .325rem 4rem;
+}
+.k-editor-block.k-sortable-ghost {
+  cursor: -webkit-grabbing;
+}
+.k-editor-block.k-sortable-ghost:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 3.5rem;
+  bottom: 0;
+  left: 3.5rem;
+  outline: 2px solid $color-focus;
+  background: rgba($color-focus, .125);
+}
+.k-editor-block.k-sortable-ghost .k-editor-block-options {
+  display: none;
+}
+.k-editor-block.sortable-drag {
+  opacity: 0 !important;
+  cursor: -webkit-grabbing;
 }
 .k-editor-block:first-child {
   margin-top: 0;

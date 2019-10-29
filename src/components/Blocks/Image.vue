@@ -224,8 +224,11 @@ export default {
 </script>
 
 <style lang="scss">
+@import "variables.scss";
+
 .k-editor-image-block {
-  margin: 1.5rem 0;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 .k-editor-image-block figure {
   line-height: 0;
@@ -245,13 +248,13 @@ export default {
 .k-editor-image-block-wrapper[data-responsive] {
   position: relative;
   padding-bottom: 66.66%;
-  background: #2d2e36;
+  background: $color-dark;
 }
 .k-editor-image-block-wrapper:focus {
   outline: 0;
 }
 .k-editor-image-block-wrapper:focus img {
-  outline: 2px solid rgba(#4271ae, 0.25);
+  outline: 2px solid $color-focus-outline;
   outline-offset: 2px;
 }
 .k-editor-image-block figcaption {
@@ -272,21 +275,25 @@ export default {
   font-style: italic;
   font-size: .875rem;
   width: 100%;
-  background: #efefef;
-  border: 1px solid #efefef;
-  border-radius: 3px;
+  background: $color-background-transparent;
+  border: 1px solid transparent;
+  border-radius: $border-radius;
   text-align: center;
-  color: #bbb;
+  color: $color-text-lighter;
 }
 .k-editor-image-block-placeholder:focus {
-  outline: 2px solid rgba(#4271ae, 0.25);
+  outline: 2px solid $color-focus-outline;
   outline-offset: 2px;
 }
 .k-editor-image-block-placeholder .k-button {
   padding: .75rem;
   display: flex;
   align-items: center;
-  color: #000;
+  color: $color-black;
   margin: 0 .5rem;
 }
+.k-editor-image-block .k-editor-block-options {
+  top: 20px;
+}
+
 </style>

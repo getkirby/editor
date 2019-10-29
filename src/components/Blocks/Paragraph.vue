@@ -67,8 +67,3 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.k-editor-paragraph-block {
-  margin-bottom: .75rem;
-}
-</style>

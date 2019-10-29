@@ -111,9 +111,11 @@ export default {
 </script>
 
 <style lang="scss">
+@import "variables.scss";
 
 .k-editor-code-block {
-  margin: 1.5rem 0;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 .k-editor-code-block-wrapper {
   position: relative;
@@ -124,13 +126,13 @@ export default {
   right: 0;
 }
 .k-editor-code-block-languages-toggle {
-  color: #fff;
+  color: $color-white;
   padding: 0 .5rem .5rem;
   border-radius: 3px;
 }
 .k-editor-code-block-languages .k-dropdown-content {
-  background: #fff;
-  color: #000;
+  background: $color-white;
+  color: $color-black;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   padding: .25rem 0;
@@ -141,9 +143,12 @@ export default {
   margin: 0;
 }
 .k-editor-code-block pre {
-  background: #2d2e36;
+  background: $color-dark;
   color: #fff;
   padding: 1.5rem;
-  border-radius: 3px;
+  border-radius: $border-radius;
+}
+.k-editor-code-block .k-editor-block-options {
+  top: 20px;
 }
 </style>

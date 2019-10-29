@@ -24,32 +24,11 @@ export default {
         });
       }
     },
-    // onTab() {
-    //   const currentIndent = Number(this.attrs.indent || 0);
-
-    //   if (currentIndent < 1) {
-    //     this.indent(1);
-    //   } else {
-    //     this.$emit("next");
-    //   }
-    // },
-    // onShiftTab() {
-    //   const currentIndent = Number(this.attrs.indent || 0);
-
-    //   if (currentIndent > 0) {
-    //     this.indent(0);
-    //   } else {
-    //     this.$emit("prev");
-    //   }
-    // }
   }
 };
 </script>
 
 <style lang="scss">
-.k-editor-ul-block {
-  margin-bottom: .75rem;
-}
 .k-editor-ul-block .k-editable {
   position: relative;
   margin-left: 1.25rem;

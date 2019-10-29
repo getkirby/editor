@@ -21,13 +21,19 @@ export default {
 </script>
 
 <style lang="scss">
+@import "variables.scss";
+
 .k-editor-kirbytext-block {
-  margin: 1.5rem 0;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 .k-editor-kirbytext-block .k-editable-code pre {
-  background: #efefef;
+  background: $color-background-transparent;
   padding: 1.5rem;
-  border-radius: 3px;
+  border-radius: $border-radius;
   white-space: pre-wrap;
+}
+.k-editor-kirbytext-block .k-editor-block-options {
+  top: 20px;
 }
 </style>

@@ -22,12 +22,13 @@ export default {
 </script>
 
 <style lang="scss">
+@import "variables.scss";
+
 .k-editor-hr-block-divider {
   position: relative;
   height: 1.5rem;
   border: 0;
-  margin-bottom: .75rem;
-  color: #ddd;
+  color: $color-background-transparent;
 
   &:focus {
     outline: 0;
@@ -44,10 +45,11 @@ export default {
   }
 
   &:focus {
-    color: rgba(#4271ae, 0.25);
+    color: $color-focus-outline;
   }
+
   &:focus:after {
-    outline: 1px solid rgba(#4271ae, 0.25);
+    outline: 1px solid $color-focus-outline;
   }
 
 }

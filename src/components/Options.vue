@@ -118,11 +118,13 @@ export default {
 </script>
 
 <style lang="scss">
+@import "variables.scss";
+
 .k-editor-block-options {
   position: absolute;
   left: 0;
   display: flex;
-  top: -3px;
+  top: 2px;
   width: 4rem;
   padding: .25rem 0;
   align-items: center;
@@ -142,10 +144,10 @@ export default {
   border-radius: 3px;
   align-items: center;
   justify-content: center;
-  color: #999;
+  color: $color-text-lighter;
 }
 .k-editor-block-option:hover {
-  background: #efefef;
+  background: rgba(#000, .1);
 }
 .k-editor-block-option:focus {
   outline: 0;

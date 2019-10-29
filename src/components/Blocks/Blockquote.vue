@@ -9,8 +9,8 @@ export default {
 <style lang="scss">
 
 .k-editor-blockquote-block {
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 .k-editor-blockquote-block .k-editable-placeholder,
 .k-editor-blockquote-block .ProseMirror {
@@ -20,6 +20,6 @@ export default {
   border-left: 3px solid #000;
 }
 .k-editor-blockquote-block .k-editor-block-options {
-  top: 0;
+  top: 24px;
 }
 </style>

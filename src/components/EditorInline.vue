@@ -59,5 +59,4 @@ export default {
 .k-editor-inline .k-editable {
   padding: .375rem;
 }
-
 </style>

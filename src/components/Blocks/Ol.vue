@@ -7,9 +7,10 @@ export default {
 </script>
 
 <style lang="scss">
+@import "variables.scss";
+
 .k-editor-ol-block {
   counter-increment: list;
-  margin-bottom: .75rem;
 }
 .k-editor-block:not(.k-editor-ol-block) {
   counter-reset: list;
@@ -24,7 +25,7 @@ export default {
   content: counter(list) ".";
   top: .0625rem;
   left: -1.25rem;
-  color: #999;
-  font-size: .875rem;
+  color: $color-text-lighter;
+  font-size: $font-size-small;
 }
 </style>
