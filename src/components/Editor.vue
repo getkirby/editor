@@ -467,8 +467,16 @@ export default {
             return;
           }
 
-          // append all pasted blocks
-          this.blocks.splice(index + 1, 0, ...blocks);
+          // get the current block
+          const block = this.getBlock(index);
+
+          if (block && block.type === "paragraph" && block.content === "") {
+            // replace all pasted blocks
+            this.blocks.splice(index, 1, ...blocks);
+          } else {
+            // append all pasted blocks
+            this.blocks.splice(index + 1, 0, ...blocks);
+          }
 
         });
 
