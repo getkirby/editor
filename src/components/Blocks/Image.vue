@@ -23,8 +23,10 @@
             :spellcheck="spellcheck"
             @prev="focus"
             @shiftTab="focus"
-            @tab="$emit('next')"
-            @next="$emit('next')"
+            @tab="$emit('next', $event)"
+            @next="$emit('next', $event)"
+            @split="$emit('append')"
+            @enter="$emit('append')"
             @input="caption"
           />
         </figcaption>

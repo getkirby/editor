@@ -20,6 +20,12 @@
           :breaks="true"
           :placeholder="$t('editor.blocks.video.caption.placeholder') + '…'"
           :spellcheck="spellcheck"
+          @prev="focus"
+          @shiftTab="focus"
+          @tab="$emit('next', $event)"
+          @next="$emit('next', $event)"
+          @split="$emit('append')"
+          @enter="$emit('append')"
           @input="caption"
         />
       </figcaption>
