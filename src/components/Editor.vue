@@ -182,11 +182,6 @@ export default {
       },
       deep: true
     },
-    focused(value) {
-      if (value === undefined || value === null || value === false) {
-        this.focused = 0;
-      }
-    }
   },
   methods: {
     add(type) {
@@ -432,6 +427,10 @@ export default {
       const block = this.getFocusedBlockComponent();
     },
     onInput(index, data) {
+      if (!this.blocks[index]) {
+        return false;
+      }
+
       if (data.content !== undefined) {
         this.blocks[index].content = data.content;
       }

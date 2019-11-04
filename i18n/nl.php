@@ -23,7 +23,7 @@ return [
     'editor.blocks.kirbytext.label'           => 'KirbyText',
     'editor.blocks.ol.label'                  => 'Genummerde lijst',
     'editor.blocks.paragraph.label'           => 'Tekst',
-    'editor.blocks.paragraph.placeholder'     => 'Tekst',
+    'editor.blocks.paragraph.placeholder'     => '',
     'editor.blocks.ul.label'                  => 'Ongenummerde lijst',
     'editor.blocks.video.caption.placeholder' => 'Voeg een onderschrift toe',
     'editor.blocks.video.css.label'           => 'CSS class',

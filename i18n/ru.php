@@ -27,7 +27,7 @@ return [
     'editor.blocks.ol.label'                  => 'Нумерованный список',
     'editor.blocks.ol.placeholder'            => 'Список',
     'editor.blocks.paragraph.label'           => 'Текст',
-    'editor.blocks.paragraph.placeholder'     => 'Текст',
+    'editor.blocks.paragraph.placeholder'     => '',
     'editor.blocks.ul.label'                  => 'Маркированный список',
     'editor.blocks.ul.placeholder'            => 'Список',
     'editor.blocks.video.caption.placeholder' => 'Добавить подпись',

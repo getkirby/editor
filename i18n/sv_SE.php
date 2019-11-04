@@ -23,7 +23,7 @@ return [
     'editor.blocks.kirbytext.label'           => 'KirbyText',
     'editor.blocks.ol.label'                  => 'Numrerad lista',
     'editor.blocks.paragraph.label'           => 'Stycke',
-    'editor.blocks.paragraph.placeholder'     => 'Stycke',
+    'editor.blocks.paragraph.placeholder'     => '',
     'editor.blocks.ul.label'                  => 'Punktlista',
     'editor.blocks.video.caption.placeholder' => 'Lägg till titel',
     'editor.blocks.video.css.label'           => 'CSS-klass',

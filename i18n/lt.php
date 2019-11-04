@@ -28,7 +28,7 @@ return [
     'editor.blocks.ol.label'                  => 'Sunumeruotas sąrašas',
     'editor.blocks.ol.placeholder'            => 'Sąrašas',
     'editor.blocks.paragraph.label'           => 'Tekstas',
-    'editor.blocks.paragraph.placeholder'     => 'Tekstas',
+    'editor.blocks.paragraph.placeholder'     => '',
     'editor.blocks.ul.label'                  => 'Sąrašas su taškeliais',
     'editor.blocks.ul.placeholder'            => 'Sąrašas',
     'editor.blocks.video.caption.placeholder' => 'Pridėti aprašymą',

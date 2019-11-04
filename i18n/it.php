@@ -23,7 +23,7 @@ return [
     'editor.blocks.kirbytext.label'           => 'KirbyText',
     'editor.blocks.ol.label'                  => 'Lista Numerata',
     'editor.blocks.paragraph.label'           => 'Testo',
-    'editor.blocks.paragraph.placeholder'     => 'Testo',
+    'editor.blocks.paragraph.placeholder'     => '',
     'editor.blocks.ul.label'                  => 'Lista puntata',
     'editor.blocks.video.caption.placeholder' => 'Aggiungi una didascalia',
     'editor.blocks.video.css.label'           => 'Classi CSS',
