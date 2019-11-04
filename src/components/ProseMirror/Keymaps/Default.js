@@ -39,6 +39,15 @@ export default function (props) {
     }
   };
 
+  const onForwardDelete = function (state, dispatch, view) {
+
+    if (view.endOfTextblock("forward", state)) {
+      trigger("onForward");
+    }
+
+    return false;
+  };
+
   const onItalic = function () {
     trigger("onItalic");
   };
@@ -91,6 +100,7 @@ export default function (props) {
     "Cmd-z": undo,
     "Cmd-Shift-s": onStrikeThrough,
     "Cmd-Shift-z": redo,
+    "Delete": onForwardDelete,
     "Enter": onEnter,
     "Shift-Enter": onShiftEnter,
     "Shift-Tab": onShiftTab,

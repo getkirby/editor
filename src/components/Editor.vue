@@ -40,6 +40,7 @@
                 @click.native.stop="closeOptions(index)"
                 @append="onAppend(index, $event)"
                 @back="onBack(index, $event)"
+                @forward="onForward(index, $event)"
                 @convert="onConvert(index, $event)"
                 @input="onInput(index, $event)"
                 @next="onNext"
@@ -123,11 +124,13 @@ export default {
   },
   created() {
 
-    this.$store.subscribeAction({
+    this.subscription = this.$store.subscribeAction({
       after: (action, state) => {
-        if (action.type === "form/revert" || action.type === "content/revert") {
-          this.blocks = this.sanitize(this.value);
-          this.modified = new Date()
+        switch (action.type) {
+          case "content/revert":
+          case "content/create":
+            this.blocks   = this.sanitize(this.value);
+            this.modified = this.uuid();
         }
       }
     });
@@ -151,10 +154,14 @@ export default {
       this.blockTypes = this.$options.blocks;
     }
 
+  },
+  destroyed() {
+    this.subscription();
+  },
+  mounted() {
     if (this.autofocus === true) {
       this.$nextTick(this.focus);
     }
-
   },
   data() {
     const blocks = this.sanitize(this.value);
@@ -163,7 +170,8 @@ export default {
       blocks: blocks,
       blockTypes: {},
       focused: 0,
-      modified: new Date(),
+      revalue: false,
+      modified: this.uuid(),
       over: null
     };
   },
@@ -181,7 +189,7 @@ export default {
         this.$emit("input", blocks);
       },
       deep: true
-    },
+    }
   },
   methods: {
     add(type) {
@@ -288,7 +296,11 @@ export default {
       }
 
       if (block && block.focus) {
-        block.focus(cursor);
+        try {
+          block.focus(cursor);
+        } catch (e) {
+          // don't throw errors if focusing fails
+        }
       }
     },
     getBlock(index) {
@@ -425,6 +437,10 @@ export default {
     onFocus(index) {
       this.focused = index;
       const block = this.getFocusedBlockComponent();
+    },
+    onForward(index) {
+      this.remove(index);
+      this.focus(index + 1, "start");
     },
     onInput(index, data) {
       if (!this.blocks[index]) {

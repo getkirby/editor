@@ -98,6 +98,7 @@ export default {
       onUpdate: this.onUpdate,
       onSplit: this.onSplit,
       onBack: this.onBack,
+      onForward: this.onForward,
       onBold: this.onBold,
       onConvert: this.onConvert,
       onItalic: this.onItalic,
@@ -347,6 +348,9 @@ export default {
     },
     onFocus() {
       this.$emit("focus", event);
+    },
+    onForward() {
+      this.$emit("forward");
     },
     onInput(html) {
       this.$emit("input", html);
