@@ -22,7 +22,10 @@ export default {
   toDOM(node) {
     let a = document.createElement("a");
 
-    a.setAttribute("title", node.attrs.title);
+    if (node.attrs.title) {
+      a.setAttribute("title", node.attrs.title);
+    }
+
     a.setAttribute("href", node.attrs.href);
 
     a.addEventListener("click", function (e) {
