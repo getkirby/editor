@@ -29,6 +29,9 @@ return [
 
             return $files;
         },
+        'pretty' => function (bool $pretty = true) {
+            return $pretty;
+        },
         'spellcheck' => function (bool $spellcheck = true) {
             return $spellcheck;
         },
@@ -75,7 +78,11 @@ return [
             return $value;
         }
 
-        return json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        if ($this->pretty === true) {
+            return json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        }
+
+        return json_encode($value);
     },
     'api' => function () {
         return [
