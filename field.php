@@ -41,7 +41,7 @@ return [
     ],
     'computed' => [
         'isSupported' => function () {
-            if (version_compare($this->kirby()->version(), '3.3.0-rc.5')) {
+            if (version_compare($this->kirby()->version(), '3.3.0')) {
                 throw new Exception('The editor requires Kirby version 3.3.0 or higher');
             }
         },
