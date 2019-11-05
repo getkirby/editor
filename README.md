@@ -2,7 +2,7 @@
 
 Kirby Editor is a new visual writing and layout field for Kirby. Compose long-form text with consistent inline styles. Add images, videos, quotes and more. Bring your own block types and always rest assured that the output will be valid, customizable HTML. 
 
-![Kirby Editor](https://user-images.githubusercontent.com/24532/62720884-4665e400-ba0b-11e9-9ece-3e756c8b6b4a.png)
+![Editor Screencast](https://user-images.githubusercontent.com/24532/68209079-e8797600-ffd2-11e9-9d91-0b786e041d19.gif)
 
 ## Features
 
