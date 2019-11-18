@@ -57,18 +57,25 @@ class Parser
                     // check for nested non-inline blocks
                     $blocks = static::parse($element);
 
-                    if (empty($blocks) === true) {
+                    // check if there are any non-paragraphs in the list
+                    $types = array_unique(array_column($blocks, 'type'));
+
+                    // it's going to end up as a single block
+                    if (empty($blocks) === true || $types === ['paragraph']) {
                         $inline[] = $element->outerHtml;
+
+                    // split different block types
                     } else {
                         foreach ($blocks as $childBlock) {
                             if ($childBlock['type'] !== 'paragraph') {
                                 static::inlineEnd($inline, $result, $markdown);
                                 $result[] = $childBlock;
                             } else {
-                                $inline[] = $element->outerHtml;
+                                $inline[] = $childBlock['content'];
                             }
                         }
                     }
+
                 } else {
                     $inline[] = $element->outerHtml;
                 }
