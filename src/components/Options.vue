@@ -101,6 +101,7 @@ export default {
     open() {
       this.menuItems = this.menu();
       this.$refs.blockOptions.toggle();
+      this.$emit("focus");
     },
     close() {
       this.menuItems = [];
@@ -112,7 +113,7 @@ export default {
     },
     onClose() {
       this.mode = null;
-    }
+    },
   }
 };
 </script>
