@@ -26,6 +26,7 @@
               @convert="convertTo($event)"
               @duplicate="duplicate"
               @remove="remove"
+              @focus="focus(index)"
             />
             <div class="k-editor-block-container">
               <component
