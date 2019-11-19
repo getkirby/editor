@@ -17,10 +17,11 @@
           >
             <k-editor-options
               v-if="showOptions(index)"
+              :key="'block-options-' + block.id"
               :ref="'block-options-' + index"
               :blocks="blockTypes"
               :block="blockTypes[block.type]"
-              :menu="menu"
+              :menu="menu(index)"
               :sortable="sortable"
               @add="add($event)"
               @convert="convertTo($event)"
@@ -376,14 +377,18 @@ export default {
     hasPreviousBlock(index) {
       return this.blocks[index - 1] !== undefined;
     },
-    menu() {
-      const component = this.getFocusedBlockComponent();
+    menu(index) {
+      const component = this.getBlockComponent(index);
 
-      if (component && component.menu) {
-        return component.menu();
-      }
+      return () => {
 
-      return [];
+        if (component && component.menu) {
+          return component.menu();
+        }
+
+        return [];
+
+      };
     },
     mergeWithPreviousBlock(index) {
 
