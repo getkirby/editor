@@ -1,8 +1,20 @@
 # Kirby Editor
 
-Kirby Editor is a new visual writing and layout field for Kirby. Compose long-form text with consistent inline styles. Add images, videos, quotes and more. Bring your own block types and always rest assured that the output will be valid, customizable HTML. 
+Kirby Editor is a new visual writing and layout field for [Kirby](https://getkirby.com). Compose long-form text with consistent inline styles. Add images, videos, quotes and more. Bring your own block types and always rest assured that the output will be valid, customizable HTML. 
 
 ![Editor Screencast](https://user-images.githubusercontent.com/24532/68209079-e8797600-ffd2-11e9-9d91-0b786e041d19.gif)
+
+## Installation
+
+### Manual
+
+[Download](https://github.com/bastianallgeier/editor/releases) and copy this repository to `/site/plugins/editor` of your Kirby installation. 
+
+### Composer
+
+```
+composer require getkirby/editor
+```
 
 ## Features
 
