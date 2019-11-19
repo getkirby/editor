@@ -4,7 +4,7 @@ This demo block shows how to extend an existing block to just slightly modify th
 
 ## Installation
 
-You can install this demo extension as a regular Kirby plugin by placing the todo-block folder in site/plugins
+You can install this demo extension as a regular Kirby plugin by placing the intro-block folder in site/plugins
 
 ## Docs
 
