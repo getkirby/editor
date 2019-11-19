@@ -6,7 +6,7 @@ It creates a nice little info box.
 
 ## Installation
 
-You can install this demo extension as a regular Kirby plugin by placing the todo-block folder in site/plugins
+You can install this demo extension as a regular Kirby plugin by placing the info-block folder in site/plugins
 
 ## Docs
 
