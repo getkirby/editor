@@ -75,7 +75,6 @@ class Parser
                             }
                         }
                     }
-
                 } else {
                     $inline[] = $element->outerHtml;
                 }

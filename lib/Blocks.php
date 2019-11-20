@@ -10,7 +10,6 @@ use Throwable;
 
 class Blocks extends Collection
 {
-
     /**
      * Return HTML when the collection is
      * converted to a string
