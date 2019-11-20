@@ -10,6 +10,7 @@ use Throwable;
 
 class Blocks extends Collection
 {
+
     /**
      * Return HTML when the collection is
      * converted to a string
@@ -19,6 +20,19 @@ class Blocks extends Collection
     public function __toString(): string
     {
         return $this->html();
+    }
+
+    /**
+     * Converts the blocks to HTML and then
+     * uses the Str::excerpt method to create
+     * a non-formatted, shortened excerpt from it
+     *
+     * @param mixed ...$args
+     * @return string
+     */
+    public function excerpt(...$args)
+    {
+        return Str::excerpt($this->html(), ...$args);
     }
 
     /**
