@@ -181,6 +181,12 @@ class Block
         ];
 
         $html = str_replace(array_keys($replace), array_values($replace), $html);
+        $html = preg_replace_callback('!<a.*?href="(.*?)".*>(.*?)</a>!', function ($matches) {
+            $href = $matches[1] ?? '/';
+            $text = $matches[2] ?? $href;
+
+            return '[' . $text . '](' . url($href) . ')';
+        }, $html);
 
         return $html;
     }
