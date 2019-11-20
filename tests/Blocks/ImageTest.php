@@ -46,5 +46,4 @@ class ImageTest extends TestCase
 
         $this->assertEquals("(image: /image.jpg caption: Test)\n\n", $block->markdown());
     }
-
 }

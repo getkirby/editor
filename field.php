@@ -50,7 +50,7 @@ return [
         }
     ],
     'methods' => [
-        'toBlocks' => function($value) {
+        'toBlocks' => function ($value) {
             return Kirby\Editor\Blocks::factory($value, $this->model());
         },
         'toValue' => function ($value) {
@@ -131,7 +131,6 @@ return [
                 'pattern' => 'export',
                 'method' => 'POST',
                 'action' => function () {
-
                     $data = get('data');
                     $type = get('type');
 
