@@ -160,6 +160,17 @@ class Block
     }
 
     /**
+     * Converts the block to AMP HTML
+     *
+     * @return string
+     */
+    public function ampHtml(): string
+    {
+        $snippetName = 'editor/' . $this->type();
+        return snippet([$snippetName . '.amp', $snippetName], $this->controller(), true);
+    }
+
+    /**
      * Convert inline html to markdown
      *
      * @param string $html
@@ -330,6 +341,16 @@ class Block
     public function toHtml(): string
     {
         return $this->html();
+    }
+
+    /**
+     * Alias for ampHtml()
+     *
+     * @return string
+     */
+    public function toAmpHtml(): string
+    {
+        return $this->ampHtml();
     }
 
     /**

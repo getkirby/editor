@@ -9,8 +9,10 @@ class ImageBlock extends Block
     public function controller(): array
     {
         $data = parent::controller();
-        $data['image'] = $image = $this->image();
-        $data['src']   = $image ? $image->url() : $this->attrs()->src();
+        $data['image']  = $image = $this->image();
+        $data['src']    = $image ? $image->url() : $this->attrs()->src();
+        $data['width']  = $image ? $image->width() : null;
+        $data['height'] = $image ? $image->height() : null;
 
         return $data;
     }
