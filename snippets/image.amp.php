@@ -7,8 +7,11 @@
       alt="<?= $attrs->alt() ?>"
       layout="responsive"
       width="<?= $width ?>"
-      height="<?= $height ?>"
-    ></amp-img>
+      height="<?= $height ?>">
+      <noscript>
+        <img src="<?= $src ?>" alt="<?= $attrs->alt() ?>" />
+      </noscript>
+    </amp-img>
   </a>
   <?php else: ?>
   <amp-img
@@ -16,8 +19,11 @@
     alt="<?= $attrs->alt() ?>"
     layout="responsive"
     width="<?= $width ?>"
-    height="<?= $height ?>"
-  ></amp-img>
+    height="<?= $height ?>">
+    <noscript>
+      <img src="<?= $src ?>" alt="<?= $attrs->alt() ?>" />
+    </noscript>
+  </amp-img>
   <?php endif ?>
 
   <?php if ($attrs->caption()->isNotEmpty()): ?>
