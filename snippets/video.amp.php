@@ -1,13 +1,13 @@
-<?php if ($iframe): ?>
+<?php if ($iframe && $videoSourceType): ?>
 
 <figure<?= attr(['class' => $attrs->css()->value()], ' ') ?>>
 
   <?php
   preg_match('/src="([^"]+)"/', $iframe, $match);
-  $url = $match[1];
+  $url = $match[1]; // grab from iframe because it's already been normalized (instead of $attrs->src())
   ?>
-  
-  <?php if (preg_match('!youtu!i', $url) === 1):      /* YouTube video */ ?>
+
+  <?php if ($videoSourceType === 'youtube'): ?>
     <?php
     $id = null;
     if (preg_match('!' . '\/embed\/([a-zA-Z0-9_-]+)' . '!i', $url, $array) === 1) {
@@ -20,7 +20,7 @@
       width="480"
       height="270"
     ></amp-youtube>
-  <?php elseif (preg_match('!vimeo!i', $url) === 1):  /* Vimeo video */ ?>
+  <?php elseif ($videoSourceType === 'vimeo'): ?>
     <?php
     $id = null;
     if (preg_match('!' . '\/video\/([0-9]+)' . '!i', $url, $array) === 1) {

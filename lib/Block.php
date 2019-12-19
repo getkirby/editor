@@ -171,6 +171,16 @@ class Block
     }
 
     /**
+     * Returns an array of custom AMP element scripts
+     *
+     * @return array
+     */
+    public function ampCustomElementScripts(): array
+    {
+        return [];
+    }
+
+    /**
      * Convert inline html to markdown
      *
      * @param string $html

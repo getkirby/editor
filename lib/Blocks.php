@@ -115,6 +115,36 @@ class Blocks extends Collection
     }
 
     /**
+     * Returns an array of custom AMP element scripts for all blocks
+     *
+     * @return array
+     */
+    public function ampCustomElementScripts(): array
+    {
+        $ampScripts = [];
+
+        foreach ($this->data as $block) {
+            $ampScripts = array_merge($ampScripts, $block->ampCustomElementScripts());
+        }
+
+        return $ampScripts;
+    }
+
+    /**
+     * Returns a string of custom AMP element script tags for all blcoks
+     *
+     * @return string
+     */
+    public function ampCustomElementScriptTags(): string
+    {
+        $tags = [];
+        foreach ($this->ampCustomElementScripts() as $customElement => $scriptSrc) {
+            $tags[] = '<script async custom-element="' . $customElement . '" src="' . $scriptSrc .'"></script>';
+        }
+        return implode("\n", $tags);
+    }
+
+    /**
      * Converts the collection to markdown
      *
      * @return string
