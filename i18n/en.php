@@ -40,7 +40,7 @@ return [
     'editor.blocks.video.src.label'           => 'Youtube or Vimeo URL',
     'editor.blocks.video.src.placeholder'     => 'https://www.youtube.com/watch?v=',
     'editor.options.insert.below'             => 'Insert below',
-    'editor.options.convert'                  => 'Turn into',
+    'editor.options.convert'                  => 'Change type',
     'editor.options.duplicate'                => 'Duplicate',
     'editor.options.delete'                   => 'Delete',
 ];
