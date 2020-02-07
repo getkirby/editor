@@ -1,8 +1,8 @@
 <template>
-  <k-dialog ref="dialog" @submit="submit">
+  <k-dialog ref="dialog" size="medium" @submit="submit">
     <k-form
       ref="linkForm"
-      :fields="$options.fields"
+      :fields="fields"
       v-model="link"
       @submit="submit"
     />
@@ -11,27 +11,51 @@
 
 <script>
 export default {
-  fields: {
-    href: {
-      label: "URL",
-      type: "text",
-      icon: "url"
-    }
-  },
   data() {
     return {
       link: {
-        href: null
+        href: null,
+        title: null,
+        target: false
       }
     };
   },
+  computed: {
+    fields() {
+      return {
+        href: {
+          label: "URL",
+          type: "text",
+          icon: "url"
+        },
+        title: {
+          label: "Title",
+          type: "text",
+          icon: "title"
+        },
+        target: {
+          label: "Open in new window",
+          type: "toggle",
+          text: ["no", "yes"]
+        }
+      };
+    }
+  },
   methods: {
-    open(href) {
-      this.link.href = href;
+    open(link) {
+      this.link = {
+        title: null,
+        target: false,
+        ...link
+      };
       this.$refs.dialog.open();
     },
     submit() {
-      this.$emit("submit", this.link.href);
+      this.$emit("submit", {
+        ...this.link,
+        target: this.link.target ? "_blank" : null
+      });
+
       this.$refs.dialog.close();
     }
   }
