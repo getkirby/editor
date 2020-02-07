@@ -52,7 +52,7 @@ class ImageBlock extends Block
             $data['attrs'] = array_merge($data['attrs'] ?? [], [
                 'guid'    => $image->panelUrl(true),
                 'ratio'   => $image->ratio(),
-                'src'     => $image->url(),
+                'src'     => null,
             ]);
         } else {
             unset($data['attrs']['guid']);
