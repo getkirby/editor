@@ -78,6 +78,10 @@ return [
             return $value;
         }
 
+        $value = $this
+            ->toBlocks($value)
+            ->toStorage();
+
         if ($this->pretty === true) {
             return json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
         }

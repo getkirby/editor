@@ -143,4 +143,21 @@ class Blocks extends Collection
     {
         return $this->markdown();
     }
+
+    /**
+     * Prepare the blocks to be stored
+     *
+     * @return array
+     */
+    public function toStorage(): array
+    {
+        $blocks = [];
+
+        foreach ($this->data as $block) {
+            $blocks[] = $block->toStorage();
+        }
+
+        return $blocks;
+    }
+
 }
