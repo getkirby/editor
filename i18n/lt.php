@@ -19,7 +19,7 @@ return [
     'editor.blocks.image.link.placeholder'    => 'http://',
     'editor.blocks.image.open.browser'        => 'Atidaryti naršyklėje',
     'editor.blocks.image.open.panel'          => 'Atidaryti panėlėje',
-    'editor.blocks.image.or'                  => 'or',
+    'editor.blocks.image.or'                  => 'arba',
     'editor.blocks.image.replace'             => 'Apkeisti nuotrauką',
     'editor.blocks.image.select'              => 'Pasirinkti nuotrauką',
     'editor.blocks.image.settings'            => 'Nuotraukos nustatymai',
