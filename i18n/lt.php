@@ -40,7 +40,7 @@ return [
     'editor.blocks.video.src.label'           => 'Youtube arba Vimeo URL',
     'editor.blocks.video.src.placeholder'     => 'https://www.youtube.com/watch?v=',
     'editor.options.insert.below'             => 'Įterpti žemiau',
-    'editor.options.convert'                  => 'Paversti į',
+    'editor.options.convert'                  => 'Pakeisti tipą',
     'editor.options.duplicate'                => 'Kopijuoti',
     'editor.options.delete'                   => 'Pašalinti',
 ];
