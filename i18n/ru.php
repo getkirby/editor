@@ -39,7 +39,7 @@ return [
     'editor.blocks.video.src.label'           => 'URL Youtube или Vimeo ',
     'editor.blocks.video.src.placeholder'     => 'https://www.youtube.com/watch?v=',
     'editor.options.insert.below'             => 'Вставить ниже',
-    'editor.options.convert'                  => 'Преобразовать в',
+    'editor.options.convert'                  => 'Поменять тип',
     'editor.options.duplicate'                => 'Дублировать',
     'editor.options.delete'                   => 'Удалить',
 ];
