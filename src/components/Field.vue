@@ -167,7 +167,7 @@ export default {
     upload() {
       this.$refs.upload.open({
         url: window.panel.api + "/" + this.endpoints.field + "/import",
-        accept: "text/plain,text/html,text/markdown",
+        accept: "text/plain,text/html,text/markdown,application/json",
         multiple: false
       });
     }
