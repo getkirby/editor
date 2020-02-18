@@ -69,5 +69,4 @@ class ImageBlock extends Block
     {
         return $this->toArray(true);
     }
-
 }

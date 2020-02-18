@@ -159,5 +159,4 @@ class Blocks extends Collection
 
         return $blocks;
     }
-
 }

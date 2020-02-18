@@ -351,5 +351,4 @@ class Block
     {
         return $this->toArray();
     }
-
 }
