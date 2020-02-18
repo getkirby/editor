@@ -44,20 +44,29 @@ class ImageBlock extends Block
         return kirbyTagMaker($attrs) . PHP_EOL . PHP_EOL;
     }
 
-    public function toArray(): array
+    public function toArray(bool $toStorage = false): array
     {
         $data = parent::toArray();
 
         if ($image = $this->image()) {
             $data['attrs'] = array_merge($data['attrs'] ?? [], [
-                'guid'    => $image->panelUrl(true),
-                'ratio'   => $image->ratio(),
-                'src'     => $image->url(),
+                'guid'  => $image->panelUrl(true),
+                'ratio' => $image->ratio(),
+                'src'   => $image->resize(800)->url()
             ]);
+
+            if ($toStorage === true) {
+                unset($data['attrs']['src']);
+            }
         } else {
             unset($data['attrs']['guid']);
         }
 
         return $data;
+    }
+
+    public function toStorage(): array
+    {
+        return $this->toArray(true);
     }
 }

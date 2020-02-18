@@ -8,6 +8,9 @@ export default {
     href: {},
     title: {
       default: null
+    },
+    target: {
+      default: null
     }
   },
   inclusive: false,
@@ -15,7 +18,8 @@ export default {
     tag: "a[href]", getAttrs(dom) {
       return {
         href: dom.getAttribute("href"),
-        title: dom.getAttribute("title")
+        title: dom.getAttribute("title"),
+        target: dom.getAttribute("target"),
       }
     }
   }],
@@ -24,6 +28,11 @@ export default {
 
     if (node.attrs.title) {
       a.setAttribute("title", node.attrs.title);
+    }
+
+    if (node.attrs.target === "_blank") {
+      a.setAttribute("target", "_blank");
+      a.setAttribute("rel", "noopener noreferrer");
     }
 
     a.setAttribute("href", node.attrs.href);

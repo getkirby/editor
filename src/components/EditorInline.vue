@@ -11,6 +11,7 @@
       :breaks="true"
       :content="content"
       :disabled="disabled"
+      :placeholder="placeholder"
       :spellcheck="spellcheck"
       @enter="onEnter"
       @split="onEnter"
@@ -24,6 +25,7 @@ export default {
   props: {
     autofocus: Boolean,
     disabled: Boolean,
+    placeholder: String,
     spellcheck: Boolean,
     value: String
   },
@@ -56,7 +58,8 @@ export default {
 </script>
 
 <style lang="scss">
-.k-editor-inline .k-editable {
+.k-editor-inline .k-editable,
+.k-editor-inline .k-editable-placeholder {
   padding: .375rem;
 }
 </style>

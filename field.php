@@ -41,7 +41,7 @@ return [
     ],
     'computed' => [
         'isSupported' => function () {
-            if (version_compare('3.3.0', $this->kirby()->version(), '>=')) {
+            if (version_compare($this->kirby()->version(), '3.3.0', '<')) {
                 throw new Exception('The editor requires Kirby version 3.3.0 or higher');
             }
         },
@@ -78,6 +78,10 @@ return [
             return $value;
         }
 
+        $value = $this
+            ->toBlocks($value)
+            ->toStorage();
+
         if ($this->pretty === true) {
             return json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
         }
@@ -89,7 +93,14 @@ return [
             [
                 'pattern' => 'files',
                 'action' => function () {
-                    return $this->field()->filepicker($this->field()->files());
+                    $field = $this->field();
+                    $files = $field->files();
+
+                    // inject stuff from the query
+                    $files['page']   = $this->requestQuery('page');
+                    $files['search'] = $this->requestQuery('search');
+
+                    return $field->filepicker($files);
                 }
             ],
             [
