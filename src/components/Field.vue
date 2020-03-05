@@ -1,6 +1,7 @@
 <template>
   <k-field
     :disabled="disabled"
+    :help="help"
     :label="label"
     :name="name"
     :required="required"
@@ -95,6 +96,7 @@ export default {
     disabled: Boolean,
     disallowed: [Array, Object],
     endpoints: Object,
+    help: String,
     inline: Boolean,
     label: String,
     name: String,
@@ -174,7 +176,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-/** put your css here **/
-</style>
