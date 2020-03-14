@@ -9,7 +9,7 @@ return [
     'editor.blocks.hr.label'                  => 'Ligne',
     'editor.blocks.image.alt.label'           => 'Texte alternatif',
     'editor.blocks.image.caption.placeholder' => 'Ajouter une légende',
-    'editor.blocks.image.css.label'           => 'Class CSS',
+    'editor.blocks.image.css.label'           => 'Classe CSS',
     'editor.blocks.image.label'               => 'Image',
     'editor.blocks.image.link.label'          => 'Lien',
     'editor.blocks.image.link.placeholder'    => 'http://',
