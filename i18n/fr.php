@@ -31,7 +31,7 @@ return [
     'editor.blocks.video.open'                => 'Ouvrir une vidéo',
     'editor.blocks.video.placeholder'         => 'Saisir une URL Youtube ou Vimeo',
     'editor.blocks.video.settings'            => 'Réglages de la vidéo',
-    'editor.blocks.video.src.label'           => 'URL Youtube ou Vidéo',
+    'editor.blocks.video.src.label'           => 'URL Youtube ou Vimeo',
     'editor.blocks.video.src.placeholder'     => 'https://www.youtube.com/watch?v=',
     'editor.options.insert.below'             => 'Insérer ci-dessous',
     'editor.options.convert'                  => 'Transformer en',
