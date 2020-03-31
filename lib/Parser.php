@@ -17,7 +17,7 @@ class Parser
 
     public static function parse($dom, bool $markdown = false, $parent = null)
     {
-        static::$parent = $parent;
+        static::$parent = $parent ?? static::$parent;
 
         // convert html to dom element if a string is being passed
         if (is_string($dom) === true) {

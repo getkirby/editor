@@ -11,6 +11,7 @@
       <k-editor-inline
         :autofocus="autofocus"
         :disabled="disabled"
+        :placeholder="placeholder"
         :spellcheck="spellcheck"
         :value="value"
         @input="onInput"
@@ -97,6 +98,7 @@ export default {
     inline: Boolean,
     label: String,
     name: String,
+    placeholder: String,
     required: Boolean,
     spellcheck: Boolean,
     type: String,
@@ -165,7 +167,7 @@ export default {
     upload() {
       this.$refs.upload.open({
         url: window.panel.api + "/" + this.endpoints.field + "/import",
-        accept: "text/plain,text/html,text/markdown",
+        accept: "text/plain,text/html,text/markdown,application/json",
         multiple: false
       });
     }

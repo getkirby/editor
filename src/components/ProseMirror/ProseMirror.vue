@@ -280,13 +280,11 @@ export default {
       const node = Doc(this.schema(), html);
       this.dispatch(this.tr().replaceSelectionWith(node).scrollIntoView());
     },
-    insertLink(href) {
-      if (!href) {
+    insertLink(link) {
+      if (!link.href) {
         this.removeMark("link");
       } else {
-        this.addMark("link", {
-          href: href
-        });
+        this.addMark("link", link);
       }
     },
     insertText(text) {
@@ -306,7 +304,7 @@ export default {
     },
     link() {
       const attrs = this.getMarkAttrs("link");
-      this.$refs.link.open(attrs.href);
+      this.$refs.link.open(attrs);
     },
     mark(type) {
       return this.editor.state.schema.marks[type];

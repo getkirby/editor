@@ -58,6 +58,7 @@ export default {
     { id: "php", label: "PHP" },
     { id: "text", label: "Plain Text" },
     { id: "python", label: "Python" },
+    { id: "r", label: "R" },
     { id: "ruby", label: "Ruby" },
     { id: "rust", label: "Rust" },
     { id: "sass", label: "Sass" },

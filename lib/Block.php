@@ -372,4 +372,14 @@ class Block
     {
         return $this->markdown();
     }
+
+    /**
+     * Prepare the block to be stored
+     *
+     * @return array
+     */
+    public function toStorage(): array
+    {
+        return $this->toArray();
+    }
 }
