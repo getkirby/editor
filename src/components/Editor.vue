@@ -679,7 +679,6 @@ export default {
 .k-editor-blocks {
   position: relative;
   background: $color-white;
-  margin-bottom: 1.5rem;
   box-shadow: $box-shadow;
 }
 .k-editor-block {
