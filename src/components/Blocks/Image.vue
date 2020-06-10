@@ -131,6 +131,7 @@ export default {
           guid: response.link,
           src: response.url,
           id: response.id,
+          filename: response.filename,
           ratio: response.dimensions.ratio
         });
       });
