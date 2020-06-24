@@ -62,6 +62,11 @@
 <script>
 export default {
   icon: "image",
+  data() {
+    return {
+      isDimensionsChanged: false
+    }
+  },
   props: {
     attrs: {
       type: Object,
@@ -71,6 +76,14 @@ export default {
     },
     endpoints: Object,
     spellcheck: Boolean
+  },
+  watch: {
+    "attrs.width"(value) {
+        this.onDimensionsChanged(value, null);
+    },
+    "attrs.height"(value) {
+        this.onDimensionsChanged(null, value);
+    }
   },
   computed: {
     style() {
@@ -94,12 +107,63 @@ export default {
         css: {
           label: this.$t('editor.blocks.image.css.label'),
           type: "text",
-          icon: "code",
+          icon: "code"
+        },
+        width: {
+          label: this.$t("editor.blocks.image.width"),
+          type: "number",
+          width: "1/2",
+          after: "px"
+        },
+        height: {
+          label: this.$t("editor.blocks.image.height"),
+          type: "number",
+          width: "1/2",
+          after: "px"
+        },
+        resize: {
+          label: this.$t("editor.blocks.image.resize"),
+          type: "select",
+          default: "resize",
+          required: true,
+          options: [
+            { value: "resize", text: this.$t("editor.blocks.image.resize.resize") },
+            { value: "crop", text: this.$t("editor.blocks.image.resize.crop") }
+          ],
+          width: "1/2"
+        },
+        aspectRatio: {
+          label: this.$t("editor.blocks.image.aspectRatio"),
+          type: "select",
+          default: true,
+          required: true,
+          options: [
+            { value: "true", text: this.$t("editor.blocks.image.aspectRatio.active") },
+            { value: "false", text: this.$t("editor.blocks.image.aspectRatio.inactive") }
+          ],
+          width: "1/2"
         }
       };
     }
   },
   methods: {
+    onDimensionsChanged(width = null, height = null) {
+      if (this.attrs.aspectRatio === "true" && this.isDimensionsChanged === false) {
+        this.isDimensionsChanged = true;
+
+        if (width !== null) {
+          this.attrs.height = Math.round(width * this.attrs.ratio);
+        }
+
+        if (height !== null) {
+          this.attrs.width = Math.round(height / this.attrs.ratio);
+        }
+      } else {
+        if (this.isDimensionsChanged === true) {
+          this.isDimensionsChanged = false;
+        }
+      }
+    },
     caption(html) {
       this.input({
         caption: html
@@ -146,7 +210,6 @@ export default {
       this.$store.dispatch("notification/success", ":)");
     },
     menu() {
-
       if (this.attrs.src) {
         return [
           {

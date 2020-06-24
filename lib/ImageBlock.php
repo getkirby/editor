@@ -9,8 +9,18 @@ class ImageBlock extends Block
     public function controller(): array
     {
         $data = parent::controller();
+
+        $width  = $this->attrs()->width()->toInt() ?? null;
+        $height = $this->attrs()->height()->toInt() ?? null;
+        $resize = $this->attrs()->resize()->value() ?? 'resize';
+
         $data['image'] = $image = $this->image();
-        $data['src']   = $image ? $image->url() : $this->attrs()->src();
+
+        if (empty($width) === false || empty($height) === false) {
+            $data['src'] = $image ? $image->{$resize}($width, $height)->url() : $this->attrs()->src();
+        } else {
+            $data['src'] = $image ? $image->url() : $this->attrs()->src();
+        }
 
         return $data;
     }
