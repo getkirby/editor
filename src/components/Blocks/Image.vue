@@ -79,10 +79,10 @@ export default {
   },
   watch: {
     "attrs.width"(value) {
-        this.onDimensionsChanged(value, null);
+        this.onDimensionsChange(value, null);
     },
     "attrs.height"(value) {
-        this.onDimensionsChanged(null, value);
+        this.onDimensionsChange(null, value);
     }
   },
   computed: {
@@ -132,14 +132,14 @@ export default {
           ],
           width: "1/2"
         },
-        aspectRatio: {
-          label: this.$t("editor.blocks.image.aspectRatio"),
+        keepRatio: {
+          label: this.$t("editor.blocks.image.keepRatio"),
           type: "select",
           default: true,
           required: true,
           options: [
-            { value: "true", text: this.$t("editor.blocks.image.aspectRatio.active") },
-            { value: "false", text: this.$t("editor.blocks.image.aspectRatio.inactive") }
+            { value: "true", text: this.$t("editor.blocks.image.keepRatio.enabled") },
+            { value: "false", text: this.$t("editor.blocks.image.keepRatio.disabled") }
           ],
           width: "1/2"
         }
@@ -147,8 +147,8 @@ export default {
     }
   },
   methods: {
-    onDimensionsChanged(width = null, height = null) {
-      if (this.attrs.aspectRatio === "true" && this.isDimensionsChanged === false) {
+    onDimensionsChange(width = null, height = null) {
+      if (this.attrs.keepRatio === "true" && this.isDimensionsChanged === false) {
         this.isDimensionsChanged = true;
 
         if (width !== null) {
