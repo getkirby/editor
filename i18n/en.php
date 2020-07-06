@@ -40,6 +40,8 @@ return [
     'editor.blocks.video.src.label'           => 'Youtube or Vimeo URL',
     'editor.blocks.video.src.placeholder'     => 'https://www.youtube.com/watch?v=',
     'editor.deleteBlocks'                     => 'Delete blocks',
+    'editor.deleteConfirm'                    => 'Do you really want to remove all blocks?',
+    'editor.downloadSuccess'                  => 'The file has been downloaded',
     'editor.export'                           => 'Export',
     'editor.import'                           => 'Import',
     'editor.options.insert.below'             => 'Insert below',
