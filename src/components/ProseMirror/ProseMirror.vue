@@ -95,8 +95,6 @@ export default {
       disabled: this.disabled,
       element: this.$el,
       marks: this.marks,
-      onUpdate: this.onUpdate,
-      onSplit: this.onSplit,
       onBack: this.onBack,
       onForward: this.onForward,
       onBold: this.onBold,
@@ -110,9 +108,11 @@ export default {
       onSelect: this.onSelect,
       onShiftEnter: this.onShiftEnter,
       onShiftTab: this.$listeners["shiftTab"] ? this.onShiftTab : false,
+      onSplit: this.onSplitBlock,
       onStrikeThrough: this.onStrikeThrough,
       onTab: this.$listeners["tab"] ? this.onTab : false,
       onUnderline: this.onUnderline,
+      onUpdate: this.onUpdate,
     });
 
     this.onUpdate();
@@ -434,7 +434,7 @@ export default {
     onStrikeThrough() {
       this.toggleMark("strikeThrough");
     },
-    onSplit() {
+    onSplitBlock() {
       this.$emit("split", {
         cursor: this.cursorPosition(),
         before: this.htmlBeforeCursor(),
