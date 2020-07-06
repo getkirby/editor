@@ -56,7 +56,7 @@
         theme="negative"
         @submit="onRemoveAll"
       >
-        <k-text>Do you really want to remove all blocks?</k-text>
+        <k-text>{{ $t('editor.deleteConfirm') }}</k-text>
       </k-dialog>
 
       <k-upload ref="upload" @success="onUpload" />
@@ -149,7 +149,7 @@ export default {
           document.body.removeChild(a);
 
           this.$refs.download.close();
-          this.$store.dispatch("notification/success", "The file has been downloaded");
+          this.$store.dispatch("notification/success", this.$t('editor.downloadSuccess'));
 
         })
         .catch(error => {
