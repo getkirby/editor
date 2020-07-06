@@ -83,7 +83,7 @@ return [
             ->toStorage();
 
         if ($this->pretty === true) {
-            return json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+            return json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         }
 
         return json_encode($value);
