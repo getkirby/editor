@@ -1,6 +1,7 @@
 <template>
   <k-field
     :disabled="disabled"
+    :help="help"
     :label="label"
     :name="name"
     :required="required"
@@ -22,10 +23,10 @@
       <k-dropdown slot="options">
         <k-button icon="dots" @click="$refs.settings.toggle()" />
         <k-dropdown-content ref="settings" align="right">
-          <k-dropdown-item icon="upload" @click="upload">Import content</k-dropdown-item>
-          <k-dropdown-item :disabled="isEmpty" icon="attachment" @click="$refs.download.open()">Export</k-dropdown-item>
+          <k-dropdown-item icon="upload" @click="upload">{{ $t('editor.import') }}</k-dropdown-item>
+          <k-dropdown-item :disabled="isEmpty" icon="attachment" @click="$refs.download.open()">{{ $t('editor.export') }}</k-dropdown-item>
           <hr>
-          <k-dropdown-item :disabled="isEmpty" icon="trash" @click="$refs.removeAll.open()">Delete blocks</k-dropdown-item>
+          <k-dropdown-item :disabled="isEmpty" icon="trash" @click="$refs.removeAll.open()">{{ $t('editor.deleteBlocks') }}</k-dropdown-item>
         </k-dropdown-content>
       </k-dropdown>
 
@@ -55,7 +56,7 @@
         theme="negative"
         @submit="onRemoveAll"
       >
-        <k-text>Do you really want to remove all blocks?</k-text>
+        <k-text>{{ $t('editor.deleteConfirm') }}</k-text>
       </k-dialog>
 
       <k-upload ref="upload" @success="onUpload" />
@@ -95,6 +96,7 @@ export default {
     disabled: Boolean,
     disallowed: [Array, Object],
     endpoints: Object,
+    help: String,
     inline: Boolean,
     label: String,
     name: String,
@@ -147,7 +149,7 @@ export default {
           document.body.removeChild(a);
 
           this.$refs.download.close();
-          this.$store.dispatch("notification/success", "The file has been downloaded");
+          this.$store.dispatch("notification/success", this.$t('editor.downloadSuccess'));
 
         })
         .catch(error => {
@@ -174,7 +176,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-/** put your css here **/
-</style>

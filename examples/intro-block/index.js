@@ -11,4 +11,7 @@ editor.block("intro", {
 
   // icon for the blocks dropdown
   icon: "text",
+  
+  // Enable line breaks
+  breaks: true,
 });

@@ -445,8 +445,7 @@ export default {
       const block = this.getFocusedBlockComponent();
     },
     onForward(index) {
-      this.remove(index);
-      this.focus(index + 1, "start");
+      this.mergeWithPreviousBlock(index + 1);
     },
     onInput(index, data) {
       if (!this.blocks[index]) {
@@ -679,7 +678,6 @@ export default {
 .k-editor-blocks {
   position: relative;
   background: $color-white;
-  margin-bottom: 1.5rem;
   box-shadow: $box-shadow;
 }
 .k-editor-block {

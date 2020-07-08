@@ -109,6 +109,9 @@ class Parser
 
     public static function dom($html)
     {
+        // replace nasty word artefacts
+        $html = preg_replace('!(xmlns+:[a-z]+=\".*?\")!', '', $html);
+
         $dom = new Dom();
         $dom->loadStr($html, [
             'whitespaceTextNode' => true,
