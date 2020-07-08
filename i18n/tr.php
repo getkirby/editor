@@ -40,6 +40,8 @@ return [
     'editor.blocks.video.src.label'           => 'Youtube veya Vimeo adresi',
     'editor.blocks.video.src.placeholder'     => 'https://www.youtube.com/watch?v=',
     'editor.deleteBlocks'                     => 'Blokları sil',
+    'editor.deleteConfirm'                    => 'Gerçekten tüm blokları kaldırmak istiyor musunuz?',
+    'editor.downloadSuccess'                  => 'Dosya indirildi',
     'editor.export'                           => 'Dışa aktar',
     'editor.import'                           => 'İçe Aktar',
     'editor.options.insert.below'             => 'Aşağıya ekle',
