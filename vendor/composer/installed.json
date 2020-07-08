@@ -1,30 +1,74 @@
 [
     {
-        "name": "paquettg/php-html-parser",
-        "version": "2.1.0",
-        "version_normalized": "2.1.0.0",
+        "name": "getkirby/composer-installer",
+        "version": "1.1.4",
+        "version_normalized": "1.1.4.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/paquettg/php-html-parser.git",
-            "reference": "d1000936350fed2cb6c54058890d2d19c5ccba4f"
+            "url": "https://github.com/getkirby/composer-installer.git",
+            "reference": "2d6b8f5601a31caeeea45623e1643fbb437eb94e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/paquettg/php-html-parser/zipball/d1000936350fed2cb6c54058890d2d19c5ccba4f",
-            "reference": "d1000936350fed2cb6c54058890d2d19c5ccba4f",
+            "url": "https://api.github.com/repos/getkirby/composer-installer/zipball/2d6b8f5601a31caeeea45623e1643fbb437eb94e",
+            "reference": "2d6b8f5601a31caeeea45623e1643fbb437eb94e",
             "shasum": ""
         },
         "require": {
+            "composer-plugin-api": "^1.0"
+        },
+        "require-dev": {
+            "composer/composer": "^1.8",
+            "phpunit/phpunit": "^7.0"
+        },
+        "time": "2019-02-11T20:27:36+00:00",
+        "type": "composer-plugin",
+        "extra": {
+            "class": "Kirby\\ComposerInstaller\\Plugin"
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Kirby\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "Kirby's custom Composer installer for the Kirby CMS and for Kirby plugins",
+        "homepage": "https://getkirby.com"
+    },
+    {
+        "name": "paquettg/php-html-parser",
+        "version": "2.2.1",
+        "version_normalized": "2.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/paquettg/php-html-parser.git",
+            "reference": "668c770fc5724ea3f15b8791435f054835be8d5e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/paquettg/php-html-parser/zipball/668c770fc5724ea3f15b8791435f054835be8d5e",
+            "reference": "668c770fc5724ea3f15b8791435f054835be8d5e",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
             "ext-mbstring": "*",
+            "ext-zlib": "*",
             "paquettg/string-encode": "~1.0.0",
             "php": ">=7.1"
         },
         "require-dev": {
+            "infection/infection": "^0.13.4",
             "mockery/mockery": "^1.2",
+            "phan/phan": "^2.4",
             "php-coveralls/php-coveralls": "^2.1",
             "phpunit/phpunit": "^7.5.1"
         },
-        "time": "2019-08-18T18:27:45+00:00",
+        "time": "2020-01-20T12:59:15+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
