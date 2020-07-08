@@ -128,7 +128,7 @@ export default {
   display: flex;
   top: 2px;
   width: 4rem;
-  padding: .25rem 0;
+  padding: .25rem 0 6rem;
   align-items: center;
   justify-content: center;
 }
@@ -161,7 +161,14 @@ export default {
 }
 .k-editor-block-option-dropdown {
   min-width: 15rem;
-  margin-bottom: 4.5rem;
+}
+.k-editor-block-option-dropdown::after {
+  position: absolute;
+  content: "";
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 6rem;
 }
 .k-editor-block-option-heading .k-button-text  {
   opacity: 1;

@@ -1,6 +1,6 @@
 /**
  * Each block is automatically wrapped in a div
- * with a generated class name that follos the scheme
+ * with a generated class name that follows the scheme
  * `k-editor-$type-block` You can use this to scope
  * all your css within a block
  */
