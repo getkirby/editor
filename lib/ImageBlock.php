@@ -20,7 +20,7 @@ class ImageBlock extends Block
         try {
             // for the guid used in 1.0.2 and earlier versions
             // @deprecated 1.1.0
-            if ($this->attrs()->filename()->isEmpty()) {
+            if ($this->attrs()->filename()->isEmpty() === true) {
                 return $this->kirby()->api()->parent($this->attrs()->guid()->value());
             }
 
