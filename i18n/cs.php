@@ -29,7 +29,7 @@ return [
     'editor.blocks.ol.placeholder'            => 'Seznam',
     'editor.blocks.paragraph.label'           => 'Text',
     'editor.blocks.paragraph.placeholder'     => '',
-    'editor.blocks.ul.label'                  => 'Seznam s odrážky',
+    'editor.blocks.ul.label'                  => 'Seznam s odrážkami',
     'editor.blocks.ul.placeholder'            => 'Seznam',
     'editor.blocks.video.caption.placeholder' => 'Přidat popisek',
     'editor.blocks.video.css.label'           => 'CSS třídy',

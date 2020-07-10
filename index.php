@@ -60,5 +60,6 @@ Kirby::plugin('getkirby/editor', [
         'ru'    => @include_once __DIR__ . '/i18n/ru.php',
         'sv_SE' => @include_once __DIR__ . '/i18n/sv_SE.php',
         'tr'    => @include_once __DIR__ . '/i18n/tr.php',
+        'cs'    => @include_once __DIR__ . '/i18n/cs.php',
     ]
 ]);
