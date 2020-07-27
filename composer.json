@@ -1,6 +1,7 @@
 {
     "name": "getkirby/editor",
     "description": "Kirby Editor",
+    "version": "1.0.5",
     "license": "proprietary",
     "keywords": ["kirby", "cms", "wysiwyg", "plugin", "editor"],
     "homepage": "https://getkirby.com",
