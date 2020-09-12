@@ -41,11 +41,13 @@ Kirby::plugin('getkirby/editor', [
         'editor/h3'         => __DIR__ . '/snippets/h3.php',
         'editor/hr'         => __DIR__ . '/snippets/hr.php',
         'editor/image'      => __DIR__ . '/snippets/image.php',
+        'editor/image.amp'  => __DIR__ . '/snippets/image.amp.php',
         'editor/kirbytext'  => __DIR__ . '/snippets/kirbytext.php',
         'editor/ol'         => __DIR__ . '/snippets/ol.php',
         'editor/paragraph'  => __DIR__ . '/snippets/paragraph.php',
         'editor/ul'         => __DIR__ . '/snippets/ul.php',
         'editor/video'      => __DIR__ . '/snippets/video.php',
+        'editor/video.amp'  => __DIR__ . '/snippets/video.amp.php',
     ],
     'translations' => [
         'de'    => @include_once __DIR__ . '/i18n/de.php',
