@@ -52,6 +52,7 @@ Kirby::plugin('getkirby/editor', [
         'en'    => @include_once __DIR__ . '/i18n/en.php',
         'es'    => @include_once __DIR__ . '/i18n/es.php',
         'fr'    => @include_once __DIR__ . '/i18n/fr.php',
+        'id'    => @include_once __DIR__ . '/i18n/id.php',
         'it'    => @include_once __DIR__ . '/i18n/it.php',
         'lt'    => @include_once __DIR__ . '/i18n/lt.php',
         'nl'    => @include_once __DIR__ . '/i18n/nl.php',
