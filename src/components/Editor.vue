@@ -102,9 +102,8 @@ export default {
   },
   beforeCreate() {
 
-    Object.keys(window.editor.blocks).forEach(key => {
-
-      const block = window.editor.blocks[key];
+    Object.keys(window.editor.blocks).forEach(index => {
+      const [key, block] = window.editor.blocks[index];
 
       if (block.extends && window.editor.blocks[block.extends]) {
         block.extends = window.editor.blocks[block.extends];
